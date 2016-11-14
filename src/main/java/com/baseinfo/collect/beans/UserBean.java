@@ -1,5 +1,7 @@
 package com.baseinfo.collect.beans;
 
+import java.util.Date;
+
 /**
  * 用户实体Bean
  */
@@ -30,6 +32,10 @@ public class UserBean {
     private String ip;
 
     private String departmentName;
+
+    private Date addtime;
+
+    private Date updatetime;
 
     public long getId() {
         return id;
@@ -83,6 +89,14 @@ public class UserBean {
         return departmentName;
     }
 
+    public Date getAddtime() {
+        return addtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -133,5 +147,13 @@ public class UserBean {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public void setAddtime(Date addtime) {
+        this.addtime = addtime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
     }
 }

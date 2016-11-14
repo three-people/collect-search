@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bj58.chr.th.mapper.ImportUserMapMapper" >
+
+    <sql id="Base_Column_List" >
+        id, uname,pwd, mobile, email, realName, mobile, email, sex,age,role,status,ufrom,ip,departmentName,addtime,updatetime
+    </sql>
+
+    <insert id="insert" parameterType="UserBean" >
+        insert into user_table (id, uname,pwd, mobile, email, realName,sex,age,role,status,ufrom,ip,departmentName,addtime,updatetime)
+        values (#{id},#{uname},#{pwd},#{mobile}, #{email},#{realName}, #{sex}, #{age},
+        #{role}, #{status}, #{ufrom},
+        #{ip}, #{departmentName}, #{addtime},#{updatetime})
+    </insert>
+
+    <select id="selectUserById" resultType="UserBean" >
+        SELECT * FROM user_table WHERE id = #{Id}
+    </select>
+
+    <select id="selectUserByUnameAndPwd" resultType="UserBean" >
+        SELECT * FROM user_table WHERE uname = #{uname} AND pwd = #{pwd}
+    </select>
+
+
+
+</mapper>

@@ -2,6 +2,7 @@ package com.baseinfo.collect.dao.impl;
 
 import com.baseinfo.collect.beans.UserBean;
 import com.baseinfo.collect.dao.UserDao;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,8 +18,8 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public int insert(UserBean user) throws Exception {
-
-
+        SqlSession session = factory.openSession(true);
+        session.insert("",user);
         return 0;
     }
 
