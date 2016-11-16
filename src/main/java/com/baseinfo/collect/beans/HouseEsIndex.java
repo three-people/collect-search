@@ -3,7 +3,11 @@ package com.baseinfo.collect.beans;
 import com.baseinfo.collect.common.IndexConstants;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = IndexConstants.PERSONINDEXNAME)
-public class UserEsIndex {
+/**
+ * 房屋相关的ES索引实体
+ */
+
+@Document(indexName = IndexConstants.HOUSEINDEXNAME)
+public class HouseEsIndex {
 
 }
