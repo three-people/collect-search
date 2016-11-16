@@ -1,11 +1,14 @@
 package com.baseinfo.collect.beans;
 
-import static sun.plugin.javascript.navig.JSType.Document;
+import com.baseinfo.collect.common.IndexConstants;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
  * 用户的ES索引
  */
-public class UserEsIndex {
 
+//五份索引，type为""
+@Document(indexName = IndexConstants.PERSONINDEXNAME)
+public class UserEsIndex {
 
 }
