@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bj58.chr.th.mapper.ImportUserMapMapper" >
+<mapper namespace="userOpreation" >
 
     <sql id="Base_Column_List" >
-        id, uname,pwd, mobile, email, realName, mobile, email, sex,age,role,status,ufrom,ip,departmentName,addtime,updatetime
+        id, uname,pwd, realName,role,status,departmentName,addtime,updatetime
     </sql>
 
     <insert id="insert" parameterType="UserBean" >
-        insert into user_table (id, uname,pwd, mobile, email, realName,sex,age,role,status,ufrom,ip,departmentName,addtime,updatetime)
-        values (#{id},#{uname},#{pwd},#{mobile}, #{email},#{realName}, #{sex}, #{age},
-        #{role}, #{status}, #{ufrom},
-        #{ip}, #{departmentName}, #{addtime},#{updatetime})
+        insert into user_table (id, uname,pwd, realName,role,status,departmentName,addtime,updatetime)
+        values (#{id},#{uname},#{pwd},#{realName},#{role}, #{status},#{departmentName}, #{addtime},#{updatetime})
     </insert>
 
     <select id="selectUserById" resultType="UserBean" >
-        SELECT * FROM user_table WHERE id = #{Id}
+        SELECT * FROM user_table WHERE id = #{id}
     </select>
 
     <select id="selectUserByUnameAndPwd" resultType="UserBean" >
         SELECT * FROM user_table WHERE uname = #{uname} AND pwd = #{pwd}
     </select>
 
+    <delete id="deleteUserById" parameterType="Map">
+        DELETE FROM user_table where id = #{id}
+    </delete>
 
+    <update id="updateById" parameterType="UserBean">
+        UPDATE user_table set
+        uname = #{uname},
+        pwd = #{pwd},
+        realName = #{realName},
+        role = #{role},
+        status = #{status},
+        departmentName = #{departmentName},
+        addtime = #{addtime},
+        updatetime = #{updatetime}
+    </update>
 
 </mapper>

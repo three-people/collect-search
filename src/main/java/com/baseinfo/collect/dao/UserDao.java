@@ -11,11 +11,11 @@ public interface UserDao {
 
     public int update(UserBean user) throws Exception;
 
-    public UserBean select(UserBean user) throws Exception;
+    public UserBean select(long id) throws Exception;
 
     public int delete(long id) throws  Exception;
 
-    public UserBean selectUserByUnameAndPwd(String uname,long id) throws Exception;
+    public UserBean selectUserByUnameAndPwd(String uname,String pwd) throws Exception;
 
 
 }
