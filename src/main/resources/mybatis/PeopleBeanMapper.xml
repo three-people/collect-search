@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baseinfo.collect.dao.PeopleBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.baseinfo.collect.beans.PeopleBean" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="subtype" property="subtype" jdbcType="VARCHAR" />
+    <result column="hostname" property="hostname" jdbcType="VARCHAR" />
+    <result column="hostid" property="hostid" jdbcType="VARCHAR" />
+    <result column="hostphone" property="hostphone" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="lessor" property="lessor" jdbcType="VARCHAR" />
+    <result column="lessee" property="lessee" jdbcType="VARCHAR" />
+    <result column="stay" property="stay" jdbcType="VARCHAR" />
+    <result column="employee" property="employee" jdbcType="VARCHAR" />
+    <result column="expend" property="expend" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, subtype, hostname, hostid, hostphone, number, lessor, lessee, stay, employee, 
+    expend
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_people
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_people
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.baseinfo.collect.beans.PeopleBean" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_people (id, type, subtype, 
+      hostname, hostid, hostphone, 
+      number, lessor, lessee, 
+      stay, employee, expend
+      )
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR}, 
+      #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{lessor,jdbcType=VARCHAR}, #{lessee,jdbcType=VARCHAR}, 
+      #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.PeopleBean" >
+    update t_people
+    set type = #{type,jdbcType=VARCHAR},
+      subtype = #{subtype,jdbcType=VARCHAR},
+      hostname = #{hostname,jdbcType=VARCHAR},
+      hostid = #{hostid,jdbcType=VARCHAR},
+      hostphone = #{hostphone,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      lessor = #{lessor,jdbcType=VARCHAR},
+      lessee = #{lessee,jdbcType=VARCHAR},
+      stay = #{stay,jdbcType=VARCHAR},
+      employee = #{employee,jdbcType=VARCHAR},
+      expend = #{expend,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

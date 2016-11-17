@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baseinfo.collect.dao.HouseBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.baseinfo.collect.beans.HouseBean" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="subtype" property="subtype" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="host" property="host" jdbcType="VARCHAR" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="ownerid" property="ownerid" jdbcType="VARCHAR" />
+    <result column="ownerphone" property="ownerphone" jdbcType="VARCHAR" />
+    <result column="subnumber" property="subnumber" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="floor" property="floor" jdbcType="INTEGER" />
+    <result column="doornumber" property="doornumber" jdbcType="VARCHAR" />
+    <result column="employee" property="employee" jdbcType="VARCHAR" />
+    <result column="expend" property="expend" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, subtype, number, host, owner, ownerid, ownerphone, subnumber, unit, floor, 
+    doornumber, employee, expend
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_house
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_house
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.baseinfo.collect.beans.HouseBean" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_house (id, type, subtype, 
+      number, host, owner, 
+      ownerid, ownerphone, subnumber, 
+      unit, floor, doornumber, 
+      employee, expend)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{host,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, 
+      #{ownerid,jdbcType=VARCHAR}, #{ownerphone,jdbcType=VARCHAR}, #{subnumber,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{doornumber,jdbcType=VARCHAR}, 
+      #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.HouseBean" >
+    update t_house
+    set type = #{type,jdbcType=VARCHAR},
+      subtype = #{subtype,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      host = #{host,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      ownerid = #{ownerid,jdbcType=VARCHAR},
+      ownerphone = #{ownerphone,jdbcType=VARCHAR},
+      subnumber = #{subnumber,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      floor = #{floor,jdbcType=INTEGER},
+      doornumber = #{doornumber,jdbcType=VARCHAR},
+      employee = #{employee,jdbcType=VARCHAR},
+      expend = #{expend,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
