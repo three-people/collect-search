@@ -5,11 +5,13 @@ import java.util.List;
 
 public interface ElasticSearchCRUDService<T> {
 
-    public boolean update(List<T> taskInfoList);
+    public boolean InsertOrUpdate(T info);
 
-    public boolean insertOrUpdateTaskInfo(List<T> taskInfoList);
+    public boolean InsertOrUpdate(List<T> infoList);
 
-    public boolean insertOrUpdateNewsInfo(T newsInfo);
+    public boolean insertOrUpdateTaskInfo(List<T> infoList);
+
+    public boolean insertOrUpdateNewsInfo(T info);
 
     public  boolean deleteById(String id);
 
