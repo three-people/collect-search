@@ -1,6 +1,7 @@
 package com.baseinfo.collect.controller;
 
 import com.baseinfo.collect.beans.UserBean;
+import com.baseinfo.collect.common.UrlPaths;
 import com.baseinfo.collect.common.UserResStatus;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.dao.UserDao;
@@ -22,6 +23,12 @@ public class LoginController {
     @Qualifier("userdaoImpl")
     private UserDao userService;
 
+    /**
+     * 登陆接口
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("/login")
     public BaseResponse login(HttpServletRequest request, HttpServletResponse response){
         String uname = request.getParameter("uname");
@@ -49,7 +56,12 @@ public class LoginController {
         }
     }
 
-
+    /**
+     * 管理员注册账号
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("adduser")
     public BaseResponse addUser(HttpServletRequest request, HttpServletResponse response){
 
@@ -116,6 +128,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * 删除相关的用户
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("/deluser")
     public BaseResponse delUser(HttpServletRequest request, HttpServletResponse response){
         BaseResponse res = new BaseResponse();
@@ -153,7 +171,12 @@ public class LoginController {
         }
     }
 
-
+    /**
+     * 管理员更新相关账户信息
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("admin/upuser")
     public BaseResponse adminUpdateUser(HttpServletRequest request, HttpServletResponse response){
         BaseResponse res = new BaseResponse();
@@ -232,7 +255,12 @@ public class LoginController {
         }
     }
 
-
+    /**
+     * 账户自己更新账户信息
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("upuser")
     public BaseResponse updateUser(HttpServletRequest request, HttpServletResponse response){
         BaseResponse res = new BaseResponse();
@@ -246,14 +274,13 @@ public class LoginController {
 
         if (StringUtils.isBlank(id)){
             try {
-                response.sendRedirect("/asdasd");
+                response.sendRedirect(UrlPaths.loginUrl);
             } catch (IOException e) {
                 res.setCode(UserResStatus.ERROR);
                 res.setMsg("系统错误，请稍后重试");
                 return res;
             }
         }
-
         long userId = Long.valueOf(id);
         if(userId<=0){
             res.setMsg("非法的用户ID");
