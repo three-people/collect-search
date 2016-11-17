@@ -7,10 +7,10 @@
 
     <elasticsearch:repositories base-package="com.xyz.acme"/>
 
-    <elasticsearch:transport-client id="client" cluster-nodes="127.0.0.1:9300" cluster-name="elasticsearch" />
+    <elasticsearch:transport-client id="client" cluster-nodes="192.168.183.153:9300" cluster-name="elasticsearch" />
 
     <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
         <constructor-arg name="client" ref="client"/>
     </bean>
-
+    <bean name="personService" class="com.baseinfo.collect.service.impl.PersonElasticSearchCRUDServiceImpl"></bean>
 </beans>

@@ -2,13 +2,16 @@ package com.baseinfo.collect.beans;
 
 import com.baseinfo.collect.common.IndexConstants;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Mapping;
 
-@Document(indexName = IndexConstants.PERSONINDEXNAME,type="fulltext")
-public class PersonEsIndex {
+/**
+ * Person的Mapping
+ */
+@Mapping
+public class PersonEsMapping {
     @Id
     @Field(index = FieldIndex.not_analyzed, store = true)
     private String personID;
@@ -22,35 +25,4 @@ public class PersonEsIndex {
     @Field(type = FieldType.String,index = FieldIndex.analyzed, analyzer = IndexConstants.AnalyserName ,store = true,searchAnalyzer = "ik_max_word")
     private String addrass;
 
-    public String getPersonID() {
-        return personID;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public String getUname() {
-        return Uname;
-    }
-
-    public String getAddrass() {
-        return addrass;
-    }
-
-    public void setPersonID(String personID) {
-        this.personID = personID;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public void setUname(String uname) {
-        Uname = uname;
-    }
-
-    public void setAddrass(String addrass) {
-        this.addrass = addrass;
-    }
 }
