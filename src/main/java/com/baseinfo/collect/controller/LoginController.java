@@ -6,4 +6,5 @@ package com.baseinfo.collect.controller;
  */
 public class LoginController {
 
+
 }
