@@ -15,8 +15,6 @@ public class PeopleBean {
 
     private Integer number;
 
-    private String lessor;
-
     private String lessee;
 
     private String stay;
@@ -79,14 +77,6 @@ public class PeopleBean {
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public String getLessor() {
-        return lessor;
-    }
-
-    public void setLessor(String lessor) {
-        this.lessor = lessor == null ? null : lessor.trim();
     }
 
     public String getLessee() {

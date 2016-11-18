@@ -9,14 +9,13 @@
     <result column="hostid" property="hostid" jdbcType="VARCHAR" />
     <result column="hostphone" property="hostphone" jdbcType="VARCHAR" />
     <result column="number" property="number" jdbcType="INTEGER" />
-    <result column="lessor" property="lessor" jdbcType="VARCHAR" />
     <result column="lessee" property="lessee" jdbcType="VARCHAR" />
     <result column="stay" property="stay" jdbcType="VARCHAR" />
     <result column="employee" property="employee" jdbcType="VARCHAR" />
     <result column="expend" property="expend" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type, subtype, hostname, hostid, hostphone, number, lessor, lessee, stay, employee, 
+    id, type, subtype, hostname, hostid, hostphone, number, lessee, stay, employee, 
     expend
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -40,7 +39,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR}, 
       #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR}, 
-      #{number,jdbcType=INTEGER}, #{lessor,jdbcType=VARCHAR}, #{lessee,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR}, 
       #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR}
       )
   </insert>
@@ -52,7 +51,6 @@
       hostid = #{hostid,jdbcType=VARCHAR},
       hostphone = #{hostphone,jdbcType=VARCHAR},
       number = #{number,jdbcType=INTEGER},
-      lessor = #{lessor,jdbcType=VARCHAR},
       lessee = #{lessee,jdbcType=VARCHAR},
       stay = #{stay,jdbcType=VARCHAR},
       employee = #{employee,jdbcType=VARCHAR},
