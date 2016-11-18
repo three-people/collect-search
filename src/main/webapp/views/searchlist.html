@@ -6,7 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="../css/search.css">
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -16,23 +15,13 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> 
 <body>
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#">泺源派出所</a>
-    </div>
-    <div>
-        <ul class="nav navbar-nav navbar-right"> 
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li> 
-        </ul> 
-    </div>
-    </div>
-</nav>
+#parse("./topbar.html")
 
 <div class="row">
 	<div class="col-md-3">
 	</div>
 	<div class="col-md-6">
+		<form action="/search">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
@@ -40,28 +29,21 @@
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li>
-						<a href="#">房屋</a>
-					</li>
-					<li>
-						<a href="#">人口</a>
-					</li>
-					<li>
-						<a href="#">单位</a>
-					</li>
-					<li>
-						<a href="#">场所</a>
-					</li>
-					<li>
-						<a href="#">监控</a>
-					</li>
+					<li><a href="javascript:void(0);" onclick="changeType('house');">房屋</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('people');">人口</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('employer');">单位</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('place');">场所</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('camera');">监控</a></li>
 				</ul>
+				<input type="hidden" name="type" id="type" value="house">
+				<input type="hidden" name="page" id="page" value="1">
 			</div><!-- /btn-group -->
-			<input type="text" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="%searchkey">
+			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="%searchkey">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="button">搜索</button>
+				<button class="btn btn-default" type="submit" onclick="submit();">搜索</button>
 			</span>
 		</div><!-- /input-group -->
+		</form>
 	</div><!-- /.col-md-6 -->
 	<div class="col-md-3">
 	</div>
@@ -72,42 +54,42 @@
 	</div>
 	<div class="col-md-8"><!-- 内容开始 -->
 		<ul class="nav nav-tabs">
-		  <li id="label-house"><a href="javascript:void(0);">房屋</a></li>
-		  <li id="label-people"><a href="javascript:void(0);">人口</a></li>
-		  <li id="label-employer"><a href="javascript:void(0);">单位</a></li>
-		  <li id="label-place"><a href="javascript:void(0);">场所</a></li>
-		  <li id="label-camera"><a href="javascript:void(0);">监控</a></li>
+		  <li id="label-house"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('house');">房屋</a></li>
+		  <li id="label-people"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('people');">人口</a></li>
+		  <li id="label-employer"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('employer');">单位</a></li>
+		  <li id="label-place"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('place');">场所</a></li>
+		  <li id="label-camera"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('camera');">监控</a></li>
 		</ul>
 		#if($houselist)
-		<!-- #foreach($house in $houselist) -->
+		#foreach($house in $houselist)
 		<div>
 			<h4>$!house.location酒仙桥北路甲10号院105号楼58赶集总部</h4>
 			<ul class="list-inline">
 				<li><strong>类型：</strong>$!house.type &nbsp;$!house.subtype</li>
-				<!-- #if ($house.unit) -->
+				#if ($house.unit)
 				<li><strong>单元：</strong>$!house.unit</li>
-				<!-- #end -->
+				#end
 				<li><strong>楼层：</strong>$!house.floor</li>
-				<!-- #if ($house.doornumber) -->
+				#if ($house.doornumber)
 				<li><strong>门牌号/房号：</strong>$!house.doornumber</li>
-				<!-- #end -->
+				#end
 				<li><strong>户主/房主：</strong>$!house.owner</li>
-				<!-- #if ($house.host) -->
+				#if ($house.host)
 				<li><strong>产权人：</strong>$!house.host</li>
-				<!-- #end -->
+				#end
 			</ul>
-			<!-- #if ($house.employee) -->
+			#if ($house.employee)
 			<div>
 				<strong>从业人员：</strong>$!house.host
 			</div>
-			<!-- #end -->
+			#end
 		<hr>
 		</div>
-		<!-- #end -->
+		#end
 		#end
 		
 		#if($peoplelist)
-		<!-- #foreach($people in $peoplelist) -->
+		#foreach($people in $peoplelist)
 		<div>
 			<ul class="list-inline">
 				<li><strong>类型：</strong>$!people.type &nbsp;$!people.subtype</li>
@@ -115,31 +97,140 @@
 				<li><strong>身份证号：</strong>$!people.hostid</li>
 				<li><strong>电话：</strong>$!people.hostphone</li>
 				<li><strong>人数：</strong>$!people.number</li>
-				<!-- #if ($people.lessee) -->
+				#if ($people.lessee)
 				<li><strong>租住人：</strong>$!people.lessee</li>
-				<!-- #end -->
-				<!-- #if ($people.stay) -->
+				#end
+				#if ($people.stay)
 				<li><strong>寄住人：</strong>$!people.stay</li>
-				<!-- #end -->
+				#end
 			</ul>
-			<!-- #if ($people.employee) -->
+			#if ($people.employee)
 			<div>
 				<strong>从业人员：</strong>$!people.host
 			</div>
-			<!-- #end -->
+			#end
 		<hr>
 		</div>
-		<!-- #end -->
 		#end
+		#end
+		
+		#if($employerlist)
+		#foreach($employer in $employerlist)
+		<div>
+			<h4>$!employer.name</h4>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!employer.type</li>
+				<li><strong>地址：</strong>$!employer.address</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>主要负责人：</strong>$!employer.chargeman</li>
+				<li><strong>身份证号：</strong>$!employer.chargemanid</li>
+				<li><strong>联系电话：</strong>$!employer.chargemanphone</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>内保负责人：</strong>$!employer.safeman</li>
+				<li><strong>身份证号：</strong>$!employer.safemanid</li>
+				<li><strong>联系电话：</strong>$!employer.safemanphone</li>
+			</ul>
+		<hr>
+		</div>
+		#end
+		#end
+		
+		#if($placelist)
+		#foreach($place in $placelist)
+		<div>
+			<h4>$!place.name</h4>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!place.type</li>
+				<li><strong>面积：</strong>$!place.area</li>
+				<li><strong>地址：</strong>$!place.address</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>出租人：</strong>$!place.lessor</li>
+				<li><strong>身份证号：</strong>$!place.lessorid</li>
+				<li><strong>联系电话：</strong>$!place.lessorphone</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>租赁人：</strong>$!place.lessee</li>
+				<li><strong>身份证号：</strong>$!place.lesseeid</li>
+				<li><strong>联系电话：</strong>$!place.lesseephone</li>
+			</ul>
+		<hr>
+		</div>
+		#end
+		#end
+		
+		#if($cameralist)
+		#foreach($camera in $cameralist)
+		<div>
+			<h4>$!camera.localname</h4>
+			<ul class="list-inline">
+				<li><strong>所属派出所：</strong>$!camera.policestation</li>
+				<li><strong>分类：</strong>$!camera.type</li>
+				<li><strong>类型：</strong>$!camera.devicetype</li>
+				<li><strong>朝向：</strong>$!camera.direction</li>
+				<li><strong>数量：</strong>$!camera.count</li>
+			</ul>
+		<hr>
+		</div>
+		#end
+		#end
+		
+		<!-- 分页 -->
+		<ul id="pager" class="pagination pull-right">
+			#if($pageindex > 5)
+		    	#set($start=$pageindex)
+		    #else
+		    	#set($start=1)
+		    #end
+		    
+		    #if($page - $start >10)
+		    	#set($end=${start+10})
+		    #else
+		    	#set($end=$page)
+		    	#set($start=${page-10})
+		    #end
+		    
+		    #if($pageindex!=1)
+		    <li><a href="javascript:void(0);" onclick="pageTo(${pageindex-1})">&laquo;</a></li>
+		    #end
+		    #foreach($foo in [$start..$end])
+		    	<li page=$foo #if($pageindex==$foo)class="active"#end><a href="javascript:void(0);" onlick="pageTo($foo)">$foo</a></li>
+			#end
+			#if($pageindex!=$end)
+		    <li><a href="javascript:void(0);" onclick="pageTo(${pageindex+1})">&raquo;</a></li>
+		    #end
+		</ul>
 		
 	</div><!-- 内容结束 -->
 	<div class="col-md-2">
 	</div>
 </div>
 <script type="text/javascript">
-$(function(){ 
-　　$("#label-people").addClass("active");
-}); 
+$(function(){
+　　$("#label-$type").addClass("active");
+	$("#type").value('$type');
+});
+
+function submit() {
+	$("#page").value(1);
+}
+
+function changeType(type) {
+	$("#type").value(type);
+}
+
+function changeTypeAndSubmit(type) {
+	$("#type").value(type);
+	$("#page").value(1);
+	$("form").submit();
+}
+
+function toPage(page) {
+	$("#page").value(page);
+	$("form").submit();
+}
 </script>
 </body>
 </html>
