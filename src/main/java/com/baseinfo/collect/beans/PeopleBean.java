@@ -1,26 +1,42 @@
 package com.baseinfo.collect.beans;
 
+import com.baseinfo.collect.common.IndexConstants;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldIndex;
+
+@Document(indexName = IndexConstants.PERSONINDEXNAME,type="fulltext")
 public class PeopleBean {
+    @Id
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private Long id;
     //居民楼写字楼
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String type;
     //自用商用常住流动
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String subtype;
     //户主、出租人
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String hostname;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String hostid;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String hostphone;
     //人数
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private Integer number;
     //租住人
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String lessee;
     //寄住人
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String stay;
     //从业人员
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String employee;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String expend;
 
     public Long getId() {

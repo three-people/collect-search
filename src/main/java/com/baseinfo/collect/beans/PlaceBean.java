@@ -1,28 +1,44 @@
 package com.baseinfo.collect.beans;
 
+import com.baseinfo.collect.common.IndexConstants;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldIndex;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+@Document(indexName = IndexConstants.PLACEINDEXNAME,type="fulltext")
 public class PlaceBean {
+    @Id
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private Long id;
     //餐饮、教学等
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String type;
     //名称
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String name;
-
+    @Field(type = FieldType.String,index = FieldIndex.analyzed, analyzer = IndexConstants.AnalyserName ,store = true,searchAnalyzer = IndexConstants.AnalyserName)
     private String address;
     //面积
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String area;
     //出租人
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String lessor;
     //出租人身份证
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String lessorid;
-    
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String lessorphone;
     //租住人
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String lessee;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String lesseeid;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String lesseephone;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String extend;
 
     public Long getId() {

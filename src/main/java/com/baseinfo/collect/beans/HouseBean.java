@@ -1,30 +1,48 @@
 package com.baseinfo.collect.beans;
 
+import com.baseinfo.collect.common.IndexConstants;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldIndex;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+@Document(indexName = IndexConstants.HOUSEINDEXNAME,type="fulltext")
 public class HouseBean {
+    @Id
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private Long id;
     //居民楼写字楼
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String type;
     //平房楼房
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String subtype;
     //地址
+    @Field(type = FieldType.String,index = FieldIndex.analyzed, analyzer = IndexConstants.AnalyserName ,store = true,searchAnalyzer = IndexConstants.AnalyserName)
     private String location;
     //产权人
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String host;
     //房主户主
     private String owner;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String ownerid;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String ownerphone;
     //单元
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String unit;
     //楼层
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private Integer floor;
     //门牌号
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String doornumber;
     //从业人员
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String employee;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String expend;
 
     public Long getId() {

@@ -14,6 +14,8 @@ public class IndexConstants {
     public static final String PLACEINDEXNAME = "place_index";
     //雇佣相关的索引
     public static final String EMPLOYERINDEXNAME = "employer_index";
+    //监控相关的索引
+    public static final String CAMERAINDEXNAME = "camera_index";
 
     //public static final String HOUSEINDEXNAME = "house_index";
 

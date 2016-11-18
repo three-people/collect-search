@@ -1,26 +1,41 @@
 package com.baseinfo.collect.beans;
 
+import com.baseinfo.collect.common.IndexConstants;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldIndex;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+@Document(indexName = IndexConstants.EMPLOYERINDEXNAME,type="fulltext")
 public class EmployerBean {
+    @Id
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private Long id;
+    @Field(index = FieldIndex.not_analyzed, store = true)
     //类型，重点单位，一级单位，二级单位，一般单位
     private String type;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String name;
-
+    @Field(type = FieldType.String,index = FieldIndex.analyzed, analyzer = IndexConstants.AnalyserName ,store = true,searchAnalyzer = IndexConstants.AnalyserName)
     private String address;
     //负责人姓名
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String chargeman;
     //身份证号
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String chargemanid;
     //电话
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String chargemanphone;
     //内保负责人
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String safeman;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String safemanid;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String safemanphone;
-
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private String extend;
 
     public Long getId() {
