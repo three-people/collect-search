@@ -2,29 +2,27 @@ package com.baseinfo.collect.beans;
 
 public class HouseBean {
     private Long id;
-
+    //居民楼写字楼
     private String type;
-
+    //平房楼房
     private String subtype;
-
-    private Integer number;
-
+    //地址
+    private String location;
+    //产权人
     private String host;
-
+    //房主户主
     private String owner;
 
     private String ownerid;
 
     private String ownerphone;
-
-    private String subnumber;
-
+    //单元
     private String unit;
-
+    //楼层
     private Integer floor;
-
+    //门牌号
     private String doornumber;
-
+    //从业人员
     private String employee;
 
     private String expend;
@@ -53,12 +51,12 @@ public class HouseBean {
         this.subtype = subtype == null ? null : subtype.trim();
     }
 
-    public Integer getNumber() {
-        return number;
+    public String getLocation() {
+        return location;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getHost() {
@@ -91,14 +89,6 @@ public class HouseBean {
 
     public void setOwnerphone(String ownerphone) {
         this.ownerphone = ownerphone == null ? null : ownerphone.trim();
-    }
-
-    public String getSubnumber() {
-        return subnumber;
-    }
-
-    public void setSubnumber(String subnumber) {
-        this.subnumber = subnumber == null ? null : subnumber.trim();
     }
 
     public String getUnit() {

@@ -2,23 +2,23 @@ package com.baseinfo.collect.beans;
 
 public class PeopleBean {
     private Long id;
-
+    //居民楼写字楼
     private String type;
-
+    //自用商用常住流动
     private String subtype;
-
+    //户主、出租人
     private String hostname;
 
     private String hostid;
 
     private String hostphone;
-
+    //人数
     private Integer number;
-
+    //租住人
     private String lessee;
-
+    //寄住人
     private String stay;
-
+    //从业人员
     private String employee;
 
     private String expend;

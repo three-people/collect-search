@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="subtype" property="subtype" jdbcType="VARCHAR" />
-    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="location" property="number" jdbcType="VARCHAR" />
     <result column="host" property="host" jdbcType="VARCHAR" />
     <result column="owner" property="owner" jdbcType="VARCHAR" />
     <result column="ownerid" property="ownerid" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
     <result column="expend" property="expend" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type, subtype, number, host, owner, ownerid, ownerphone, subnumber, unit, floor, 
+    id, type, subtype, location, host, owner, ownerid, ownerphone, unit, floor, 
     doornumber, employee, expend
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -36,13 +36,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_house (id, type, subtype, 
-      number, host, owner, 
-      ownerid, ownerphone, subnumber, 
+      location, host, owner, 
+      ownerid, ownerphone, 
       unit, floor, doornumber, 
       employee, expend)
     values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR}, 
-      #{number,jdbcType=INTEGER}, #{host,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, 
-      #{ownerid,jdbcType=VARCHAR}, #{ownerphone,jdbcType=VARCHAR}, #{subnumber,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, 
+      #{ownerid,jdbcType=VARCHAR}, #{ownerphone,jdbcType=VARCHAR},
       #{unit,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{doornumber,jdbcType=VARCHAR}, 
       #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR})
   </insert>
@@ -50,12 +50,11 @@
     update t_house
     set type = #{type,jdbcType=VARCHAR},
       subtype = #{subtype,jdbcType=VARCHAR},
-      number = #{number,jdbcType=INTEGER},
+      location = #{location,jdbcType=VARCHAR},
       host = #{host,jdbcType=VARCHAR},
       owner = #{owner,jdbcType=VARCHAR},
       ownerid = #{ownerid,jdbcType=VARCHAR},
       ownerphone = #{ownerphone,jdbcType=VARCHAR},
-      subnumber = #{subnumber,jdbcType=VARCHAR},
       unit = #{unit,jdbcType=VARCHAR},
       floor = #{floor,jdbcType=INTEGER},
       doornumber = #{doornumber,jdbcType=VARCHAR},

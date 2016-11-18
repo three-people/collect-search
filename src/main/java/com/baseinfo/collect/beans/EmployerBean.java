@@ -2,19 +2,19 @@ package com.baseinfo.collect.beans;
 
 public class EmployerBean {
     private Long id;
-
+    //类型，重点单位，一级单位，二级单位，一般单位
     private String type;
 
     private String name;
 
     private String address;
-
+    //负责人姓名
     private String chargeman;
-
+    //身份证号
     private String chargemanid;
-
+    //电话
     private String chargemanphone;
-
+    //内保负责人
     private String safeman;
 
     private String safemanid;

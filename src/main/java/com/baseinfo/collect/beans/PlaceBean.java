@@ -2,21 +2,21 @@ package com.baseinfo.collect.beans;
 
 public class PlaceBean {
     private Long id;
-
+    //餐饮、教学等
     private String type;
-
+    //名称
     private String name;
 
     private String address;
-
+    //面积
     private String area;
-
+    //出租人
     private String lessor;
-
+    //出租人身份证
     private String lessorid;
-
+    
     private String lessorphone;
-
+    //租住人
     private String lessee;
 
     private String lesseeid;
