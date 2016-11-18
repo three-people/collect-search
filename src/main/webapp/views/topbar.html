@@ -1,0 +1,16 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">泺源派出所</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav navbar-right">
+        	#if($uname)
+        	<li><a href="/login"><span>$uname</span></a></li>
+        	#else
+            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            #end
+        </ul> 
+    </div>
+    </div>
+</nav>
