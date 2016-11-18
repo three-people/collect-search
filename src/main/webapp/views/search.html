@@ -28,23 +28,14 @@
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li>
-						<a href="#">房屋</a>
-					</li>
-					<li>
-						<a href="#">人口</a>
-					</li>
-					<li>
-						<a href="#">单位</a>
-					</li>
-					<li>
-						<a href="#">场所</a>
-					</li>
-					<li>
-						<a href="#">监控</a>
-					</li>
+					<li><a href="javascript:void(0);" onclick="changeType('house');">房屋</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('people');">人口</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('employer');">单位</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('place');">场所</a></li>
+					<li><a href="javascript:void(0);" onclick="changeType('camera');">监控</a></li>
 				</ul>
 			</div><!-- /btn-group -->
+			<input type="hidden" name="type" id="type" value="house">
 			<input type="text" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”">
 			<span class="input-group-btn">
 				<button class="btn btn-default" type="button">搜索</button>
@@ -55,6 +46,12 @@
 	</div>
 </div><!-- /.row -->
 </form>
+
+<script type="text/javascript">
+function changeType(type) {
+	$("#type").value(type);
+}
+</script>
 
 </body>
 </html>
