@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="../css/search.css">
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> 
+<body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">泺源派出所</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav navbar-right"> 
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li> 
+        </ul> 
+    </div>
+    </div>
+</nav>
+
+<div class="row">
+	<div class="col-md-3">
+	</div>
+	<div class="col-md-6">
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default 
+				dropdown-toggle" data-toggle="dropdown">搜索类型
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="#">房屋</a>
+					</li>
+					<li>
+						<a href="#">人口</a>
+					</li>
+					<li>
+						<a href="#">单位</a>
+					</li>
+					<li>
+						<a href="#">场所</a>
+					</li>
+					<li>
+						<a href="#">监控</a>
+					</li>
+				</ul>
+			</div><!-- /btn-group -->
+			<input type="text" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="%searchkey">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button">搜索</button>
+			</span>
+		</div><!-- /input-group -->
+	</div><!-- /.col-md-6 -->
+	<div class="col-md-3">
+	</div>
+</div><!-- /.row -->
+<br/>
+<div class="row">
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-8"><!-- 内容开始 -->
+		<ul class="nav nav-tabs">
+		  <li id="label-house"><a href="javascript:void(0);">房屋</a></li>
+		  <li id="label-people"><a href="javascript:void(0);">人口</a></li>
+		  <li id="label-employer"><a href="javascript:void(0);">单位</a></li>
+		  <li id="label-place"><a href="javascript:void(0);">场所</a></li>
+		  <li id="label-camera"><a href="javascript:void(0);">监控</a></li>
+		</ul>
+		#if($houselist)
+		<!-- #foreach($house in $houselist) -->
+		<div>
+			<h4>$!house.location酒仙桥北路甲10号院105号楼58赶集总部</h4>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!house.type &nbsp;$!house.subtype</li>
+				<!-- #if ($house.unit) -->
+				<li><strong>单元：</strong>$!house.unit</li>
+				<!-- #end -->
+				<li><strong>楼层：</strong>$!house.floor</li>
+				<!-- #if ($house.doornumber) -->
+				<li><strong>门牌号/房号：</strong>$!house.doornumber</li>
+				<!-- #end -->
+				<li><strong>户主/房主：</strong>$!house.owner</li>
+				<!-- #if ($house.host) -->
+				<li><strong>产权人：</strong>$!house.host</li>
+				<!-- #end -->
+			</ul>
+			<!-- #if ($house.employee) -->
+			<div>
+				<strong>从业人员：</strong>$!house.host
+			</div>
+			<!-- #end -->
+		<hr>
+		</div>
+		<!-- #end -->
+		#end
+		
+		#if($peoplelist)
+		<!-- #foreach($people in $peoplelist) -->
+		<div>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!people.type &nbsp;$!people.subtype</li>
+				<li><strong>户主/出租人：</strong>$!people.hostname</li>
+				<li><strong>身份证号：</strong>$!people.hostid</li>
+				<li><strong>电话：</strong>$!people.hostphone</li>
+				<li><strong>人数：</strong>$!people.number</li>
+				<!-- #if ($people.lessee) -->
+				<li><strong>租住人：</strong>$!people.lessee</li>
+				<!-- #end -->
+				<!-- #if ($people.stay) -->
+				<li><strong>寄住人：</strong>$!people.stay</li>
+				<!-- #end -->
+			</ul>
+			<!-- #if ($people.employee) -->
+			<div>
+				<strong>从业人员：</strong>$!people.host
+			</div>
+			<!-- #end -->
+		<hr>
+		</div>
+		<!-- #end -->
+		#end
+		
+	</div><!-- 内容结束 -->
+	<div class="col-md-2">
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){ 
+　　$("#label-people").addClass("active");
+}); 
+</script>
+</body>
+</html>
