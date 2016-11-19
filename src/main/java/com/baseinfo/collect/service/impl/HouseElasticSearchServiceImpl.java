@@ -1,6 +1,5 @@
 package com.baseinfo.collect.service.impl;
 
-import com.baseinfo.collect.beans.EmployerBean;
 import com.baseinfo.collect.beans.HouseBean;
 import com.baseinfo.collect.service.ElasticSearchCRUDService;
 import org.slf4j.Logger;
@@ -9,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
-
+import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by zhiming on 2016-11-19.
- */
+@Service("houseService")
 public class HouseElasticSearchServiceImpl implements ElasticSearchCRUDService<HouseBean> {
 
     private static final Logger logger = LoggerFactory.getLogger(HouseElasticSearchServiceImpl.class);

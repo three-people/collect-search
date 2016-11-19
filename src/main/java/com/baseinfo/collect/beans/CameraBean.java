@@ -1,6 +1,7 @@
 package com.baseinfo.collect.beans;
 
 import com.baseinfo.collect.common.IndexConstants;
+import org.apache.tools.ant.types.resources.comparators.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -35,6 +36,10 @@ public class CameraBean {
     //扩展字段
     @Field(index = FieldIndex.not_analyzed, store = true)
     private String expend;
+
+/*    private Date addtime;
+
+    private Date updatetime;*/
 
     public Long getId() {
         return id;
