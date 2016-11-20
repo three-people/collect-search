@@ -21,6 +21,8 @@
         <property name="order" value="1"/>
         <property name="suffix" value=".html"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="allowSessionOverride" value="true"/>
     </bean>
     <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="resourceLoaderPath" value="/WEB-INF/views"/>
