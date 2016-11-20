@@ -1,0 +1,66 @@
+<html>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> 
+<body>
+#parse("./topbar.html")
+<div class="row">
+	<div class="col-md-12">
+		<div style="margin: 60px 0px">
+			<h1 class="text-center">泺源派出所警务搜索</h1>
+		<div/>
+	</div>
+</div>
+<form>
+<div class="row">
+	<div class="col-md-3">
+	</div>
+	<div class="col-md-6">
+	<form action="/upload"  enctype="multipart/form-data">
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default 
+				dropdown-toggle" data-toggle="dropdown">上传类型
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="javascript:void(0);" data-type="house" onclick="changeType(this);">房屋</a></li>
+					<li><a href="javascript:void(0);" data-type="people" onclick="changeType(this);">人口</a></li>
+					<li><a href="javascript:void(0);" data-type="employer" onclick="changeType(this);">单位</a></li>
+					<li><a href="javascript:void(0);" data-type="place" onclick="changeType(this);">场所</a></li>
+					<li><a href="javascript:void(0);" data-type="camera" onclick="changeType(this);">监控</a></li>
+				</ul>
+			</div><!-- /btn-group -->
+			<input type="hidden" name="type" id="type" value="house">
+			<input class="form-control" type="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit">上传</button>
+			</span>
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" onclick="download();">下载模板</button>
+			</span>
+		</div><!-- /input-group -->
+	</form>
+	</div><!-- /.col-lg-6 -->
+	<div class="col-md-3">
+	</div>
+</div><!-- /.row -->
+</form>
+
+<script type="text/javascript">
+function changeType(type) {
+	$("#type").value(type);
+}
+
+function download(){
+	window.open("/downTemplate?type="+$("#type").val());
+}
+</script>
+
+</body>
+</html>

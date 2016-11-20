@@ -25,15 +25,15 @@
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
-				dropdown-toggle" data-toggle="dropdown">搜索类型
+				dropdown-toggle" data-toggle="dropdown"><span id="type-lebal">搜索类型</span>
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="javascript:void(0);" onclick="changeType('house');">房屋</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('people');">人口</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('employer');">单位</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('place');">场所</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('camera');">监控</a></li>
+					<li><a href="javascript:void(0);" data-type="house" onclick="changeType(this);">房屋</a></li>
+					<li><a href="javascript:void(0);" data-type="people" onclick="changeType(this);">人口</a></li>
+					<li><a href="javascript:void(0);" data-type="employer" onclick="changeType(this);">单位</a></li>
+					<li><a href="javascript:void(0);" data-type="place" onclick="changeType(this);">场所</a></li>
+					<li><a href="javascript:void(0);" data-type="camera" onclick="changeType(this);">监控</a></li>
 				</ul>
 			</div><!-- /btn-group -->
 			<input type="hidden" name="type" id="type" value="house">
@@ -50,8 +50,10 @@
 </form>
 
 <script type="text/javascript">
-function changeType(type) {
-	$("#type").value(type);
+function changeType(obj) {
+	var type = $(obj).attr('data-type')
+	$("#type").val(type);
+	$("#type-lebal").html($(obj).html())
 }
 </script>
 
