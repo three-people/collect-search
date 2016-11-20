@@ -21,10 +21,15 @@ public class PersonClient {
     @Qualifier("peopleService")
     private PersonElasticSearchCRUDServiceImpl esService;
 
-    public int insertAndIndex(PeopleBean people){
-        userMapper.insert(people);
-        esService.insertIndex(people);
-        return 0;
+    public boolean insertAndIndex(PeopleBean people){
+        long id = userMapper.insert(people);
+        if (id>0) {
+            people.setId(id);
+            boolean flag = esService.insertIndex(people);
+            return flag;
+        }else {
+            return false;
+        }
     }
 
 }
