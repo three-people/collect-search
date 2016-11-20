@@ -21,24 +21,25 @@
 	<div class="col-md-3">
 	</div>
 	<div class="col-md-6">
-		<form action="/search">
+		<form id="form-search" action="/search">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
-				dropdown-toggle" data-toggle="dropdown">搜索类型
+				dropdown-toggle" data-toggle="dropdown">
+					<span id="type-lebal">搜索类型</span>
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="javascript:void(0);" data-type="house" onclick="changeType(this);">房屋</a></li>
-					<li><a href="javascript:void(0);" data-type="people" onclick="changeType(this);">人口</a></li>
-					<li><a href="javascript:void(0);" data-type="employer" onclick="changeType(this);">单位</a></li>
-					<li><a href="javascript:void(0);" data-type="place" onclick="changeType(this);">场所</a></li>
-					<li><a href="javascript:void(0);" data-type="camera" onclick="changeType(this);">监控</a></li>
+					<li><a href="javascript:void(0);" id="li-house" data-type="house" onclick="changeType(this);">房屋</a></li>
+					<li><a href="javascript:void(0);" id="li-people" data-type="people" onclick="changeType(this);">人口</a></li>
+					<li><a href="javascript:void(0);" id="li-employer" data-type="employer" onclick="changeType(this);">单位</a></li>
+					<li><a href="javascript:void(0);" id="li-place" data-type="place" onclick="changeType(this);">场所</a></li>
+					<li><a href="javascript:void(0);" id="li-camera" data-type="camera" onclick="changeType(this);">监控</a></li>
 				</ul>
 				<input type="hidden" name="type" id="type" value="house">
 				<input type="hidden" name="page" id="page" value="1">
 			</div><!-- /btn-group -->
-			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="$searchkey">
+			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="$!searchkey">
 			<span class="input-group-btn">
 				<button class="btn btn-default" type="submit" onclick="submit();">搜索</button>
 			</span>
@@ -63,7 +64,7 @@
 		#if($houselist)
 		#foreach($house in $houselist)
 		<div>
-			<h4>$!house.location酒仙桥北路甲10号院105号楼58赶集总部</h4>
+			<h4>$!house.location</h4>
 			<ul class="list-inline">
 				<li><strong>类型：</strong>$!house.type &nbsp;$!house.subtype</li>
 				#if ($house.unit)
@@ -86,7 +87,7 @@
 			<div>
 				<a href="javascript:void(0);" onclick="update('$house.id','house')">修改</a>
 				&nbsp;
-				<a href="javascript:void(0);" onclick="delete('$house.id','house')">删除</a>
+				<a href="javascript:void(0);" onclick="deleteData('$house.id','house')">删除</a>
 			</div>
 		<hr>
 		</div>
@@ -117,7 +118,7 @@
 			<div style="padding:2px 0px;">
 				<a href="javascript:void(0);" onclick="update('$people.id','people')">修改</a>
 				&nbsp;
-				<a href="javascript:void(0);" onclick="delete('$people.id','people')">删除</a>
+				<a href="javascript:void(0);" onclick="deleteData('$people.id','people')">删除</a>
 			</div>
 		</div>
 		#end
@@ -144,7 +145,7 @@
 			<div>
 				<a href="javascript:void(0);" onclick="update('$employer.id','employer')">修改</a>
 				&nbsp;
-				<a href="javascript:void(0);" onclick="delete('$employer.id','employer')">删除</a>
+				<a href="javascript:void(0);" onclick="deleteData('$employer.id','employer')">删除</a>
 			</div>
 		<hr>
 		</div>
@@ -173,7 +174,7 @@
 			<div>
 				<a href="javascript:void(0);" onclick="update('$place.id','place')">修改</a>
 				&nbsp;
-				<a href="javascript:void(0);" onclick="delete('$place.id','place')">删除</a>
+				<a href="javascript:void(0);" onclick="deleteData('$place.id','place')">删除</a>
 			</div>
 		<hr>
 		</div>
@@ -194,7 +195,7 @@
 			<div>
 				<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
 				&nbsp;
-				<a href="javascript:void(0);" onclick="delete('$camera.id','camera')">删除</a>
+				<a href="javascript:void(0);" onclick="deleteData('$camera.id','camera')">删除</a>
 			</div>
 		<hr>
 		</div>
@@ -364,7 +365,7 @@
 var currentType='$type';
 $(function(){
 　　$("#label-$type").addClass("active");
-	$("#type").val('$type');
+	changeType($(".dropdown-menu #li-"+"$type"))
 });
 
 function submit() {
@@ -380,16 +381,25 @@ function changeType(obj) {
 function changeTypeAndSubmit(type) {
 	$("#type").val(type);
 	$("#page").val(1);
-	$("form").submit();
+	$("#form-search").submit();
 }
 
 function toPage(page) {
 	$("#page").val(page);
-	$("form").submit();
+	$("#form-search").submit();
 }
 
 function update(id, type){
 	$('#model-'+type).modal('show')
+}
+
+function deleteData(id, type){
+	jQuery.ajax({
+		url: "/delete/"+type+"/"+id,
+		success: function(data){
+			alert(data.msg);
+		}
+	});
 }
 </script>
 </body>

@@ -27,20 +27,17 @@ import java.util.Map;
 public class PageController {
 
     @RequestMapping(value = "/index")
-    public ModelAndView searchIndex(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/search");
-        return model;
+    public String searchIndex(HttpServletRequest request, HttpServletResponse response) {
+        return "/search";
     }
 
     @RequestMapping(value = "/loginpage")
-    public ModelAndView loginPage(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/login");
-        return model;
+    public String loginPage(HttpServletRequest request, HttpServletResponse response) {
+        return "/login";
     }
 
     @RequestMapping(value = "/uploadpage")
-    public ModelAndView uploadPage(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/upload");
-        return model;
+    public String uploadPage(HttpServletRequest request, HttpServletResponse response) {
+        return "/upload";
     }
 }
