@@ -37,4 +37,10 @@ public class PageController {
         ModelAndView model = new ModelAndView("/login");
         return model;
     }
+
+    @RequestMapping(value = "/uploadpage")
+    public ModelAndView uploadPage(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView model = new ModelAndView("/upload");
+        return model;
+    }
 }

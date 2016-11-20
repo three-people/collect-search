@@ -38,7 +38,7 @@ public class SearchController {
 
     @RequestMapping(value = "/search")
     public ModelAndView search(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView model = new ModelAndView("/views/searchlist");
+        ModelAndView model = new ModelAndView("/searchlist");
         try {
             String searchkey = request.getParameter("searchkey");
         	String type = request.getParameter("type").trim();
@@ -49,8 +49,10 @@ public class SearchController {
             } catch(NumberFormatException e){}
             if(pageIndex < 1)
                 pageIndex = 1;
+            pageIndex--;
         	String indexType = IndexConstants.getIndexByType(type);
-            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex, 20, indexType);
+            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*20, 20, indexType);
+            model.addObject("searchkey", searchkey);
             model.addObject("type", type);
             model.addObject(type+"list", resultList);
         } catch (Exception e) {
@@ -61,7 +63,7 @@ public class SearchController {
 
     @ResponseBody
     @RequestMapping(value = "/delete/{type}/{id}")
-    public BaseResponse search(@PathVariable("type") String type, @PathVariable("id") long id, HttpServletRequest request, HttpServletResponse response) {
+    public BaseResponse delete(@PathVariable("type") String type, @PathVariable("id") long id, HttpServletRequest request, HttpServletResponse response) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         BaseResponse res = new BaseResponse();
         int result = 0;
