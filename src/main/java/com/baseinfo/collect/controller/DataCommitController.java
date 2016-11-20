@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,23 +44,24 @@ public class DataCommitController {
 
 
     @RequestMapping(value = "/main")
-    public String excelPage(HttpServletRequest request,
-                            HttpServletResponse response) {
+    public ModelAndView excelPage(HttpServletRequest request,
+                                  HttpServletResponse response) {
 
         String error = request.getParameter("error");
         if (error != null) {
         }
-
-        return "uploaddata/upload";
+        ModelAndView model = new ModelAndView("/uploaddata/upload");
+        return model;
     }
 
-    @RequestMapping(value = "/excelupload")
+    @ResponseBody
+    @RequestMapping(value = "/excelUpload")
     public BaseResponse excelCommit(
 //                                    @RequestParam("beanType") int beanType,
-//            @RequestParam("multifile") CommonsMultipartFile file,
+//            @RequestParam("multifile") MultipartFile file,
             HttpServletRequest request,
             HttpServletResponse response) {
-
+        String beanType = request.getParameter("beanType");
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("multifile");
         String sourceName = file.getOriginalFilename(); // 原始文件名
@@ -76,10 +79,12 @@ public class DataCommitController {
 
             //读取excel文件方法
             Workbook workbook = createWorkbook(fileInput);
-            dealExcel(workbook, BeanTypeEnum.CAMERA, res);
+            dealExcel(workbook, BeanTypeEnum.PEOPLE, res);
         } catch (Exception e) {
             res.setCode(0);
             res.setMsg("系统错误，请稍后重试");
+            e.printStackTrace();
+            logger.error("上传", e);
         }
         return res;
     }
@@ -88,14 +93,14 @@ public class DataCommitController {
     public void excelDown(HttpServletRequest request,
                           HttpServletResponse response) {
         try {
+
             String beanType = request.getParameter("beanType");
-            int type = Integer.parseInt(beanType);
             String realname = "file.xls";
             // 设置响应头，控制浏览器下载该文件
             response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(realname, "UTF-8"));
             // 读取要下载的文件，保存到文件输入流
 
-            HSSFWorkbook workbook = (HSSFWorkbook) excelFileUtil.getExcel(BeanTypeEnum.EMPLOYER);
+            HSSFWorkbook workbook = (HSSFWorkbook) excelFileUtil.getExcel(BeanTypeEnum.PEOPLE);
             OutputStream out = response.getOutputStream();
 
             // 创建缓冲区
@@ -172,12 +177,12 @@ public class DataCommitController {
             System.out.println("");
             //校验数据
             for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-                int colCheck = excelFileUtil.checkRowData(sheet.getRow(rowIndex), BeanTypeEnum.CAMERA);
+                int colCheck = excelFileUtil.checkRowData(sheet.getRow(rowIndex), beanTypeEnum);
                 if (colCheck > -1) {
                     response.setCode(-2);
-                    response.setMsg(String.format("文件第%d行,第%d列,%s 数据类型错误", rowIndex, colCheck, BeanTypeEnum.CAMERA.getValue()[colCheck - 1]));
+                    response.setMsg(String.format("文件第%d行,第%d列,%s 数据类型错误", rowIndex, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
                     //TODO:
-                    System.out.println(String.format("文件第%d行,第%d列,%s 错误", rowIndex, colCheck, BeanTypeEnum.CAMERA.getValue()[colCheck - 1]));
+                    System.out.println(String.format("文件第%d行,第%d列,%s 错误", rowIndex, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
                     return;
                 }
                 Row currentRow = sheet.getRow(rowIndex);// 当前行
@@ -192,7 +197,11 @@ public class DataCommitController {
             }//TODO test end
             // 入库并添加索引
             for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-                excelFileUtil.insertRowData(sheet.getRow(rowIndex), BeanTypeEnum.CAMERA);
+                int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum);
+                if (numres == 0) {
+                    response.setCode(1);
+                    response.setMsg("添加数据成功");
+                }
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {
