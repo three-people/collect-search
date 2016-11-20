@@ -1,25 +1,21 @@
 package com.baseinfo.collect.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.baseinfo.collect.common.IndexConstants;
+import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.dao.*;
-import org.apache.commons.lang.StringUtils;
+import com.baseinfo.collect.service.ESSearchService;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.baseinfo.collect.common.IndexConstants;
-import com.baseinfo.collect.contract.BaseResponse;
-import com.baseinfo.collect.service.ESSearchService;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +32,7 @@ public class SearchController {
     @Autowired
     @Qualifier("sqlSessionFactory")
     private SqlSession sqlSession;
-	
+
     @RequestMapping(value = "/search")
     public ModelAndView search(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView model = new ModelAndView("/views/searchlist");

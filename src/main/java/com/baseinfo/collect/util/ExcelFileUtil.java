@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by Walker on 2016/11/18.
  */
@@ -53,16 +55,16 @@ public class ExcelFileUtil {
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
-                    Integer.parseInt(getCellValue(row.getCell(6), true));
+                    Integer.parseInt(getCellValue(row.getCell(5), false));
                 } catch (Exception e) {
                     return 6;//第七列数量
                 }
                 break;
             case HOUSE:
                 try {
-                    Integer.parseInt(getCellValue(row.getCell(6), true));
+                    Integer.parseInt(getCellValue(row.getCell(6), false));
                 } catch (Exception e) {
-                    return 10;//第七列数量
+                    return 7;//第七列数量
                 }
                 break;
             case EMPLOYER:
@@ -99,11 +101,15 @@ public class ExcelFileUtil {
                     peopleBean.setStay(getCellValue(row.getCell(n++), true));
                     peopleBean.setEmployee(getCellValue(row.getCell(n++), true));
                     peopleBean.setExpend(getCellValue(row.getCell(n++), true));
+
+                    peopleBean.setAddtime(new Date());
+                    peopleBean.setUpdatetime(new Date());
                     //插入数据库
 
                     //建立ES索引
-                    personclient.insertAndIndex(peopleBean);
+                    n = personclient.insertAndIndex(peopleBean);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     return n + 1;//第七列数量
                 }
                 break;
@@ -196,7 +202,7 @@ public class ExcelFileUtil {
             default:
                 break;
         }
-        return -1;//数据基本正常
+        return n;//数据基本正常
     }
 
     public Workbook getExcel(BeanTypeEnum beanTypeEnum) {
@@ -228,7 +234,7 @@ public class ExcelFileUtil {
         if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
             return String.valueOf(cell.getBooleanCellValue());
         } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-            return String.valueOf(cell.getNumericCellValue());
+            return String.valueOf((int) cell.getNumericCellValue());
         } else {
             return String.valueOf(cell.getStringCellValue());
         }
