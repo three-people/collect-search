@@ -197,8 +197,11 @@ public class DataCommitController {
             }//TODO test end
             // 入库并添加索引
             for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-               int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum);
-
+                int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum);
+                if (numres == 0) {
+                    response.setCode(1);
+                    response.setMsg("添加数据成功");
+                }
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {

@@ -86,7 +86,7 @@ public class ExcelFileUtil {
 
     //处理数据
     public int insertRowData(Row row, BeanTypeEnum infoHeadEnum) {
-        int n = 0;
+        int n = -1;
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
@@ -107,9 +107,7 @@ public class ExcelFileUtil {
                     //插入数据库
 
                     //建立ES索引
-                    if( personclient.insertAndIndex(peopleBean)){
-
-                    }
+                    n = personclient.insertAndIndex(peopleBean) ? 0 : -1;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return n + 1;//第七列数量
