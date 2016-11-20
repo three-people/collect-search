@@ -43,6 +43,9 @@ public class SearchController {
             String searchkey = request.getParameter("searchkey");
         	String type = request.getParameter("type").trim();
         	String pageindexStr = request.getParameter("pageindex");
+            model.addObject("searchkey", searchkey);
+            model.addObject("type", type);
+            model.addObject("pageindex", pageindexStr);
         	int pageIndex = 1;
             try{
                 pageIndex = Integer.parseInt(pageindexStr);
@@ -52,8 +55,6 @@ public class SearchController {
             pageIndex--;
         	String indexType = IndexConstants.getIndexByType(type);
             List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*20, 20, indexType);
-            model.addObject("searchkey", searchkey);
-            model.addObject("type", type);
             model.addObject(type+"list", resultList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,37 +65,38 @@ public class SearchController {
     @ResponseBody
     @RequestMapping(value = "/delete/{type}/{id}")
     public BaseResponse delete(@PathVariable("type") String type, @PathVariable("id") long id, HttpServletRequest request, HttpServletResponse response) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+//        SqlSession sqlSession = sqlSessionFactory.openSession();
         BaseResponse res = new BaseResponse();
-        int result = 0;
-        switch (type){
-            case "house" :
-                HouseDao houseDao = sqlSession.getMapper(HouseDao.class);
-                result = houseDao.deleteByPrimaryKey(id);
-                break;
-            case "people" :
-                PeopleDao peopleDao = sqlSession.getMapper(PeopleDao.class);
-                result = peopleDao.deleteByPrimaryKey(id);
-                break;
-            case "place" :
-                PlaceDao placeDao = sqlSession.getMapper(PlaceDao.class);
-                result = placeDao.deleteByPrimaryKey(id);
-                break;
-            case "employer" :
-                EmployerDao employerDao = sqlSession.getMapper(EmployerDao.class);
-                result = employerDao.deleteByPrimaryKey(id);
-                break;
-            case "camera" :
-                CameraDao cameraDao = sqlSession.getMapper(CameraDao.class);
-                result = cameraDao.deleteByPrimaryKey(id);
-                break;
-        }
-        sqlSession.commit();
-        if(result > 0) {
-            res.setCode(1);
-        } else {
-            res.setCode(0);
-        }
+        res.setMsg(type+id);
+//        int result = 0;
+//        switch (type){
+//            case "house" :
+//                HouseDao houseDao = sqlSession.getMapper(HouseDao.class);
+//                result = houseDao.deleteByPrimaryKey(id);
+//                break;
+//            case "people" :
+//                PeopleDao peopleDao = sqlSession.getMapper(PeopleDao.class);
+//                result = peopleDao.deleteByPrimaryKey(id);
+//                break;
+//            case "place" :
+//                PlaceDao placeDao = sqlSession.getMapper(PlaceDao.class);
+//                result = placeDao.deleteByPrimaryKey(id);
+//                break;
+//            case "employer" :
+//                EmployerDao employerDao = sqlSession.getMapper(EmployerDao.class);
+//                result = employerDao.deleteByPrimaryKey(id);
+//                break;
+//            case "camera" :
+//                CameraDao cameraDao = sqlSession.getMapper(CameraDao.class);
+//                result = cameraDao.deleteByPrimaryKey(id);
+//                break;
+//        }
+//        sqlSession.commit();
+//        if(result > 0) {
+//            res.setCode(1);
+//        } else {
+//            res.setCode(0);
+//        }
         return res;
     }
 

@@ -72,6 +72,15 @@ public class LoginController {
         }
     }
 
+    @RequestMapping("/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response){
+        request.getSession().invalidate();
+        try {
+            response.sendRedirect("/loginpage");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @RequestMapping("/import")
     public BaseResponse importPeople(HttpServletRequest request, HttpServletResponse response){

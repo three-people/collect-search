@@ -26,7 +26,7 @@
     <div class="container">
 
       <form class="form-signin" role="form" action="/user/login">
-        <h2 class="form-signin-heading">登录</h2>
+        <h2 class="form-signin-heading">泺源派出所搜索登录</h2>
         <input type="uname" id="uname" name="uname" class="form-control" placeholder="用户名" required autofocus>
         <input type="password" name="pwd" id="pwd" class="form-control" placeholder="密码" required>
         <div class="checkbox">
@@ -56,6 +56,9 @@
             }else{
               alert("系统错误")
             }
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("系统异常")
           }
         });
       }
