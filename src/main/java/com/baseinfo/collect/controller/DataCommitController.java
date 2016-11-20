@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,14 +44,14 @@ public class DataCommitController {
 
 
     @RequestMapping(value = "/main")
-    public String excelPage(HttpServletRequest request,
-                            HttpServletResponse response) {
+    public ModelAndView excelPage(HttpServletRequest request,
+                                  HttpServletResponse response) {
 
         String error = request.getParameter("error");
         if (error != null) {
         }
-
-        return "uploaddata/upload";
+        ModelAndView model = new ModelAndView("/uploaddata/upload");
+        return model;
     }
 
     @ResponseBody

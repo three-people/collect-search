@@ -107,7 +107,9 @@ public class ExcelFileUtil {
                     //插入数据库
 
                     //建立ES索引
-                    n = personclient.insertAndIndex(peopleBean);
+                    if( personclient.insertAndIndex(peopleBean)){
+
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     return n + 1;//第七列数量
