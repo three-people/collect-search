@@ -2,14 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
+    <import resource="elasticsearch.xml"/>
+    <import resource="mybatis-spring.xml"/>
     <!--启用SpringMvc注解-->
-    <mvc:annotation-driven>
-    </mvc:annotation-driven>
+    <mvc:annotation-driven></mvc:annotation-driven>
     <!-- 扫描此package下的jar包-->
     <context:component-scan base-package="com.baseinfo.collect"/>
 
@@ -34,7 +33,4 @@
             </props>
         </property>
     </bean>
-    <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-              p:prefix="WEB-INF/views/" p:suffix=".jsp" />-->
-
 </beans>

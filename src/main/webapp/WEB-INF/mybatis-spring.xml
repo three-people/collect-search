@@ -19,18 +19,36 @@
         <property name="maxPoolPreparedStatementPerConnectionSize" value="50"/>
     </bean>
 
-    <!-- 配置扫描器 -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!-- 扫描me.gacl.dao这个包以及它的子包下的所有映射接口类 -->
-        <property name="basePackage" value="com.baseinfo.collect.dao.impl.*" />
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-    </bean>
-
     <!-- 定义sqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="jdbcDataSource" />
-        <property name="configLocation" value="classpath:mybatis-config/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config/sqlMapConfig.xml"/>
         <property name="mapperLocations" value="classpath:mybatis/*.xml"/>
+    </bean>
+
+    <bean id="PeopleBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.PeopleBeanMapper"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="HouseBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.HouseBeanMapper"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="PlaceBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.PlaceBeanMapper"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="EmployerBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.EmployerBeanMapper"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="CameraBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.CameraBeanMapper"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
 </beans>

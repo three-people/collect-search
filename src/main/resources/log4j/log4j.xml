@@ -12,7 +12,7 @@
 
     <!-- [公共Appender] -->
     <appender name="DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="/opt/web/qy_thuser/wf/logs/qy_thuser.log" />
+        <param name="File" value="E://log//collect-search.log" />
         <param name="Append" value="true" />
         <!--<param name="encoding" value="GBK" />-->
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />

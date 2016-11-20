@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-@RequestMapping("/user")
 @RestController
+@RequestMapping("/user")
 public class LoginController {
 
     @Autowired
