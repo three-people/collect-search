@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.baseinfo.collect.dao.*;
-import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,8 @@ public class SearchController {
 
     @Autowired
     @Qualifier("sqlSessionFactory")
-    private SqlSession sqlSession;
-	
+    private SqlSessionFactory sqlSessionFactory;
+
     @RequestMapping(value = "/search")
     public ModelAndView search(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView model = new ModelAndView("/views/searchlist");
@@ -63,6 +62,7 @@ public class SearchController {
     @ResponseBody
     @RequestMapping(value = "/delete/{type}/{id}")
     public BaseResponse search(@PathVariable("type") String type, @PathVariable("id") long id, HttpServletRequest request, HttpServletResponse response) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
         BaseResponse res = new BaseResponse();
         int result = 0;
         switch (type){
