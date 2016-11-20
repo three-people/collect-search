@@ -80,9 +80,9 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public UserBean selectUserByUnameAndPwd(String uname, String id) throws Exception {
+    public UserBean selectUserByUnameAndPwd(String uname, String pwd) throws Exception {
         Map idMap = new HashMap();
-        idMap.put("id",id);
+        idMap.put("pwd",pwd);
         idMap.put("uname",uname);
         SqlSession session = factory.openSession(true);
         List<UserBean> beanList;
@@ -92,6 +92,8 @@ public class UserDaoImpl implements UserDao{
             session.commit();
             session.close();
         }
+        if (beanList==null || beanList.size()<=0)
+            return null;
         return beanList.get(0);
     }
 }

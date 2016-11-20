@@ -6,6 +6,8 @@ import com.baseinfo.collect.common.UserResStatus;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.dao.UserDao;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ public class LoginController {
     @Qualifier("userdaoImpl")
     private UserDao userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     /**
      * 登陆接口
      * @param request
@@ -42,7 +45,7 @@ public class LoginController {
             UserBean bean = userService.selectUserByUnameAndPwd(uname,pwd);
             if(bean==null){
                 res.setCode(UserResStatus.PASSWORDORNAMEERROR);
-                res.setMsg("参数错误");
+                res.setMsg("用户名或密码错误");
                 return res;
             }
             request.getSession().setAttribute("loginId",String.valueOf(bean.getId()));
@@ -50,6 +53,7 @@ public class LoginController {
             res.setMsg("登陆成功");
             return res;
         } catch (Exception e) {
+            logger.error("login error",e);
             res.setCode(UserResStatus.ERROR);
             res.setMsg("系统错误，请稍后重试");
             return res;
@@ -64,7 +68,6 @@ public class LoginController {
      */
     @RequestMapping("adduser")
     public BaseResponse addUser(HttpServletRequest request, HttpServletResponse response){
-
         BaseResponse res = new BaseResponse();
         res.setCode(UserResStatus.PARAM_ERROR);
 
