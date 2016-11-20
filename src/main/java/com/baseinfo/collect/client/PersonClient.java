@@ -22,14 +22,16 @@ public class PersonClient {
     private PersonElasticSearchCRUDServiceImpl esService;
 
     public boolean insertAndIndex(PeopleBean people){
-        long id = userMapper.insert(people);
-        if (id>0) {
-            people.setId(id);
-            boolean flag = esService.insertIndex(people);
-            return flag;
-        }else {
-            return false;
+        int result = userMapper.insert(people);
+        if(result == 1){
+            long id = people.getId();
+            if (id>0) {
+                people.setId(id);
+                boolean flag = esService.insertIndex(people);
+                return flag;
+            }
         }
+        return false;
     }
 
 }

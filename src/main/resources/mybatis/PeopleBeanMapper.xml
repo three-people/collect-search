@@ -30,15 +30,15 @@
     delete from t_people
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.baseinfo.collect.beans.PeopleBean" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+  <insert id="insert" parameterType="com.baseinfo.collect.beans.PeopleBean">
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_people (id, type, subtype,
+    insert into t_people (type, subtype,
     hostname, hostid, hostphone,
     number, lessee,stay, employee, expend,addtime,updatetime
     )
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR},
+    values (#{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR},
     #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR},
     #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR},
     #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR},

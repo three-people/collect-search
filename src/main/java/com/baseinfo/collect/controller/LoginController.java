@@ -84,11 +84,10 @@ public class LoginController {
 
     @RequestMapping("/import")
     public BaseResponse importPeople(HttpServletRequest request, HttpServletResponse response){
-        long id = Long.parseLong(request.getParameter("id"));
         PeopleBean people = new PeopleBean();
-        people.setId(id);
         people.setType("写字楼");
         people.setEmployee("阿斯达所多撒大所多撒多撒多撒多");
+        people.setNumber(2);
         people.setExpend("");
         people.setHostid("露露露");
         people.setHostphone("1231243123");
