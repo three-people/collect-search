@@ -1,7 +1,7 @@
 package com.baseinfo.collect.client;
 
 import com.baseinfo.collect.beans.PeopleBean;
-import com.baseinfo.collect.dao.PeopleBeanMapper;
+import com.baseinfo.collect.dao.PeopleDao;
 import com.baseinfo.collect.service.impl.PersonElasticSearchCRUDServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 public class PersonClient {
 
     @Autowired
-    @Qualifier("PeopleBeanMapper")
-    private PeopleBeanMapper userMapper;//People的相关的Dao层Client
+    @Qualifier("PeopleDao")
+    private PeopleDao userMapper;//People的相关的Dao层Client
 
     @Autowired
     @Qualifier("peopleService")
