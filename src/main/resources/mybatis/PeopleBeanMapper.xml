@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.baseinfo.collect.dao.PeopleDao" >
+<mapper namespace="com.baseinfo.collect.dao.PeopleBeanMapper" >
   <resultMap id="BaseResultMap" type="com.baseinfo.collect.beans.PeopleBean" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="VARCHAR" />
@@ -13,10 +13,12 @@
     <result column="stay" property="stay" jdbcType="VARCHAR" />
     <result column="employee" property="employee" jdbcType="VARCHAR" />
     <result column="expend" property="expend" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="DATE"/>
+    <result column="updatetime" property="updatetime" jdbcType="DATE"/>
   </resultMap>
   <sql id="Base_Column_List" >
     id, type, subtype, hostname, hostid, hostphone, number, lessee, stay, employee,
-    expend
+    expend,addtime,updatetime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
@@ -33,15 +35,15 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_people (id, type, subtype,
-      hostname, hostid, hostphone,
-      number, lessor, lessee,
-      stay, employee, expend
-      )
+    hostname, hostid, hostphone,
+    number, lessee,stay, employee, expend,addtime,updatetime
+    )
     values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR},
-      #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR},
-      #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR},
-      #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR}
-      )
+    #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR},
+    #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR},
+    #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR},
+    #{addtime,jdbcType=DATE}, #{updatetime,jdbcType=DATE}
+    )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.PeopleBean" >
     update t_people
@@ -54,7 +56,8 @@
       lessee = #{lessee,jdbcType=VARCHAR},
       stay = #{stay,jdbcType=VARCHAR},
       employee = #{employee,jdbcType=VARCHAR},
-      expend = #{expend,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+      expend = #{expend,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=DATE}
+    where id = #{id,jdbcType=DATE}
   </update>
 </mapper>
