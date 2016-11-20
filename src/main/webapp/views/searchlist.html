@@ -21,7 +21,7 @@
 	<div class="col-md-3">
 	</div>
 	<div class="col-md-6">
-		<form action="/search">
+		<form id="form-search" action="/search">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
@@ -30,11 +30,11 @@
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="javascript:void(0);" data-type="house" onclick="changeType(this);">房屋</a></li>
-					<li><a href="javascript:void(0);" data-type="people" onclick="changeType(this);">人口</a></li>
-					<li><a href="javascript:void(0);" data-type="employer" onclick="changeType(this);">单位</a></li>
-					<li><a href="javascript:void(0);" data-type="place" onclick="changeType(this);">场所</a></li>
-					<li><a href="javascript:void(0);" data-type="camera" onclick="changeType(this);">监控</a></li>
+					<li><a href="javascript:void(0);" id="li-house" data-type="house" onclick="changeType(this);">房屋</a></li>
+					<li><a href="javascript:void(0);" id="li-people" data-type="people" onclick="changeType(this);">人口</a></li>
+					<li><a href="javascript:void(0);" id="li-employer" data-type="employer" onclick="changeType(this);">单位</a></li>
+					<li><a href="javascript:void(0);" id="li-place" data-type="place" onclick="changeType(this);">场所</a></li>
+					<li><a href="javascript:void(0);" id="li-camera" data-type="camera" onclick="changeType(this);">监控</a></li>
 				</ul>
 				<input type="hidden" name="type" id="type" value="house">
 				<input type="hidden" name="page" id="page" value="1">
@@ -365,7 +365,7 @@
 var currentType='$type';
 $(function(){
 　　$("#label-$type").addClass("active");
-	$("#type").val('$type');
+	changeType($(".dropdown-menu #li-"+"$type"))
 });
 
 function submit() {
@@ -381,12 +381,12 @@ function changeType(obj) {
 function changeTypeAndSubmit(type) {
 	$("#type").val(type);
 	$("#page").val(1);
-	$("form").submit();
+	$("#form-search").submit();
 }
 
 function toPage(page) {
 	$("#page").val(page);
-	$("form").submit();
+	$("#form-search").submit();
 }
 
 function update(id, type){
@@ -396,8 +396,8 @@ function update(id, type){
 function deleteData(id, type){
 	jQuery.ajax({
 		url: "/delete/"+type+"/"+id,
-		success: function(date){
-			alert(data);
+		success: function(data){
+			alert(data.msg);
 		}
 	});
 }
