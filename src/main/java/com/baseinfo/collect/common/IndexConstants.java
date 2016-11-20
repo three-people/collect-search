@@ -1,5 +1,6 @@
 package com.baseinfo.collect.common;
 
+import org.apache.velocity.app.event.ReferenceInsertionEventHandler.referenceInsertExecutor;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
@@ -7,7 +8,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
  */
 public class IndexConstants {
     //人口相关的索引
-    public static final String PERSONINDEXNAME = "people_index2";
+    public static final String PERSONINDEXNAME = "people_index";
     //房屋相关的索引
     public static final String HOUSEINDEXNAME = "house_index";
     //位置相关索引
@@ -20,4 +21,15 @@ public class IndexConstants {
     //public static final String HOUSEINDEXNAME = "house_index";
 
     public static final String AnalyserName = "ik_max_word";
+    
+    public static String getIndexByType(String type) {
+    	switch(type) {
+    	case "people": return PERSONINDEXNAME;
+    	case "house": return HOUSEINDEXNAME;
+    	case "place": return PLACEINDEXNAME;
+    	case "employer": return EMPLOYERINDEXNAME;
+    	case "camera": return CAMERAINDEXNAME;
+    	default : return null;
+    	}
+    }
 }

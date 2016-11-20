@@ -8,40 +8,75 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 
 /**
  * Created by Walker on 2016/11/17.
  */
+
+@Controller
 public class DataCommitController {
+
+    private static final Logger logger = LoggerFactory.getLogger(DataCommitController.class);
     private static final String EXTENSION_XLS = "xls";
     private static final String EXTENSION_XLSX = "xlsx";
 
-    @RequestMapping(value = "/excelUpload")
-    public BaseResponse excelCommit(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    @RequestParam("beanType") int beanType,
-                                    @RequestParam("fileContent") MultipartFile fileContent) {
+    @Autowired
+    @Qualifier("ExcelFileUtil")
+    ExcelFileUtil excelFileUtil;
+
+
+    @RequestMapping(value = "/main")
+    public String excelPage(HttpServletRequest request,
+                            HttpServletResponse response) {
+
+        String error = request.getParameter("error");
+        if (error != null) {
+        }
+
+        return "uploaddata/upload";
+    }
+
+    @RequestMapping(value = "/excelupload")
+    public BaseResponse excelCommit(
+//                                    @RequestParam("beanType") int beanType,
+//            @RequestParam("multifile") CommonsMultipartFile file,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("multifile");
+        String sourceName = file.getOriginalFilename(); // 原始文件名
+        String fileType = sourceName.substring(sourceName.lastIndexOf("."));
+
         BaseResponse res = new BaseResponse();
         try {
-            if (fileContent.getSize() / 1024 > 100) {//100KB
+
+            if (file.getSize() / 1024 > 100) {//100KB
                 res.setCode(-1);
                 res.setMsg("文件过大，清手动拆分");
                 return res;
             }
-            InputStream file = fileContent.getInputStream();
+            InputStream fileInput = file.getInputStream();
 
             //读取excel文件方法
-            Workbook workbook = createWorkbook(file);
-            dealExcel(workbook, BeanTypeEnum.getEnum(beanType), res);
+            Workbook workbook = createWorkbook(fileInput);
+            dealExcel(workbook, BeanTypeEnum.CAMERA, res);
         } catch (Exception e) {
             res.setCode(0);
             res.setMsg("系统错误，请稍后重试");
@@ -49,6 +84,30 @@ public class DataCommitController {
         return res;
     }
 
+    @RequestMapping(value = "/excelDownload")
+    public void excelDown(HttpServletRequest request,
+                          HttpServletResponse response) {
+        try {
+            String beanType = request.getParameter("beanType");
+            int type = Integer.parseInt(beanType);
+            String realname = "file.xls";
+            // 设置响应头，控制浏览器下载该文件
+            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(realname, "UTF-8"));
+            // 读取要下载的文件，保存到文件输入流
+
+            HSSFWorkbook workbook = (HSSFWorkbook) excelFileUtil.getExcel(BeanTypeEnum.EMPLOYER);
+            OutputStream out = response.getOutputStream();
+
+            // 创建缓冲区
+            workbook.write(out);
+            // 关闭输出流
+            out.close();
+
+        } catch (Exception e) {
+            logger.error("下载模版 error", e);
+            e.printStackTrace();
+        }
+    }
 
     private Workbook getWorkbookBySuffix(String filePath) throws IOException {
         Workbook workbook = null;
@@ -113,7 +172,7 @@ public class DataCommitController {
             System.out.println("");
             //校验数据
             for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-                int colCheck = ExcelFileUtil.checkRowData(sheet.getRow(rowIndex), BeanTypeEnum.CAMERA);
+                int colCheck = excelFileUtil.checkRowData(sheet.getRow(rowIndex), BeanTypeEnum.CAMERA);
                 if (colCheck > -1) {
                     response.setCode(-2);
                     response.setMsg(String.format("文件第%d行,第%d列,%s 数据类型错误", rowIndex, colCheck, BeanTypeEnum.CAMERA.getValue()[colCheck - 1]));
@@ -133,7 +192,7 @@ public class DataCommitController {
             }//TODO test end
             // 入库并添加索引
             for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-                ExcelFileUtil.insertRowData(sheet.getRow(rowIndex), BeanTypeEnum.CAMERA);
+                excelFileUtil.insertRowData(sheet.getRow(rowIndex), BeanTypeEnum.CAMERA);
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {

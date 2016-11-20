@@ -5,18 +5,27 @@ package com.baseinfo.collect.enums;
  */
 public enum BeanTypeEnum {
 
-    PEOPLE(1, new String[]{"", ""}),
+    PEOPLE(1, "实有人口", new String[]{"楼宇功能", "类型", "户主/出租人", "身份证号码", "联系方式",
+            "人数", "租住人", "寄住人", "从业人员", "备注"}),
 
-    HOUSE(2, new String[]{"", ""}),
+    HOUSE(2, "实有房屋", new String[]{"楼宇功能", "类别", "产权人", "户主/房主", "身份证号码", "联系方式", "从业人员",
+            "地址", "单元", "楼层", "门牌号", "备注"}),
 
-    EMPLOYER(3, new String[]{"", ""}),
+    EMPLOYER(3, "实有单位", new String[]{"单位级别", "名称", "负责人", "身份证号码", "联系方式",
+            "内保负责人", "身份证号码", "联系方式", "地址", "备注"}),
 
-    PLACE(4, new String[]{"", ""}),
+    PLACE(4, "实有场所", new String[]{"类型", "名称", "地址", "面积", "出租人", "身份证号码", "联系方式",
+            "租住人", "身份证号码", "联系方式", "备注"}),
 
-    CAMERA(5, new String[]{"设备编号", "所属派出所", "分类", "监控地点", "设备类型", "设备朝向", "数量", "备注"});
+    CAMERA(5, "实有监控", new String[]{"设备编号", "所属派出所", "分类", "监控地点", "设备类型", "设备朝向", "数量", "备注"});
 
-    BeanTypeEnum(int type, String[] value) {
+    private int type;
+    private String name;
+    private String[] value;
+
+    BeanTypeEnum(int type, String name, String[] value) {
         this.type = type;
+        this.name = name;
         this.value = value;
     }
 
@@ -29,23 +38,15 @@ public enum BeanTypeEnum {
         return null;
     }
 
-    private String[] value;
-    private int type;
-
     public String[] getValue() {
         return value;
-    }
-
-    public void setValue(String[] value) {
-        this.value = value;
     }
 
     public int getType() {
         return type;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public String getName() {
+        return name;
     }
-
 }

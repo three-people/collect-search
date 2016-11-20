@@ -8,7 +8,7 @@
      <!-- 配置数据源-->
     <bean id="jdbcDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/collectdb?connectTimeout=1000&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="url" value="jdbc:mysql://192.168.0.107:3306/collectdb?connectTimeout=1000&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
         <property name="username" value="root"/>
         <property name="password" value="123456"/>
         <property name="maxActive" value="20"/>
@@ -27,27 +27,27 @@
     </bean>
 
     <bean id="PeopleBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.PeopleBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.PeopleDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="HouseBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.HouseBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.HouseDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="PlaceBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.PlaceBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.PlaceDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="EmployerBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.EmployerBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.EmployerDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="CameraBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.CameraBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.CameraDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 

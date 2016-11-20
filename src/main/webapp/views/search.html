@@ -10,7 +10,7 @@
 <body>
 #parse("./topbar.html")
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-md-12">
 		<div style="margin: 60px 0px">
 			<h1 class="text-center">泺源派出所警务搜索</h1>
 		<div/>
@@ -18,38 +18,42 @@
 </div>
 <form>
 <div class="row">
-	<div class="col-lg-3">
+	<div class="col-md-3">
 	</div>
-	<div class="col-lg-6">
+	<div class="col-md-6">
+	<form action="/search">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
-				dropdown-toggle" data-toggle="dropdown">搜索类型
+				dropdown-toggle" data-toggle="dropdown"><span id="type-lebal">搜索类型</span>
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="javascript:void(0);" onclick="changeType('house');">房屋</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('people');">人口</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('employer');">单位</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('place');">场所</a></li>
-					<li><a href="javascript:void(0);" onclick="changeType('camera');">监控</a></li>
+					<li><a href="javascript:void(0);" data-type="house" onclick="changeType(this);">房屋</a></li>
+					<li><a href="javascript:void(0);" data-type="people" onclick="changeType(this);">人口</a></li>
+					<li><a href="javascript:void(0);" data-type="employer" onclick="changeType(this);">单位</a></li>
+					<li><a href="javascript:void(0);" data-type="place" onclick="changeType(this);">场所</a></li>
+					<li><a href="javascript:void(0);" data-type="camera" onclick="changeType(this);">监控</a></li>
 				</ul>
 			</div><!-- /btn-group -->
 			<input type="hidden" name="type" id="type" value="house">
 			<input type="text" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="button">搜索</button>
+				<button class="btn btn-default" type="submit">搜索</button>
 			</span>
 		</div><!-- /input-group -->
+	</form>
 	</div><!-- /.col-lg-6 -->
-	<div class="col-lg-3">
+	<div class="col-md-3">
 	</div>
 </div><!-- /.row -->
 </form>
 
 <script type="text/javascript">
-function changeType(type) {
-	$("#type").value(type);
+function changeType(obj) {
+	var type = $(obj).attr('data-type')
+	$("#type").val(type);
+	$("#type-lebal").html($(obj).html())
 }
 </script>
 
