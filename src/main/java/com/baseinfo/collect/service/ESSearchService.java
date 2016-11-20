@@ -8,7 +8,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,9 @@ import java.util.Map;
 @Service("esSearchService")
 public class ESSearchService {
 
-    @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     @Autowired
     private Client client;
@@ -33,7 +33,7 @@ public class ESSearchService {
                 .setExplain(true);
         QueryStringQueryBuilder queryString = QueryBuilders.queryStringQuery("\""+ content + "\"");
         queryString.field("_all");
-        queryString.minimumShouldMatch("10");
+        //queryString.minimumShouldMatch("10");
         reqBuilder.setQuery(QueryBuilders.boolQuery().should(queryString))
                 .setExplain(true);
         if (from >= 0 && size > 0) {

@@ -6,6 +6,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
 
+import java.util.Date;
+
 @Document(indexName = IndexConstants.PERSONINDEXNAME,type="fulltext")
 public class PeopleBean {
     @Id
@@ -38,6 +40,12 @@ public class PeopleBean {
     private String employee;
     @Field(index = FieldIndex.not_analyzed, store = true)
     private String expend;
+
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private Date addtime;
+
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private Date updatetime;
 
     public Long getId() {
         return id;
@@ -125,5 +133,21 @@ public class PeopleBean {
 
     public void setExpend(String expend) {
         this.expend = expend == null ? null : expend.trim();
+    }
+
+    public Date getAddtime() {
+        return addtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setAddtime(Date addtime) {
+        this.addtime = addtime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
     }
 }

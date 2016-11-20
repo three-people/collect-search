@@ -1,21 +1,28 @@
 package com.baseinfo.collect.controller;
 
+import com.baseinfo.collect.beans.PeopleBean;
 import com.baseinfo.collect.beans.UserBean;
+import com.baseinfo.collect.client.PersonClient;
+import com.baseinfo.collect.common.IndexConstants;
 import com.baseinfo.collect.common.UrlPaths;
 import com.baseinfo.collect.common.UserResStatus;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.dao.UserDao;
+import com.baseinfo.collect.service.ESSearchService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -24,6 +31,10 @@ public class LoginController {
     @Autowired
     @Qualifier("userdaoImpl")
     private UserDao userService;
+
+    @Autowired
+    @Qualifier("PersonClient")
+    PersonClient service;
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     /**
@@ -59,6 +70,25 @@ public class LoginController {
             return res;
         }
     }
+
+
+    @RequestMapping("/import")
+    public BaseResponse importPeople(HttpServletRequest request, HttpServletResponse response){
+        PeopleBean people = new PeopleBean();
+        people.setId(123123L);
+        people.setType("qweqwe");
+        people.setEmployee("asdasd");
+        people.setExpend("asdasdasd");
+        people.setHostid("asdasd");
+        people.setHostphone("1231243123");
+        people.setHostname("asdasdasd");
+        people.setLessee("asdasdasd");
+        people.setAddtime(new Date());
+        service.insertAndIndex(people);
+        return null;
+    }
+
+
 
     /**
      * 管理员注册账号
@@ -358,15 +388,10 @@ public class LoginController {
     }
 
 
-   /* public static  void main(String args[]){
-        FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("C:\\Users\\58\\git\\collect-search\\src\\main\\webapp\\WEB-INF\\applicationContext.xml");
-        ElasticSearchCRUDService service = (ElasticSearchCRUDService)context.getBean("personService");
-        PersonEsIndex index = new PersonEsIndex();
-        index.setAddrass("北京市朝阳区");
-        index.setPersonID("1");
-        index.setSex("male");
-        index.setUname("张三");
-        service.insertIndex(index);
-
+/*    public static  void main(String args[]){
+        FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("E:\\collect-search\\collect-search\\src\\main\\webapp\\WEB-INF\\applicationContext.xml");
+        ESSearchService searchService = (ESSearchService)context.getBean("esSearchService");
+        List<Map<String, Object>> list =  searchService.queryForObjectNotEq("qweqwe",0,10, IndexConstants.PERSONINDEXNAME);
+        System.out.println("end...");
     }*/
 }

@@ -15,11 +15,11 @@
     <result column="expend" property="expend" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type, subtype, hostname, hostid, hostphone, number, lessee, stay, employee, 
+    id, type, subtype, hostname, hostid, hostphone, number, lessee, stay, employee,
     expend
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_people
     where id = #{id,jdbcType=BIGINT}
@@ -32,14 +32,14 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_people (id, type, subtype, 
-      hostname, hostid, hostphone, 
-      number, lessor, lessee, 
+    insert into t_people (id, type, subtype,
+      hostname, hostid, hostphone,
+      number, lessor, lessee,
       stay, employee, expend
       )
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR}, 
-      #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR}, 
-      #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR},
+      #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR},
+      #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR},
       #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR}
       )
   </insert>

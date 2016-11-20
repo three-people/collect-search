@@ -44,6 +44,12 @@ curl -XPOST http://${escluster_host}:9200/people_index/fulltext/_mapping -d'
             "expend": {
                  "type": "string"
             }
+            "addtime": {
+                 "type": "string"
+            }
+            "updatetime": {
+                 "type": "string"
+            }
         }
     }
 }'
