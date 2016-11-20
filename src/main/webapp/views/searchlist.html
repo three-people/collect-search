@@ -80,9 +80,14 @@
 			</ul>
 			#if ($house.employee)
 			<div>
-				<strong>从业人员：</strong>$!house.host
+				<strong>从业人员：</strong>$!house.employee
 			</div>
 			#end
+			<div>
+				<a href="javascript:void(0);" onclick="update('$house.id','house')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="delete('$house.id','house')">删除</a>
+			</div>
 		<hr>
 		</div>
 		#end
@@ -106,9 +111,14 @@
 			</ul>
 			#if ($people.employee)
 			<div>
-				<strong>从业人员：</strong>$!people.host
+				<strong>从业人员：</strong>$!people.employee
 			</div>
 			#end
+			<div>
+				<a href="javascript:void(0);" onclick="update('$people.id','people')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="delete('$people.id','people')">删除</a>
+			</div>
 		<hr>
 		</div>
 		#end
@@ -132,6 +142,11 @@
 				<li><strong>身份证号：</strong>$!employer.safemanid</li>
 				<li><strong>联系电话：</strong>$!employer.safemanphone</li>
 			</ul>
+			<div>
+				<a href="javascript:void(0);" onclick="update('$employer.id','employer')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="delete('$employer.id','employer')">删除</a>
+			</div>
 		<hr>
 		</div>
 		#end
@@ -156,6 +171,11 @@
 				<li><strong>身份证号：</strong>$!place.lesseeid</li>
 				<li><strong>联系电话：</strong>$!place.lesseephone</li>
 			</ul>
+			<div>
+				<a href="javascript:void(0);" onclick="update('$place.id','place')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="delete('$place.id','place')">删除</a>
+			</div>
 		<hr>
 		</div>
 		#end
@@ -172,6 +192,11 @@
 				<li><strong>朝向：</strong>$!camera.direction</li>
 				<li><strong>数量：</strong>$!camera.count</li>
 			</ul>
+			<div>
+				<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="delete('$camera.id','camera')">删除</a>
+			</div>
 		<hr>
 		</div>
 		#end
@@ -207,7 +232,73 @@
 	<div class="col-md-2">
 	</div>
 </div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="model-house" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+            </div>
+            <div class="modal-body">
+            	<form class="bs-example bs-example-form" role="form">
+			        <div class="input-group">
+			            <span class="input-group-addon">类别</span>
+			            <input type="text" id="type" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon">子类别</span>
+			            <input type="text" id="subtype" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon">地址</span>
+			            <input type="text" id="location" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon">单元</span>
+			            <input type="text" id="unit" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon">楼层</span>
+			            <input type="text" id="floor" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon">门牌号/房号</span>
+			            <input type="text" id="doornumber" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon">户主/房主</span>
+			            <input type="text" id="owner" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon" style="width: 100px;">产权人</span>
+			            <input type="text" id="host" class="form-control">
+			        </div>
+			        <br/>
+			        <div class="input-group">
+			            <span class="input-group-addon">从业人员</span>
+			            <input type="text" id="employee" class="form-control">
+			        </div>
+			    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <script type="text/javascript">
+var currentType='$type';
 $(function(){
 　　$("#label-$type").addClass("active");
 	$("#type").value('$type');
@@ -230,6 +321,10 @@ function changeTypeAndSubmit(type) {
 function toPage(page) {
 	$("#page").value(page);
 	$("form").submit();
+}
+
+function update(id, type){
+	$('#model-'+type).modal('show')
 }
 </script>
 </body>

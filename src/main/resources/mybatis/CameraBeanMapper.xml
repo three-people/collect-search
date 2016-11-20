@@ -11,7 +11,7 @@
     <result column="count" property="count" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type, policestation, localname, devicetype, direction, count
+    id, deviceid, type, policestation, localname, devicetype, direction, count, expend
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -30,18 +30,20 @@
     insert into t_camera (id, type, policestation, 
       localname, devicetype, direction, 
       count)
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{policestation,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{deviceid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{policestation,jdbcType=VARCHAR},
       #{localname,jdbcType=VARCHAR}, #{devicetype,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, 
-      #{count,jdbcType=INTEGER})
+      #{count,jdbcType=INTEGER}), #{expend,jdbcType=VARCHAR}
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.CameraBean" >
     update t_camera
-    set type = #{type,jdbcType=VARCHAR},
+    set deviceid = #{deviceid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       policestation = #{policestation,jdbcType=VARCHAR},
       localname = #{localname,jdbcType=VARCHAR},
       devicetype = #{devicetype,jdbcType=VARCHAR},
       direction = #{direction,jdbcType=VARCHAR},
-      count = #{count,jdbcType=INTEGER}
+      count = #{count,jdbcType=INTEGER},
+      expend = #{expend,jdbcType=VARCHAR},
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

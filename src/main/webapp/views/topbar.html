@@ -6,7 +6,16 @@
     <div>
         <ul class="nav navbar-nav navbar-right">
         	#if($uname)
-        	<li><a href="/login"><span>$uname</span></a></li>
+        	<li><a href="/login"></a></li>
+        	<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    $uname <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/upload">上传数据</a></li>
+                    <li><a href="/logout">登出</a></li>
+                </ul>
+            </li>
         	#else
             <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
             #end
