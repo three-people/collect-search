@@ -38,7 +38,7 @@
 				<input type="hidden" name="type" id="type" value="house">
 				<input type="hidden" name="page" id="page" value="1">
 			</div><!-- /btn-group -->
-			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="%searchkey">
+			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="$searchkey">
 			<span class="input-group-btn">
 				<button class="btn btn-default" type="submit" onclick="submit();">搜索</button>
 			</span>
@@ -95,7 +95,7 @@
 		
 		#if($peoplelist)
 		#foreach($people in $peoplelist)
-		<div>
+		<div style="border-bottom:1px solid #ddd; padding: 5px 10px;">
 			<ul class="list-inline">
 				<li><strong>类型：</strong>$!people.type &nbsp;$!people.subtype</li>
 				<li><strong>户主/出租人：</strong>$!people.hostname</li>
@@ -114,12 +114,11 @@
 				<strong>从业人员：</strong>$!people.employee
 			</div>
 			#end
-			<div>
+			<div style="padding:2px 0px;">
 				<a href="javascript:void(0);" onclick="update('$people.id','people')">修改</a>
 				&nbsp;
 				<a href="javascript:void(0);" onclick="delete('$people.id','people')">删除</a>
 			</div>
-		<hr>
 		</div>
 		#end
 		#end
@@ -211,20 +210,20 @@
 		    #end
 		    
 		    #if($page - $start >10)
-		    	#set($end=${start+10})
+		    	#set($end=$start+10)
 		    #else
 		    	#set($end=$page)
-		    	#set($start=${page-10})
+		    	#set($start=$page-10)
 		    #end
 		    
 		    #if($pageindex!=1)
-		    <li><a href="javascript:void(0);" onclick="pageTo(${pageindex-1})">&laquo;</a></li>
+		    <li><a href="javascript:void(0);" onclick="pageTo($pageindex-1)">&laquo;</a></li>
 		    #end
 		    #foreach($foo in [$start..$end])
 		    	<li page=$foo #if($pageindex==$foo)class="active"#end><a href="javascript:void(0);" onlick="pageTo($foo)">$foo</a></li>
 			#end
 			#if($pageindex!=$end)
-		    <li><a href="javascript:void(0);" onclick="pageTo(${pageindex+1})">&raquo;</a></li>
+		    <li><a href="javascript:void(0);" onclick="pageTo($pageindex+1)">&raquo;</a></li>
 		    #end
 		</ul>
 		
@@ -295,6 +294,70 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="model-people" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">修改信息</h4>
+			</div>
+			<div class="modal-body">
+				<form class="bs-example bs-example-form" role="form">
+					<div class="input-group">
+						<span class="input-group-addon">类别</span>
+						<input type="text" id="type" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">子类别</span>
+						<input type="text" id="subtype" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">地址</span>
+						<input type="text" id="location" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">单元</span>
+						<input type="text" id="unit" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">楼层</span>
+						<input type="text" id="floor" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">门牌号/房号</span>
+						<input type="text" id="doornumber" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">户主/房主</span>
+						<input type="text" id="owner" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon" style="width: 100px;">产权人</span>
+						<input type="text" id="host" class="form-control">
+					</div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">从业人员</span>
+						<input type="text" id="employee" class="form-control">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary">提交更改</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
 </div>
 
 <script type="text/javascript">

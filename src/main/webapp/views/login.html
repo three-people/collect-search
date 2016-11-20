@@ -25,14 +25,14 @@
 
     <div class="container">
 
-      <form class="form-signin" role="form">
+      <form class="form-signin" role="form" action="/user/login">
         <h2 class="form-signin-heading">登录</h2>
-        <input type="email" class="form-control" placeholder="用户名" required autofocus>
-        <input type="password" class="form-control" placeholder="密码" required>
+        <input type="uname" id="uname" name="uname" class="form-control" placeholder="用户名" required autofocus>
+        <input type="password" name="pwd" id="pwd" class="form-control" placeholder="密码" required>
         <div class="checkbox">
         </div>
         <br/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="login()">登录</button>
       </form>
 
     </div> <!-- /container -->
@@ -40,5 +40,25 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script type="text/javascript">
+      function login() {
+        jQuery.ajax({
+          type: "POST",
+          url: "/user/login",
+          data: "uname="+jQuery("#uname").val()+"&pwd="+jQuery("#pwd").val(),
+          success: function(data){
+//            var result = JSON.parse(data);
+            if(data.code == 1){
+              window.location.href="/index";
+            }else if(data.code == 4){
+              alert("用户名或密码错误")
+            }else{
+              alert("系统错误")
+            }
+          }
+        });
+      }
+    </script>
   </body>
 </html>

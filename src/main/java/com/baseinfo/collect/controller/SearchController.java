@@ -32,7 +32,7 @@ public class SearchController {
     @Autowired
     @Qualifier("sqlSessionFactory")
     private SqlSession sqlSession;
-
+	
     @RequestMapping(value = "/search")
     public ModelAndView search(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView model = new ModelAndView("/views/searchlist");

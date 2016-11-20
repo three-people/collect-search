@@ -56,12 +56,31 @@
   </servlet>
 
   <!-- url-pattern配置为/，不带文件后缀，会造成其它静态文件(js，css等)不能访问。如配为*.do，则不影响静态文件的访问 -->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.jpg</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.gif</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.js</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.css</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.png</url-pattern>
+  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>spring</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
