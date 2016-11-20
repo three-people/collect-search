@@ -27,27 +27,27 @@
     </bean>
 
     <bean id="PeopleBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.PeopleBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.PeopleDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="HouseBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.HouseBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.HouseDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="PlaceBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.PlaceBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.PlaceDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="EmployerBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.EmployerBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.EmployerDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
     <bean id="CameraBeanMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baseinfo.collect.dao.CameraBeanMapper"></property>
+        <property name="mapperInterface" value="com.baseinfo.collect.dao.CameraDao"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
 
