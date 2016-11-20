@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class PersonClient {
 
     @Autowired
-    @Qualifier("PeopleDao")
+    @Qualifier("PeopleBeanMapper")
     private PeopleDao userMapper;//People的相关的Dao层Client
 
     @Autowired

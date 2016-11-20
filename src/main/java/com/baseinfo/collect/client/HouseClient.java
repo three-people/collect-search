@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service("HouseClient")
 public class HouseClient {
     @Autowired
-    @Qualifier("HouseDao")
+    @Qualifier("HouseBeanMapper")
     private HouseDao houseDao;//People的相关的Dao层Client
 
     @Autowired
