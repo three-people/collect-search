@@ -59,7 +59,8 @@ public class LoginController {
                 res.setMsg("用户名或密码错误");
                 return res;
             }
-            request.getSession().setAttribute("loginId",String.valueOf(bean.getId()));
+            request.getSession().setAttribute("loginId", String.valueOf(bean.getId()));
+            request.getSession().setAttribute("uname", uname);
             res.setCode(UserResStatus.SUCESS);
             res.setMsg("登陆成功");
             return res;
