@@ -8,13 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
+ *
  */
+
+@Service("employerService")
 public class EmployerElasticSearchCRUDServiceImpl  implements ElasticSearchCRUDService<EmployerBean> {
 
     private static final Logger logger = LoggerFactory.getLogger(EmployerElasticSearchCRUDServiceImpl.class);

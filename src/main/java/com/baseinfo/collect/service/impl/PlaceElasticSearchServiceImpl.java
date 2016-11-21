@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 场所的索引服务
  */
+@Service("PlaceService")
 public class PlaceElasticSearchServiceImpl  implements ElasticSearchCRUDService<PlaceBean> {
 
     private static final Logger logger = LoggerFactory.getLogger(PlaceElasticSearchServiceImpl.class);

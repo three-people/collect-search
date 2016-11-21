@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * 监控相关的实现
  */
+@Service("cameraService")
 public class CameraElasticSearchCRUDServiceImpl implements ElasticSearchCRUDService<CameraBean> {
 
     private static final Logger logger = LoggerFactory.getLogger(CameraElasticSearchCRUDServiceImpl.class);

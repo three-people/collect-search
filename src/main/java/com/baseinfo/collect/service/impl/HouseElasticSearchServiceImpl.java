@@ -2,6 +2,7 @@ package com.baseinfo.collect.service.impl;
 
 import com.baseinfo.collect.beans.HouseBean;
 import com.baseinfo.collect.service.ElasticSearchCRUDService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,10 @@ public class HouseElasticSearchServiceImpl implements ElasticSearchCRUDService<H
     @Override
     public boolean insertIndex(HouseBean info) {
         IndexQuery indexQuery = new IndexQueryBuilder().withId(String.valueOf(info.getId())).withObject(info).build();
-        elasticsearchTemplate.index(indexQuery);
-        return true;
+        String  house = elasticsearchTemplate.index(indexQuery);
+        if (StringUtils.isNotBlank(house))
+            return true;
+        return false;
     }
 
     @Override

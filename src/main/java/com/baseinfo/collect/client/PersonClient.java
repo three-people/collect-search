@@ -28,10 +28,43 @@ public class PersonClient {
             if (id>0) {
                 people.setId(id);
                 boolean flag = esService.insertIndex(people);
+                if (!flag){
+                    userMapper.deleteByPrimaryKey(id);
+                    return flag;
+                }
                 return flag;
             }
         }
         return false;
     }
+
+
+    public boolean updatePeople(PeopleBean people){
+        if(people.getId()<=0)
+            return false;
+        PeopleBean peopleOld = userMapper.selectByPrimaryKey(people.getId());
+        int result = userMapper.updateByPrimaryKey(people);
+        if(result == 1){
+            boolean flag = esService.updateIndex(people);
+            if(!flag){
+                userMapper.updateByPrimaryKey(peopleOld);
+            }
+            return flag;
+        }
+        return false;
+    }
+
+    public boolean deletePeople(PeopleBean people){
+        if(people.getId()<=0)
+            return false;
+        int result = userMapper.deleteByPrimaryKey(people.getId());
+        if(result == 1){
+            boolean flag = esService.deleteById(String.valueOf(people.getId()),PeopleBean.class);
+            return flag;
+        }
+        return false;
+    }
+
+
 
 }
