@@ -3,26 +3,22 @@ package com.baseinfo.collect.controller;
 import com.baseinfo.collect.beans.PeopleBean;
 import com.baseinfo.collect.beans.UserBean;
 import com.baseinfo.collect.client.PersonClient;
-import com.baseinfo.collect.common.IndexConstants;
 import com.baseinfo.collect.common.UrlPaths;
 import com.baseinfo.collect.common.UserResStatus;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.dao.UserDao;
-import com.baseinfo.collect.service.ESSearchService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")

@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.Date;
  */
 @Service("ExcelFileUtil")
 public class ExcelFileUtil {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ExcelFileUtil.class);
 
     //    public static final String[] people_info = new String[]{"", ""};
 //    public static final String[] house_info = new String[]{"", ""};
@@ -90,6 +92,7 @@ public class ExcelFileUtil {
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
+                    n=0;
                     PeopleBean peopleBean = new PeopleBean();
                     peopleBean.setType(getCellValue(row.getCell(n++), true));
                     peopleBean.setSubtype(getCellValue(row.getCell(n++), true));
@@ -109,12 +112,14 @@ public class ExcelFileUtil {
                     //建立ES索引
                     n = personclient.insertAndIndex(peopleBean) ? 0 : -1;
                 } catch (Exception e) {
+
                     e.printStackTrace();
                     return n + 1;//第七列数量
                 }
                 break;
             case HOUSE:
                 try {
+                    n=0;
                     HouseBean houseBean = new HouseBean();
                     houseBean.setType(getCellValue(row.getCell(n++), true));
                     houseBean.setSubtype(getCellValue(row.getCell(n++), true));
@@ -139,6 +144,7 @@ public class ExcelFileUtil {
                 break;
             case EMPLOYER:
                 try {
+                    n=0;
                     EmployerBean employerBean = new EmployerBean();
                     employerBean.setType(getCellValue(row.getCell(n++), true));
                     employerBean.setName(getCellValue(row.getCell(n++), true));
@@ -182,6 +188,7 @@ public class ExcelFileUtil {
                 break;
             case CAMERA:
                 try {
+                    n=0;
                     CameraBean cameraBean = new CameraBean();
                     cameraBean.setDeviceid(getCellValue(row.getCell(n++), true));
                     cameraBean.setPolicestation(getCellValue(row.getCell(n++), true));
