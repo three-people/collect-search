@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baseinfo.collect.dao.PeopleDao" >
-  <resultMap id="BaseResultMap" type="com.baseinfo.collect.beans.PeopleBean" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="subtype" property="subtype" jdbcType="VARCHAR" />
-    <result column="hostname" property="hostname" jdbcType="VARCHAR" />
-    <result column="hostid" property="hostid" jdbcType="VARCHAR" />
-    <result column="hostphone" property="hostphone" jdbcType="VARCHAR" />
-    <result column="number" property="number" jdbcType="INTEGER" />
-    <result column="lessee" property="lessee" jdbcType="VARCHAR" />
-    <result column="stay" property="stay" jdbcType="VARCHAR" />
-    <result column="employee" property="employee" jdbcType="VARCHAR" />
-    <result column="expend" property="expend" jdbcType="VARCHAR" />
-    <result column="addtime" property="addtime" jdbcType="DATE"/>
-    <result column="updatetime" property="updatetime" jdbcType="DATE"/>
-  </resultMap>
   <sql id="Base_Column_List" >
     id, type, subtype, hostname, hostid, hostphone, number, lessee, stay, employee,
     expend,addtime,updatetime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="PeopleBean" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
     from t_people
@@ -42,7 +27,7 @@
     #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR},
     #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR},
     #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR},
-    #{addtime,jdbcType=DATE}, #{updatetime,jdbcType=DATE}
+    #{addtime,jdbcType=DATETIME}, #{updatetime,jdbcType=DATETIME}
     )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.PeopleBean" >
@@ -57,7 +42,7 @@
       stay = #{stay,jdbcType=VARCHAR},
       employee = #{employee,jdbcType=VARCHAR},
       expend = #{expend,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=DATE}
-    where id = #{id,jdbcType=DATE}
+      updatetime = #{updatetime,jdbcType=DATETIME}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

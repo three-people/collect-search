@@ -7,6 +7,8 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.Date;
+
 @Document(indexName = IndexConstants.PLACEINDEXNAME,type="fulltext")
 public class PlaceBean {
     @Id
@@ -41,6 +43,27 @@ public class PlaceBean {
     @Field(index = FieldIndex.not_analyzed, store = true)
     private String extend;
 
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private Date addtime;
+
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private Date updatetime;
+
+    public Date getAddtime() {
+        return addtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setAddtime(Date addtime) {
+        this.addtime = addtime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
     public Long getId() {
         return id;
     }

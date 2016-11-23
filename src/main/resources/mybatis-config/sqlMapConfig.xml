@@ -5,5 +5,10 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.baseinfo.collect.beans.UserBean" alias="UserBean" />
+        <typeAlias type="com.baseinfo.collect.beans.CameraBean" alias="CameraBean" />
+        <typeAlias type="com.baseinfo.collect.beans.EmployerBean" alias="EmployerBean" />
+        <typeAlias type="com.baseinfo.collect.beans.HouseBean" alias="HouseBean" />
+        <typeAlias type="com.baseinfo.collect.beans.PeopleBean" alias="PeopleBean" />
+        <typeAlias type="com.baseinfo.collect.beans.PlaceBean" alias="PlaceBean" />
     </typeAliases>
 </configuration>

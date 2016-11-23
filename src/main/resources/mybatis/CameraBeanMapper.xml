@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baseinfo.collect.dao.CameraDao" >
-  <resultMap id="BaseResultMap" type="com.baseinfo.collect.beans.CameraBean" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="policestation" property="policestation" jdbcType="VARCHAR" />
-    <result column="localname" property="localname" jdbcType="VARCHAR" />
-    <result column="devicetype" property="devicetype" jdbcType="VARCHAR" />
-    <result column="direction" property="direction" jdbcType="VARCHAR" />
-    <result column="count" property="count" jdbcType="INTEGER" />
-  </resultMap>
   <sql id="Base_Column_List" >
     id, deviceid, type, policestation, localname, devicetype, direction, count, expend
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="CameraBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from t_camera
@@ -32,7 +23,8 @@
       count)
     values (#{id,jdbcType=BIGINT}, #{deviceid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{policestation,jdbcType=VARCHAR},
       #{localname,jdbcType=VARCHAR}, #{devicetype,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, 
-      #{count,jdbcType=INTEGER}), #{expend,jdbcType=VARCHAR}
+      #{count,jdbcType=INTEGER}, #{expend,jdbcType=VARCHAR},
+      #{addtime,jdbcType=DATETIME}, #{updatetime,jdbcType=DATETIME})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.CameraBean" >
     update t_camera
@@ -44,6 +36,7 @@
       direction = #{direction,jdbcType=VARCHAR},
       count = #{count,jdbcType=INTEGER},
       expend = #{expend,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=DATETIME}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
