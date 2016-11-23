@@ -46,19 +46,22 @@ public class SearchController {
         	String pageindexStr = request.getParameter("pageindex");
             model.addObject("searchkey", searchkey);
             model.addObject("type", type);
-            model.addObject("pageindex", pageindexStr);
         	int pageIndex = 1;
             try{
                 pageIndex = Integer.parseInt(pageindexStr);
             } catch(NumberFormatException e){}
             if(pageIndex < 1)
                 pageIndex = 1;
+            model.addObject("pageindex", pageIndex);
             pageIndex--;
         	String indexType = IndexConstants.getIndexByType(type);
             TotalHits hits = new TotalHits(0);
-            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*20, 20, indexType,hits);
+            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*2, 2, indexType,hits);
             model.addObject(type+"list", resultList);
-            model.addObject("total",hits);
+            long total = hits.getTotal();
+            long pagetotal = total/2;
+            model.addObject("total",total);
+            model.addObject("pagetotal",pagetotal);
         } catch (Exception e) {
             e.printStackTrace();
         }
