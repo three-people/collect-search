@@ -32,11 +32,12 @@ public class ESSearchService {
         SearchRequestBuilder reqBuilder = client.prepareSearch(esIndexName)
                 .setTypes("fulltext").setSearchType(SearchType.DEFAULT)
                 .setExplain(true);
-        QueryStringQueryBuilder queryString = QueryBuilders.queryStringQuery("\""+ content + "\"");
-        queryString.field("_all");
+        QueryStringQueryBuilder queryString = QueryBuilders.queryStringQuery(content);
+        queryString.defaultField("_all");
         queryString.analyzer("standard");
         //queryString.minimumShouldMatch("10");
-        reqBuilder.setQuery(QueryBuilders.boolQuery().should(queryString))
+        //QueryBuilders.boolQuery().should(
+        reqBuilder.setQuery(queryString)
                 .setExplain(true);
         if (from >= 0 && size > 0) {
             reqBuilder.setFrom(from).setSize(size);
