@@ -37,7 +37,7 @@
 					<li><a href="javascript:void(0);" id="li-camera" data-type="camera" onclick="changeType(this);">监控</a></li>
 				</ul>
 				<input type="hidden" name="type" id="type" value="house">
-				<input type="hidden" name="page" id="page" value="1">
+				<input type="hidden" name="pageindex" id="page" value="1">
 			</div><!-- /btn-group -->
 			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="$!searchkey">
 			<span class="input-group-btn">
@@ -210,21 +210,24 @@
 		    	#set($start=1)
 		    #end
 		    
-		    #if($page - $start >10)
-		    	#set($end=$start+10)
+		    #if($pagetotal - $start >10)
+		    	#set($end=$start + 10)
 		    #else
-		    	#set($end=$page)
-		    	#set($start=$page-10)
+		    	#set($end=$pagetotal)
+				#set($temp=$pagetotal - 10)
+				#if($temp > $start)
+		    		#set($start=$temp)
+				#end
 		    #end
 		    
 		    #if($pageindex!=1)
-		    <li><a href="javascript:void(0);" onclick="pageTo($pageindex-1)">&laquo;</a></li>
+		    <li><a href="javascript:void(0);" onclick="pageTo('$pageindex - 1')">&laquo;</a></li>
 		    #end
 		    #foreach($foo in [$start..$end])
-		    	<li page=$foo #if($pageindex==$foo)class="active"#end><a href="javascript:void(0);" onlick="pageTo($foo)">$foo</a></li>
+		    	<li page=$foo #if($pageindex==$foo)class="active"#end><a href="javascript:pageTo('$foo');" onlick="">$foo</a></li>
 			#end
 			#if($pageindex!=$end)
-		    <li><a href="javascript:void(0);" onclick="pageTo($pageindex+1)">&raquo;</a></li>
+		    <li><a href="javascript:void(0);" onclick="pageTo('$pageindex + 1'')">&raquo;</a></li>
 		    #end
 		</ul>
 		
@@ -384,7 +387,7 @@ function changeTypeAndSubmit(type) {
 	$("#form-search").submit();
 }
 
-function toPage(page) {
+function pageTo(page) {
 	$("#page").val(page);
 	$("#form-search").submit();
 }
