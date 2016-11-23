@@ -5,15 +5,15 @@
     id, type, subtype, location, host, owner, ownerid, ownerphone, unit, floor, 
     doornumber, employee, expend
   </sql>
-  <select id="selectByPrimaryKey" resultMap="HouseBean" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="HouseBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from t_house
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_house
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.baseinfo.collect.beans.HouseBean" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -24,28 +24,28 @@
       ownerid, ownerphone, 
       unit, floor, doornumber, 
       employee, expend)
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR}, 
-      #{location,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, 
-      #{ownerid,jdbcType=VARCHAR}, #{ownerphone,jdbcType=VARCHAR},
-      #{unit,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, #{doornumber,jdbcType=VARCHAR}, 
-      #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR},
-      #{addtime,jdbcType=DATETIME}, #{updatetime,jdbcType=DATETIME})
+    values (#{id}, #{type}, #{subtype}, 
+      #{location}, #{host}, #{owner}, 
+      #{ownerid}, #{ownerphone},
+      #{unit}, #{floor}, #{doornumber},
+      #{employee}, #{expend},
+      #{addtime}, #{updatetime})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.HouseBean" >
     update t_house
-    set type = #{type,jdbcType=VARCHAR},
-      subtype = #{subtype,jdbcType=VARCHAR},
-      location = #{location,jdbcType=VARCHAR},
-      host = #{host,jdbcType=VARCHAR},
-      owner = #{owner,jdbcType=VARCHAR},
-      ownerid = #{ownerid,jdbcType=VARCHAR},
-      ownerphone = #{ownerphone,jdbcType=VARCHAR},
-      unit = #{unit,jdbcType=VARCHAR},
-      floor = #{floor,jdbcType=INTEGER},
-      doornumber = #{doornumber,jdbcType=VARCHAR},
-      employee = #{employee,jdbcType=VARCHAR},
-      expend = #{expend,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=DATETIME}
-    where id = #{id,jdbcType=BIGINT}
+    set type = #{type},
+      subtype = #{subtype},
+      location = #{location},
+      host = #{host},
+      owner = #{owner},
+      ownerid = #{ownerid},
+      ownerphone = #{ownerphone},
+      unit = #{unit},
+      floor = #{floor},
+      doornumber = #{doornumber},
+      employee = #{employee},
+      expend = #{expend},
+      updatetime = #{updatetime}
+    where id = #{id}
   </update>
 </mapper>

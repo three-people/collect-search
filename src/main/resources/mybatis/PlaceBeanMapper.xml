@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baseinfo.collect.dao.PlaceDao" >
   <sql id="Base_Column_List" >
-    id, type, name, address, area, lessor, lessorid, lessorphone, lessee, lesseeid, lesseephone, 
+    id, type, name, address, area, lessor, lessorid, lessorphone, lessee, lesseeid, lesseephone,
     extend
   </sql>
-  <select id="selectByPrimaryKey" resultMap="PlaceBean" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="PlaceBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from t_place
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_place
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.baseinfo.collect.beans.PlaceBean" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -24,27 +24,27 @@
       lessorid, lessorphone, lessee, 
       lesseeid, lesseephone, extend
       )
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{lessor,jdbcType=VARCHAR}, 
-      #{lessorid,jdbcType=VARCHAR}, #{lessorphone,jdbcType=VARCHAR}, #{lessee,jdbcType=VARCHAR}, 
-      #{lesseeid,jdbcType=VARCHAR}, #{lesseephone,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR},
-      #{addtime,jdbcType=DATETIME}, #{updatetime,jdbcType=DATETIME}
+    values (#{id}, #{type}, #{name}, 
+      #{address}, #{area}, #{lessor}, 
+      #{lessorid}, #{lessorphone}, #{lessee}, 
+      #{lesseeid}, #{lesseephone}, #{extend},
+      #{addtime}, #{updatetime}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.PlaceBean" >
     update t_place
-    set type = #{type,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      area = #{area,jdbcType=VARCHAR},
-      lessor = #{lessor,jdbcType=VARCHAR},
-      lessorid = #{lessorid,jdbcType=VARCHAR},
-      lessorphone = #{lessorphone,jdbcType=VARCHAR},
-      lessee = #{lessee,jdbcType=VARCHAR},
-      lesseeid = #{lesseeid,jdbcType=VARCHAR},
-      lesseephone = #{lesseephone,jdbcType=VARCHAR},
-      extend = #{extend,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=DATETIME}
-    where id = #{id,jdbcType=BIGINT}
+    set type = #{type},
+      name = #{name},
+      address = #{address},
+      area = #{area},
+      lessor = #{lessor},
+      lessorid = #{lessorid},
+      lessorphone = #{lessorphone},
+      lessee = #{lessee},
+      lesseeid = #{lesseeid},
+      lesseephone = #{lesseephone},
+      extend = #{extend},
+      updatetime = #{updatetime}
+    where id = #{id}
   </update>
 </mapper>
