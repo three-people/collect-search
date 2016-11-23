@@ -21,7 +21,7 @@
 	<div class="col-md-3">
 	</div>
 	<div class="col-md-6">
-		<form id="form-search" action="/search">
+		<form id="form-search" action="/search" method="post">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
@@ -85,8 +85,8 @@
 			</div>
 			#end
 			<div>
-				<a href="javascript:void(0);" onclick="update('$house.id','house')">修改</a>
-				&nbsp;
+				<!--<a href="javascript:void(0);" onclick="update('$house.id','house')">修改</a>
+				&nbsp;-->
 				<a href="javascript:void(0);" onclick="deleteData('$house.id','house')">删除</a>
 			</div>
 		<hr>
@@ -116,8 +116,8 @@
 			</div>
 			#end
 			<div style="padding:2px 0px;">
-				<a href="javascript:void(0);" onclick="update('$people.id','people')">修改</a>
-				&nbsp;
+				<!--<a href="javascript:void(0);" onclick="update('$people.id','people')">修改</a>
+				&nbsp;-->
 				<a href="javascript:void(0);" onclick="deleteData('$people.id','people')">删除</a>
 			</div>
 		</div>
@@ -143,8 +143,8 @@
 				<li><strong>联系电话：</strong>$!employer.safemanphone</li>
 			</ul>
 			<div>
-				<a href="javascript:void(0);" onclick="update('$employer.id','employer')">修改</a>
-				&nbsp;
+				<!--<a href="javascript:void(0);" onclick="update('$employer.id','employer')">修改</a>
+				&nbsp;-->
 				<a href="javascript:void(0);" onclick="deleteData('$employer.id','employer')">删除</a>
 			</div>
 		<hr>
@@ -172,8 +172,8 @@
 				<li><strong>联系电话：</strong>$!place.lesseephone</li>
 			</ul>
 			<div>
-				<a href="javascript:void(0);" onclick="update('$place.id','place')">修改</a>
-				&nbsp;
+				<!--<a href="javascript:void(0);" onclick="update('$place.id','place')">修改</a>
+				&nbsp;-->
 				<a href="javascript:void(0);" onclick="deleteData('$place.id','place')">删除</a>
 			</div>
 		<hr>
@@ -193,8 +193,8 @@
 				<li><strong>数量：</strong>$!camera.count</li>
 			</ul>
 			<div>
-				<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
-				&nbsp;
+				<!--<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
+				&nbsp;-->
 				<a href="javascript:void(0);" onclick="deleteData('$camera.id','camera')">删除</a>
 			</div>
 		<hr>
@@ -221,13 +221,15 @@
 		    #end
 		    
 		    #if($pageindex!=1)
-		    <li><a href="javascript:void(0);" onclick="pageTo('$pageindex - 1')">&laquo;</a></li>
+			#set($pre=$pageindex - 1)
+		    <li><a href="javascript:pageTo('$pre');">&laquo;</a></li>
 		    #end
 		    #foreach($foo in [$start..$end])
 		    	<li page=$foo #if($pageindex==$foo)class="active"#end><a href="javascript:pageTo('$foo');" onlick="">$foo</a></li>
 			#end
 			#if($pageindex!=$end)
-		    <li><a href="javascript:void(0);" onclick="pageTo('$pageindex + 1'')">&raquo;</a></li>
+			#set($next=$pageindex + 1)
+		    <li><a href="javascript:pageTo('$next');">&raquo;</a></li>
 		    #end
 		</ul>
 		
