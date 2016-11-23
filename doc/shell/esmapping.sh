@@ -7,8 +7,8 @@ curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
-            "analyzer": "ik_max_word",
-            "search_analyzer": "ik_max_word",
+            "analyzer": "standard",
+            "search_analyzer": "standard",
             "term_vector": "no",
             "store": "false"
         },
