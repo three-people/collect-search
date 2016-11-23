@@ -4,6 +4,7 @@ package com.baseinfo.collect.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.baseinfo.collect.beans.TotalHits;
 import com.baseinfo.collect.dao.*;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by luzhaohui on 2016/11/17.
+ * 搜索Controller
  */
 @Controller
 public class SearchController {
@@ -54,8 +55,10 @@ public class SearchController {
                 pageIndex = 1;
             pageIndex--;
         	String indexType = IndexConstants.getIndexByType(type);
-            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*20, 20, indexType);
+            TotalHits hits = new TotalHits(0);
+            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*20, 20, indexType,hits);
             model.addObject(type+"list", resultList);
+            model.addObject("total",hits);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -37,9 +37,27 @@ public class CameraBean {
     @Field(index = FieldIndex.not_analyzed, store = true)
     private String expend;
 
-/*    private Date addtime;
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private java.util.Date addtime;
 
-    private Date updatetime;*/
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private java.util.Date updatetime;
+
+    public java.util.Date getAddtime() {
+        return addtime;
+    }
+
+    public java.util.Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setAddtime(java.util.Date addtime) {
+        this.addtime = addtime;
+    }
+
+    public void setUpdatetime(java.util.Date updatetime) {
+        this.updatetime = updatetime;
+    }
 
     public Long getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.baseinfo.collect.service;
 
+import com.baseinfo.collect.beans.TotalHits;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -27,12 +28,13 @@ public class ESSearchService {
     private Client client;
 
 
-    public List<Map<String, Object>> queryForObjectNotEq(String content,int from, int size,String esIndexName) {
+    public List<Map<String, Object>> queryForObjectNotEq(String content, int from, int size, String esIndexName, TotalHits hitsTimes) {
         SearchRequestBuilder reqBuilder = client.prepareSearch(esIndexName)
                 .setTypes("fulltext").setSearchType(SearchType.DEFAULT)
                 .setExplain(true);
         QueryStringQueryBuilder queryString = QueryBuilders.queryStringQuery("\""+ content + "\"");
         queryString.field("_all");
+        queryString.analyzer("standard");
         //queryString.minimumShouldMatch("10");
         reqBuilder.setQuery(QueryBuilders.boolQuery().should(queryString))
                 .setExplain(true);
@@ -41,8 +43,9 @@ public class ESSearchService {
         }
 
         SearchResponse resp = reqBuilder.execute().actionGet();
+        long total = resp.getHits().getTotalHits();
+        hitsTimes.setTotal(total);
         SearchHit[] hits = resp.getHits().getHits();
-
         List<Map<String, Object>> results = new ArrayList<Map<String, Object>>();
         for (SearchHit hit : hits) {
             results.add(hit.getSource());
