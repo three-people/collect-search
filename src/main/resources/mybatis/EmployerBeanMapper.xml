@@ -5,15 +5,15 @@
     id, type, name, address, chargeman, chargemanid, chargemanphone, safeman, safemanid, 
     safemanphone, extend
   </sql>
-  <select id="selectByPrimaryKey" resultMap="EmployerBean" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="EmployerBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from t_employer
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_employer
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.baseinfo.collect.beans.EmployerBean" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -23,25 +23,25 @@
       address, chargeman, chargemanid, 
       chargemanphone, safeman, safemanid, 
       safemanphone, extend)
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{chargeman,jdbcType=VARCHAR}, #{chargemanid,jdbcType=VARCHAR}, 
-      #{chargemanphone,jdbcType=VARCHAR}, #{safeman,jdbcType=VARCHAR}, #{safemanid,jdbcType=VARCHAR}, 
-      #{safemanphone,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR},
-      #{addtime,jdbcType=DATETIME}, #{updatetime,jdbcType=DATETIME})
+    values (#{id}, #{type}, #{name}, 
+      #{address}, #{chargeman}, #{chargemanid}, 
+      #{chargemanphone}, #{safeman}, #{safemanid}, 
+      #{safemanphone}, #{extend},
+      #{addtime}, #{updatetime})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.EmployerBean" >
     update t_employer
-    set type = #{type,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      chargeman = #{chargeman,jdbcType=VARCHAR},
-      chargemanid = #{chargemanid,jdbcType=VARCHAR},
-      chargemanphone = #{chargemanphone,jdbcType=VARCHAR},
-      safeman = #{safeman,jdbcType=VARCHAR},
-      safemanid = #{safemanid,jdbcType=VARCHAR},
-      safemanphone = #{safemanphone,jdbcType=VARCHAR},
-      extend = #{extend,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=DATETIME}
-    where id = #{id,jdbcType=BIGINT}
+    set type = #{type},
+      name = #{name},
+      address = #{address},
+      chargeman = #{chargeman},
+      chargemanid = #{chargemanid},
+      chargemanphone = #{chargemanphone},
+      safeman = #{safeman},
+      safemanid = #{safemanid},
+      safemanphone = #{safemanphone},
+      extend = #{extend},
+      updatetime = #{updatetime}
+    where id = #{id}
   </update>
 </mapper>

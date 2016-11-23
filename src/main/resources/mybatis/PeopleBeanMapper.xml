@@ -5,15 +5,15 @@
     id, type, subtype, hostname, hostid, hostphone, number, lessee, stay, employee,
     expend,addtime,updatetime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="PeopleBean" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="PeopleBean" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
     from t_people
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_people
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.baseinfo.collect.beans.PeopleBean">
     <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
@@ -23,26 +23,26 @@
     hostname, hostid, hostphone,
     number, lessee,stay, employee, expend,addtime,updatetime
     )
-    values (#{type,jdbcType=VARCHAR}, #{subtype,jdbcType=VARCHAR},
-    #{hostname,jdbcType=VARCHAR}, #{hostid,jdbcType=VARCHAR}, #{hostphone,jdbcType=VARCHAR},
-    #{number,jdbcType=INTEGER}, #{lessee,jdbcType=VARCHAR},
-    #{stay,jdbcType=VARCHAR}, #{employee,jdbcType=VARCHAR}, #{expend,jdbcType=VARCHAR},
-    #{addtime,jdbcType=DATETIME}, #{updatetime,jdbcType=DATETIME}
+    values (#{type}, #{subtype},
+    #{hostname}, #{hostid}, #{hostphone},
+    #{number}, #{lessee},
+    #{stay}, #{employee}, #{expend},
+    #{addtime}, #{updatetime}
     )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.PeopleBean" >
     update t_people
-    set type = #{type,jdbcType=VARCHAR},
-      subtype = #{subtype,jdbcType=VARCHAR},
-      hostname = #{hostname,jdbcType=VARCHAR},
-      hostid = #{hostid,jdbcType=VARCHAR},
-      hostphone = #{hostphone,jdbcType=VARCHAR},
-      number = #{number,jdbcType=INTEGER},
-      lessee = #{lessee,jdbcType=VARCHAR},
-      stay = #{stay,jdbcType=VARCHAR},
-      employee = #{employee,jdbcType=VARCHAR},
-      expend = #{expend,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=DATETIME}
-    where id = #{id,jdbcType=BIGINT}
+    set type = #{type},
+      subtype = #{subtype},
+      hostname = #{hostname},
+      hostid = #{hostid},
+      hostphone = #{hostphone},
+      number = #{number},
+      lessee = #{lessee},
+      stay = #{stay},
+      employee = #{employee},
+      expend = #{expend},
+      updatetime = #{updatetime}
+    where id = #{id}
   </update>
 </mapper>
