@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by luzhaohui on 2016/11/17.
+ * 搜索Controller
  */
 @Controller
 public class SearchController {

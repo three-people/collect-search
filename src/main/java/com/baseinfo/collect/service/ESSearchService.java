@@ -34,6 +34,7 @@ public class ESSearchService {
                 .setExplain(true);
         QueryStringQueryBuilder queryString = QueryBuilders.queryStringQuery("\""+ content + "\"");
         queryString.field("_all");
+        queryString.analyzer("standard");
         //queryString.minimumShouldMatch("10");
         reqBuilder.setQuery(QueryBuilders.boolQuery().should(queryString))
                 .setExplain(true);
