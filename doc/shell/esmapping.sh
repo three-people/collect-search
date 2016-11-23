@@ -1,7 +1,9 @@
 #/bin/bash
 #生成es相关的person索引
 escluster_host=$1
-curl -XPOST http://${escluster_host}:9200/people_index/fulltext/_mapping -d'
+
+curl -XPUT http://127.0.0.1:9200/people_index
+curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
@@ -53,6 +55,8 @@ curl -XPOST http://${escluster_host}:9200/people_index/fulltext/_mapping -d'
         }
     }
 }'
+
+
 #房屋相关
 curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
 {
