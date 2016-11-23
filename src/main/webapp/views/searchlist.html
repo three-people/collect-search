@@ -215,8 +215,10 @@
 		    #else
 		    	#set($end=$pagetotal)
 				#set($temp=$pagetotal - 10)
-				#if($temp > $start)
+				#if($temp > 0)
 		    		#set($start=$temp)
+				#else
+					#set($start=1)
 				#end
 		    #end
 		    
