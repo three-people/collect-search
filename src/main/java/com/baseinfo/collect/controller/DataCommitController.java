@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Walker on 2016/11/17.
@@ -89,11 +90,28 @@ public class DataCommitController {
             if (res.getData() != null) {
                 model.addAttribute("headList", res.getData().get("headList"));
                 model.addAttribute("resList", res.getData().get("resList"));
-                model.addAttribute("isList", "23,23");
+                model.addAttribute("idList", getIdsByList((ArrayList<Long>) res.getData().get("idList")));
             }
         }
         ModelAndView modelAndView = new ModelAndView("/upload", model);
         return modelAndView;
+    }
+
+    /**
+     * 获取ids 字符串
+     * @param idList
+     * @return
+     */
+    private String getIdsByList(List<Long> idList) {
+        if (idList == null || idList.isEmpty()) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < idList.size(); i++) {
+            sb.append(String.valueOf(idList.get(i)));
+            if (i < idList.size() - 1) sb.append(",");
+        }
+        return sb.toString();
     }
 
     @RequestMapping(value = "/excelDownload")
@@ -256,9 +274,10 @@ public class DataCommitController {
         // 入库并添加索引
         int successCount = 0;
         response.setResList(new ArrayList<Object>());
-        response.setData(new HashMap<String,Object>());
+        response.setData(new HashMap<String, Object>());
         response.getData().put("resList", new ArrayList<Object>());
         response.getData().put("headList", beanTypeEnum.getValue());
+        response.getData().put("idList", new ArrayList<Long>());
         for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
             int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum, response);
             if (numres == 0) successCount++;

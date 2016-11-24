@@ -1,8 +1,7 @@
 package com.baseinfo.collect.util;
 
 import com.baseinfo.collect.beans.*;
-import com.baseinfo.collect.client.HouseClient;
-import com.baseinfo.collect.client.PersonClient;
+import com.baseinfo.collect.client.*;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.enums.BeanTypeEnum;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -35,12 +34,25 @@ public class ExcelFileUtil {
 //    public static final String[] place_info = new String[]{"", ""};
 //    public static final String[] camera_info = new String[]{"设备编号", "所属派出所", "分类", "监控地点", "设备类型", "设备朝向", "数量", "备注"};
     @Autowired
-    @Qualifier("HouseClient")
-    HouseClient houseClient;
+    @Qualifier("PlaceClient")
+    PlaceClient placeClient;
 
     @Autowired
     @Qualifier("PersonClient")
     PersonClient personclient;
+
+    @Autowired
+    @Qualifier("CameraClient")
+    CameraClient cameraCient;
+
+    @Autowired
+    @Qualifier("EmployerClient")
+    EmployerClient employerClient;
+
+    @Autowired
+    @Qualifier("HouseClient")
+    HouseClient houseClient;
+
 
     //检查excel 表头
     public static int checkHead(Row headRow, BeanTypeEnum infoEnum) {
@@ -115,6 +127,10 @@ public class ExcelFileUtil {
 
                     //建立ES索引
                     n = personclient.insertAndIndex(peopleBean) ? 0 : -1;
+                    if (n == 0) {
+                        List<Long> resList = (ArrayList<Long>) baseResponse.getData().get("idList");
+                        resList.add(peopleBean.getId());
+                    }
                 } catch (Exception e) {
                     logger.error(infoHeadEnum.getName() + " " + infoHeadEnum.getType() + " error:" + e.getMessage());
                     return n + 1;//第七列数量
@@ -140,7 +156,11 @@ public class ExcelFileUtil {
                     //插入数据库
 
                     //建立ES索引
-//                    n = .insertAndIndex(houseBean) ? 0 : -1;
+                    n = houseClient.insertAndIndex(houseBean) ? 0 : -1;
+                    if (n == 0) {
+                        List<Long> resList = (ArrayList<Long>) baseResponse.getData().get("idList");
+                        resList.add(houseBean.getId());
+                    }
                 } catch (Exception e) {
                     logger.error(infoHeadEnum.getName() + " " + infoHeadEnum.getType() + " error:" + e.getMessage());
                     return n + 1;//第七列数量
@@ -163,8 +183,13 @@ public class ExcelFileUtil {
                     //插入数据库
 
                     //建立ES索引
-
+                    n = employerClient.insertAndIndex(employerBean) ? 0 : -1;
+                    if (n == 0) {
+                        List<Long> resList = (ArrayList<Long>) baseResponse.getData().get("idList");
+                        resList.add(employerBean.getId());
+                    }
                 } catch (Exception e) {
+                    logger.error(infoHeadEnum.getName() + " " + infoHeadEnum.getType() + " error:" + e.getMessage());
                     return n + 1;//第七列数量
                 }
                 break;
@@ -185,8 +210,13 @@ public class ExcelFileUtil {
                     //插入数据库
 
                     //建立ES索引
-
+                    n = placeClient.insertAndIndex(placeBean) ? 0 : -1;
+                    if (n == 0) {
+                        List<Long> resList = (ArrayList<Long>) baseResponse.getData().get("idList");
+                        resList.add(placeBean.getId());
+                    }
                 } catch (Exception e) {
+                    logger.error(infoHeadEnum.getName() + " " + infoHeadEnum.getType() + " error:" + e.getMessage());
                     return n + 1;//第七列数量
                 }
                 break;
@@ -205,8 +235,13 @@ public class ExcelFileUtil {
                     //插入数据库
 
                     //建立ES索引
-
+                    n = cameraCient.insertAndIndex(cameraBean) ? 0 : -1;
+                    if (n == 0) {
+                        List<Long> resList = (ArrayList<Long>) baseResponse.getData().get("idList");
+                        resList.add(cameraBean.getId());
+                    }
                 } catch (Exception e) {
+                    logger.error(infoHeadEnum.getName() + " " + infoHeadEnum.getType() + " error:" + e.getMessage());
                     return n + 1;//第七列数量
                 }
                 break;
@@ -274,7 +309,6 @@ public class ExcelFileUtil {
         } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
             str = String.valueOf((long) cell.getNumericCellValue());
         } else {
-            rowList.add(String.valueOf(cell.getStringCellValue()));
             str = String.valueOf(cell.getStringCellValue());
         }
         rowList.add(str);
