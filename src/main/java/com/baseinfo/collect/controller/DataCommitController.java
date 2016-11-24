@@ -4,6 +4,7 @@ package com.baseinfo.collect.controller;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.enums.BeanTypeEnum;
 import com.baseinfo.collect.util.ExcelFileUtil;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * Created by Walker on 2016/11/17.
@@ -61,7 +63,7 @@ public class DataCommitController {
             HttpServletRequest request,
             HttpServletResponse response) {
         String beanType = request.getParameter("beanType");
-
+        BeanTypeEnum typeEnum = BeanTypeEnum.getEnum("people");
         BaseResponse res = new BaseResponse();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("multifile");
@@ -71,7 +73,7 @@ public class DataCommitController {
                 InputStream fileInput = file.getInputStream();
                 //读取excel文件方法
                 Workbook workbook = createWorkbook(fileInput);
-                dealExcel(workbook, BeanTypeEnum.PEOPLE, res);
+                dealExcel(workbook, typeEnum, res);
 
             } catch (Exception e) {
                 res.setCode(0);
@@ -84,6 +86,10 @@ public class DataCommitController {
         if (res != null) {
             model.addAttribute("code", res.getCode());
             model.addAttribute("msg", res.getMsg());
+            if (res.getData() != null) {
+                model.addAttribute("headList", res.getData().get("headList"));
+                model.addAttribute(typeEnum.getType() + "list", res.getData().get("resList"));
+            }
         }
         ModelAndView modelAndView = new ModelAndView("/upload", model);
         return modelAndView;
@@ -248,8 +254,12 @@ public class DataCommitController {
         }//TODO test end
         // 入库并添加索引
         int successCount = 0;
+        response.setResList(new ArrayList<Object>());
+        response.setData(new HashedMap());
+        response.getData().put("resList", new ArrayList<Object>());
+        response.getData().put("headList", beanTypeEnum.getValue());
         for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-            int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum);
+            int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum, response);
             if (numres == 0) successCount++;
             try {
                 Thread.sleep(20);

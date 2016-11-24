@@ -49,13 +49,189 @@
         #if($!{code})
         <h4><font color=#if($!{code}&&$code==1)"green"#else"red"#end>$!{msg}</font></h4>
         #end
+		#if(!$!{code}||$!{code}!=1)
 		<h5>使用说明：</h5>
 		<h5>本系统仅接受xls，xlsx文件。</h5>
 		<h5>请选择想要上传的数据类型，之后点击“下载模板”（已有模板则忽略该步骤）。</h5>
 		<h5>根据模板填好数据后点击“选择文件”，选好文件后点击“上传”按钮即可。</h5>
+		#end
+		#if($headlist)
+		#foreach($house in $hoseList)
+		<div>
+			<h4>$!house.location</h4>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!house.type &nbsp;$!house.subtype</li>
+				#if ($house.unit)
+				<li><strong>单元：</strong>$!house.unit</li>
+				#end
+				<li><strong>楼层：</strong>$!house.floor</li>
+				#if ($house.doornumber)
+				<li><strong>门牌号/房号：</strong>$!house.doornumber</li>
+				#end
+				<li><strong>户主/房主：</strong>$!house.owner</li>
+				#if ($house.host)
+				<li><strong>产权人：</strong>$!house.host</li>
+				#end
+			</ul>
+			#if ($house.employee)
+			<div>
+				<strong>从业人员：</strong>$!house.employee
+			</div>
+			#end
+			<div>
+				<a href="javascript:void(0);" onclick="update('$house.id','house')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="deleteData('$house.id','house')">删除</a>
+			</div>
+			<hr>
+		</div>
+		#end
+		#end
+		#if($houselist)
+		#foreach($house in $hoseList)
+		<div>
+			<h4>$!house.location</h4>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!house.type &nbsp;$!house.subtype</li>
+				#if ($house.unit)
+				<li><strong>单元：</strong>$!house.unit</li>
+				#end
+				<li><strong>楼层：</strong>$!house.floor</li>
+				#if ($house.doornumber)
+				<li><strong>门牌号/房号：</strong>$!house.doornumber</li>
+				#end
+				<li><strong>户主/房主：</strong>$!house.owner</li>
+				#if ($house.host)
+				<li><strong>产权人：</strong>$!house.host</li>
+				#end
+			</ul>
+			#if ($house.employee)
+			<div>
+				<strong>从业人员：</strong>$!house.employee
+			</div>
+			#end
+			<div>
+				<a href="javascript:void(0);" onclick="update('$house.id','house')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="deleteData('$house.id','house')">删除</a>
+			</div>
+			<hr>
+		</div>
+		#end
+		#end
+
+		#if($peoplelist)
+		#foreach($people in $peoplelist)
+		<div style="border-bottom:1px solid #ddd; padding: 5px 10px;">
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!people.type &nbsp;$!people.subtype</li>
+				<li><strong>户主/出租人：</strong>$!people.hostname</li>
+				<li><strong>身份证号：</strong>$!people.hostid</li>
+				<li><strong>电话：</strong>$!people.hostphone</li>
+				<li><strong>人数：</strong>$!people.number</li>
+				#if ($people.lessee)
+				<li><strong>租住人：</strong>$!people.lessee</li>
+				#end
+				#if ($people.stay)
+				<li><strong>寄住人：</strong>$!people.stay</li>
+				#end
+			</ul>
+			#if ($people.employee)
+			<div>
+				<strong>从业人员：</strong>$!people.employee
+			</div>
+			#end
+			<div style="padding:2px 0px;">
+				<a href="javascript:void(0);" onclick="update('$people.id','people')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="deleteData('$people.id','people')">删除</a>
+			</div>
+		</div>
+		#end
+		#end
+
+		#if($employerlist)
+		#foreach($employer in $employerlist)
+		<div>
+			<h4>$!employer.name</h4>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!employer.type</li>
+				<li><strong>地址：</strong>$!employer.address</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>主要负责人：</strong>$!employer.chargeman</li>
+				<li><strong>身份证号：</strong>$!employer.chargemanid</li>
+				<li><strong>联系电话：</strong>$!employer.chargemanphone</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>内保负责人：</strong>$!employer.safeman</li>
+				<li><strong>身份证号：</strong>$!employer.safemanid</li>
+				<li><strong>联系电话：</strong>$!employer.safemanphone</li>
+			</ul>
+			<div>
+				<a href="javascript:void(0);" onclick="update('$employer.id','employer')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="deleteData('$employer.id','employer')">删除</a>
+			</div>
+			<hr>
+		</div>
+		#end
+		#end
+
+		#if($placelist)
+		#foreach($place in $placelist)
+		<div>
+			<h4>$!place.name</h4>
+			<ul class="list-inline">
+				<li><strong>类型：</strong>$!place.type</li>
+				<li><strong>面积：</strong>$!place.area</li>
+				<li><strong>地址：</strong>$!place.address</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>出租人：</strong>$!place.lessor</li>
+				<li><strong>身份证号：</strong>$!place.lessorid</li>
+				<li><strong>联系电话：</strong>$!place.lessorphone</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>租赁人：</strong>$!place.lessee</li>
+				<li><strong>身份证号：</strong>$!place.lesseeid</li>
+				<li><strong>联系电话：</strong>$!place.lesseephone</li>
+			</ul>
+			<div>
+				<a href="javascript:void(0);" onclick="update('$place.id','place')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="deleteData('$place.id','place')">删除</a>
+			</div>
+			<hr>
+		</div>
+		#end
+		#end
+
+		#if($cameralist)
+		#foreach($camera in $cameralist)
+		<div>
+			<h4>$!camera.localname</h4>
+			<ul class="list-inline">
+				<li><strong>所属派出所：</strong>$!camera.policestation</li>
+				<li><strong>分类：</strong>$!camera.type</li>
+				<li><strong>类型：</strong>$!camera.devicetype</li>
+				<li><strong>朝向：</strong>$!camera.direction</li>
+				<li><strong>数量：</strong>$!camera.count</li>
+			</ul>
+			<div>
+				<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
+				&nbsp;
+				<a href="javascript:void(0);" onclick="deleteData('$camera.id','camera')">删除</a>
+			</div>
+			<hr>
+		</div>
+		#end
+		#end
 	</div><!-- /.col-lg-6 -->
 	<div class="col-md-3">
 	</div>
+
+
 </div><!-- /.row -->
 
 <script type="text/javascript">

@@ -1,7 +1,6 @@
 package com.baseinfo.collect.contract;
 
-import com.alibaba.fastjson.JSONObject;
-
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +14,8 @@ public class BaseResponse {
 
     private Map<String,Object> data;
 
+    private List<Object> resList;
+
     public int getCode() {
         return code;
     }
@@ -25,6 +26,14 @@ public class BaseResponse {
 
     public Map<String, Object> getData() {
         return data;
+    }
+
+    public List<Object> getResList() {
+        return resList;
+    }
+
+    public void setResList(List<Object> resList) {
+        this.resList = resList;
     }
 
     public void setCode(int code) {
