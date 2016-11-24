@@ -1,5 +1,6 @@
 package com.baseinfo.collect.client;
 
+import com.baseinfo.collect.beans.CameraBean;
 import com.baseinfo.collect.beans.EmployerBean;
 import com.baseinfo.collect.beans.HouseBean;
 import com.baseinfo.collect.dao.EmployerDao;
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Service;
 /**
  * Created by 58 on 2016/11/21.
  */
-@Service("EmpployerClient")
-public class EmpployerClient {
+@Service("EmployerClient")
+public class EmployerClient {
 
     @Autowired
     @Qualifier("EmployerBeanMapper")
@@ -54,12 +55,13 @@ public class EmpployerClient {
         return false;
     }
 
-    public boolean deletePeople(EmployerBean employer){
-        if(employer.getId()<=0)
+
+    public boolean delete(long id){
+        if(id<=0)
             return false;
-        int result = employerDao.deleteByPrimaryKey(employer.getId());
+        int result = employerDao.deleteByPrimaryKey(id);
         if(result == 1){
-            boolean flag = esService.deleteById(String.valueOf(employer.getId()),EmployerBean.class);
+            boolean flag = esService.deleteById(String.valueOf(id),EmployerBean.class);
             return flag;
         }
         return false;
