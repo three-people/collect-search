@@ -8,24 +8,26 @@
 <title>登录</title>
 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 <link href="../css/signin.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-  <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
 <![endif]-->
 </head>
   <body>
 
     <div class="container">
 
-      <form class="form-signin" role="form" action="/user/login">
+      <form class="form-signin" role="form" action="./user/login">
         <h2 class="form-signin-heading">泺源派出所搜索登录</h2>
         <input type="uname" id="uname" name="uname" class="form-control" placeholder="用户名" required autofocus>
         <input type="password" name="pwd" id="pwd" class="form-control" placeholder="密码" required>

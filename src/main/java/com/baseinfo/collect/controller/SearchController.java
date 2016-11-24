@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.baseinfo.collect.beans.TotalHits;
+import com.baseinfo.collect.client.*;
 import com.baseinfo.collect.dao.*;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -34,8 +35,20 @@ public class SearchController {
     private ESSearchService esSearchService;
 
     @Autowired
-    @Qualifier("sqlSessionFactory")
-    private SqlSessionFactory sqlSessionFactory;
+    @Qualifier("HouseClient")
+    private HouseClient houseClient;
+    @Autowired
+    @Qualifier("PersonClient")
+    private PersonClient personClient;
+    @Autowired
+    @Qualifier("PlaceClient")
+    private PlaceClient placeClient;
+    @Autowired
+    @Qualifier("EmployerClient")
+    private EmployerClient employerClient;
+    @Autowired
+    @Qualifier("CameraClient")
+    private CameraClient cameraClient;
 
     @RequestMapping(value = "/search")
     public ModelAndView search(HttpServletRequest request, HttpServletResponse response) {
@@ -71,38 +84,30 @@ public class SearchController {
     @ResponseBody
     @RequestMapping(value = "/delete/{type}/{id}")
     public BaseResponse delete(@PathVariable("type") String type, @PathVariable("id") long id, HttpServletRequest request, HttpServletResponse response) {
-//        SqlSession sqlSession = sqlSessionFactory.openSession();
         BaseResponse res = new BaseResponse();
-        res.setMsg(type+id);
-//        int result = 0;
-//        switch (type){
-//            case "house" :
-//                HouseDao houseDao = sqlSession.getMapper(HouseDao.class);
-//                result = houseDao.deleteByPrimaryKey(id);
-//                break;
-//            case "people" :
-//                PeopleDao peopleDao = sqlSession.getMapper(PeopleDao.class);
-//                result = peopleDao.deleteByPrimaryKey(id);
-//                break;
-//            case "place" :
-//                PlaceDao placeDao = sqlSession.getMapper(PlaceDao.class);
-//                result = placeDao.deleteByPrimaryKey(id);
-//                break;
-//            case "employer" :
-//                EmployerDao employerDao = sqlSession.getMapper(EmployerDao.class);
-//                result = employerDao.deleteByPrimaryKey(id);
-//                break;
-//            case "camera" :
-//                CameraDao cameraDao = sqlSession.getMapper(CameraDao.class);
-//                result = cameraDao.deleteByPrimaryKey(id);
-//                break;
-//        }
-//        sqlSession.commit();
-//        if(result > 0) {
-//            res.setCode(1);
-//        } else {
-//            res.setCode(0);
-//        }
+        boolean result = false;
+        switch (type){
+            case "house" :
+                result = houseClient.delete(id);
+                break;
+            case "people" :
+                result = personClient.delete(id);
+                break;
+            case "place" :
+                result = placeClient.delete(id);
+                break;
+            case "employer" :
+                result = employerClient.delete(id);
+                break;
+            case "camera" :
+                result = cameraClient.delete(id);
+                break;
+        }
+        if(result) {
+            res.setCode(1);
+        } else {
+            res.setCode(0);
+        }
         return res;
     }
 

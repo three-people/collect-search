@@ -7,13 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> 
+<script src="../js/bootstrap.min.js"></script>
 <body>
 #parse("./topbar.html")
 
@@ -21,7 +21,7 @@
 	<div class="col-md-3">
 	</div>
 	<div class="col-md-6">
-		<form id="form-search" action="/search" method="post">
+		<form id="form-search" action="./search" method="post">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
@@ -203,6 +203,7 @@
 		#end
 		
 		<!-- 分页 -->
+		#if($pagetotal > 1)
 		<ul id="pager" class="pagination pull-right">
 			#if($pageindex > 5)
 		    	#set($start=$pageindex)
@@ -224,16 +225,17 @@
 		    
 		    #if($pageindex!=1)
 			#set($pre=$pageindex - 1)
-		    <li><a href="javascript:pageTo('$pre');">&laquo;</a></li>
+		    <li><a href="javascript:void(0);" onclick="pageTo('$pre');">&laquo;</a></li>
 		    #end
 		    #foreach($foo in [$start..$end])
 		    	<li page=$foo #if($pageindex==$foo)class="active"#end><a href="javascript:pageTo('$foo');" onlick="">$foo</a></li>
 			#end
 			#if($pageindex!=$end)
 			#set($next=$pageindex + 1)
-		    <li><a href="javascript:pageTo('$next');">&raquo;</a></li>
+		    <li><a href="javascript:void(0);" onclick="pageTo('$next');">&raquo;</a></li>
 		    #end
 		</ul>
+		#end
 		
 	</div><!-- 内容结束 -->
 	<div class="col-md-2">
@@ -404,7 +406,11 @@ function deleteData(id, type){
 	jQuery.ajax({
 		url: "/delete/"+type+"/"+id,
 		success: function(data){
-			alert(data.msg);
+			if(data.code == 1){
+				alert("删除成功");
+			}else{
+				alert("删除失败");
+			}
 		}
 	});
 }
