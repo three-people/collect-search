@@ -63,8 +63,8 @@ public class DataCommitController {
 //            @RequestParam("multifile") MultipartFile file,
             HttpServletRequest request,
             HttpServletResponse response) {
-        String beanType = request.getParameter("beanType");
-        BeanTypeEnum typeEnum = BeanTypeEnum.getEnum("people");
+        String beanType = request.getParameter("type");
+        BeanTypeEnum typeEnum = BeanTypeEnum.getEnum(beanType);
         BaseResponse res = new BaseResponse();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("multifile");
