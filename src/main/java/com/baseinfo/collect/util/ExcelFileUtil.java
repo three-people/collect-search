@@ -92,21 +92,22 @@ public class ExcelFileUtil {
     //处理数据
     public int insertRowData(Row row, BeanTypeEnum infoHeadEnum, BaseResponse baseResponse) {
         int n = -1;
+        List<String> cellList = new ArrayList<>();
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
                     n = 0;
                     PeopleBean peopleBean = new PeopleBean();
-                    peopleBean.setType(getCellValue(row.getCell(n++), true));
-                    peopleBean.setSubtype(getCellValue(row.getCell(n++), true));
-                    peopleBean.setHostname(getCellValue(row.getCell(n++), true));
-                    peopleBean.setHostid(getCellValue(row.getCell(n++), false));
-                    peopleBean.setHostphone(getCellValue(row.getCell(n++), true));
-                    peopleBean.setNumber(Integer.parseInt(getCellValue(row.getCell(n++), true)));
-                    peopleBean.setLessee(getCellValue(row.getCell(n++), true));
-                    peopleBean.setStay(getCellValue(row.getCell(n++), true));
-                    peopleBean.setEmployee(getCellValue(row.getCell(n++), true));
-                    peopleBean.setExpend(getCellValue(row.getCell(n++), true));
+                    peopleBean.setType(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setSubtype(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setHostname(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setHostid(getAndAddCellValue(row.getCell(n++), cellList, false));
+                    peopleBean.setHostphone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setNumber(Integer.parseInt(getAndAddCellValue(row.getCell(n++), cellList, true)));
+                    peopleBean.setLessee(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setStay(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setEmployee(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setExpend(getAndAddCellValue(row.getCell(n++), cellList, true));
 
                     peopleBean.setAddtime(new Date());
                     peopleBean.setUpdatetime(new Date());
@@ -114,15 +115,8 @@ public class ExcelFileUtil {
 
                     //建立ES索引
                     n = personclient.insertAndIndex(peopleBean) ? 0 : -1;
-                    if (n == 0) {
-                        List<Object> resList = (ArrayList) baseResponse.getData().get("resList");
-                        resList.add(peopleBean);
-//                        baseResponse.getResList().add(peopleBean);
-                    }
-
                 } catch (Exception e) {
-
-                    e.printStackTrace();
+                    logger.error(infoHeadEnum.getName() + " " + infoHeadEnum.getType() + " error:" + e.getMessage());
                     return n + 1;//第七列数量
                 }
                 break;
@@ -130,24 +124,25 @@ public class ExcelFileUtil {
                 try {
                     n = 0;
                     HouseBean houseBean = new HouseBean();
-                    houseBean.setType(getCellValue(row.getCell(n++), true));
-                    houseBean.setSubtype(getCellValue(row.getCell(n++), true));
-                    houseBean.setHost(getCellValue(row.getCell(n++), true));
-                    houseBean.setOwner(getCellValue(row.getCell(n++), true));
-                    houseBean.setOwnerid(getCellValue(row.getCell(n++), true));
-                    houseBean.setOwnerphone(getCellValue(row.getCell(n++), true));
-                    houseBean.setEmployee(getCellValue(row.getCell(n++), true));
-                    houseBean.setLocation(getCellValue(row.getCell(n++), true));
-                    houseBean.setUnit(getCellValue(row.getCell(n++), true));
-                    houseBean.setFloor(Integer.parseInt(getCellValue(row.getCell(n++), true)));
-                    houseBean.setDoornumber(getCellValue(row.getCell(n++), true));
-                    houseBean.setExpend(getCellValue(row.getCell(n++), true));
+                    houseBean.setType(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setSubtype(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setHost(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setOwner(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setOwnerid(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setOwnerphone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setEmployee(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setLocation(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setUnit(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setFloor(Integer.parseInt(getAndAddCellValue(row.getCell(n++), cellList, true)));
+                    houseBean.setDoornumber(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setExpend(getAndAddCellValue(row.getCell(n++), cellList, true));
 
                     //插入数据库
 
                     //建立ES索引
-                    houseClient.insertAndIndex(houseBean);
+//                    n = .insertAndIndex(houseBean) ? 0 : -1;
                 } catch (Exception e) {
+                    logger.error(infoHeadEnum.getName() + " " + infoHeadEnum.getType() + " error:" + e.getMessage());
                     return n + 1;//第七列数量
                 }
                 break;
@@ -155,16 +150,16 @@ public class ExcelFileUtil {
                 try {
                     n = 0;
                     EmployerBean employerBean = new EmployerBean();
-                    employerBean.setType(getCellValue(row.getCell(n++), true));
-                    employerBean.setName(getCellValue(row.getCell(n++), true));
-                    employerBean.setChargeman(getCellValue(row.getCell(n++), true));
-                    employerBean.setChargemanid(getCellValue(row.getCell(n++), true));
-                    employerBean.setChargemanphone(getCellValue(row.getCell(n++), true));
-                    employerBean.setSafeman(getCellValue(row.getCell(n++), true));
-                    employerBean.setSafemanid(getCellValue(row.getCell(n++), true));
-                    employerBean.setSafemanphone(getCellValue(row.getCell(n++), true));
-                    employerBean.setAddress(getCellValue(row.getCell(n++), true));
-                    employerBean.setExtend(getCellValue(row.getCell(n++), true));
+                    employerBean.setType(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setName(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setChargeman(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setChargemanid(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setChargemanphone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setSafeman(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setSafemanid(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setSafemanphone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setAddress(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setExtend(getAndAddCellValue(row.getCell(n++), cellList, true));
                     //插入数据库
 
                     //建立ES索引
@@ -176,17 +171,17 @@ public class ExcelFileUtil {
             case PLACE:
                 try {
                     PlaceBean placeBean = new PlaceBean();
-                    placeBean.setType(getCellValue(row.getCell(n++), true));
-                    placeBean.setName(getCellValue(row.getCell(n++), true));
-                    placeBean.setAddress(getCellValue(row.getCell(n++), true));
-                    placeBean.setArea(getCellValue(row.getCell(n++), true));
-                    placeBean.setLessor(getCellValue(row.getCell(n++), true));
-                    placeBean.setLessorid(getCellValue(row.getCell(n++), true));
-                    placeBean.setLessorphone(getCellValue(row.getCell(n++), true));
-                    placeBean.setLessee(getCellValue(row.getCell(n++), true));
-                    placeBean.setLesseeid(getCellValue(row.getCell(n++), true));
-                    placeBean.setLesseephone(getCellValue(row.getCell(n++), true));
-                    placeBean.setExtend(getCellValue(row.getCell(n++), true));
+                    placeBean.setType(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setName(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setAddress(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setArea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLessor(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLessorid(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLessorphone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLessee(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLesseeid(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLesseephone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setExtend(getAndAddCellValue(row.getCell(n++), cellList, true));
                     //插入数据库
 
                     //建立ES索引
@@ -199,14 +194,14 @@ public class ExcelFileUtil {
                 try {
                     n = 0;
                     CameraBean cameraBean = new CameraBean();
-                    cameraBean.setDeviceid(getCellValue(row.getCell(n++), true));
-                    cameraBean.setPolicestation(getCellValue(row.getCell(n++), true));
-                    cameraBean.setType(getCellValue(row.getCell(n++), true));
-                    cameraBean.setLocalname(getCellValue(row.getCell(n++), true));
-                    cameraBean.setDevicetype(getCellValue(row.getCell(n++), true));
-                    cameraBean.setDirection(getCellValue(row.getCell(n++), true));
-                    cameraBean.setCount(Integer.parseInt(getCellValue(row.getCell(n++), true)));
-                    cameraBean.setExpend(getCellValue(row.getCell(n++), true));
+                    cameraBean.setDeviceid(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setPolicestation(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setType(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setLocalname(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setDevicetype(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setDirection(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setCount(Integer.parseInt(getAndAddCellValue(row.getCell(n++), cellList, true)));
+                    cameraBean.setExpend(getAndAddCellValue(row.getCell(n++), cellList, true));
                     //插入数据库
 
                     //建立ES索引
@@ -217,6 +212,11 @@ public class ExcelFileUtil {
                 break;
             default:
                 break;
+        }
+        if (n == 0) {
+            List<Object> resList = (ArrayList) baseResponse.getData().get("resList");
+            resList.add(cellList);
+//                        baseResponse.getResList().add(peopleBean);
         }
         return n;//数据基本正常
     }
@@ -255,5 +255,31 @@ public class ExcelFileUtil {
             return String.valueOf(cell.getStringCellValue());
         }
     }
+
+    public static String getAndAddCellValue(Cell cell, List<String> rowList, boolean treatAsStr) {
+        if (cell == null) {
+            rowList.add("");
+            return "";
+        }
+
+        if (treatAsStr) {
+            // 虽然excel中设置的都是文本，但是数字文本还被读错，如“1”取成“1.0”
+            // 加上下面这句，临时把它当做文本来读取
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+        }
+
+        String str = "";
+        if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+            str = String.valueOf(cell.getBooleanCellValue());
+        } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+            str = String.valueOf((long) cell.getNumericCellValue());
+        } else {
+            rowList.add(String.valueOf(cell.getStringCellValue()));
+            str = String.valueOf(cell.getStringCellValue());
+        }
+        rowList.add(str);
+        return str;
+    }
+
 
 }

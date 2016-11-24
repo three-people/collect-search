@@ -4,7 +4,6 @@ package com.baseinfo.collect.controller;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.enums.BeanTypeEnum;
 import com.baseinfo.collect.util.ExcelFileUtil;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -27,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Walker on 2016/11/17.
@@ -255,7 +255,7 @@ public class DataCommitController {
         // 入库并添加索引
         int successCount = 0;
         response.setResList(new ArrayList<Object>());
-        response.setData(new HashedMap());
+        response.setData(new HashMap<String,Object>());
         response.getData().put("resList", new ArrayList<Object>());
         response.getData().put("headList", beanTypeEnum.getValue());
         for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
