@@ -153,6 +153,8 @@ public class ExcelFileUtil {
                     houseBean.setDoornumber(getAndAddCellValue(row.getCell(n++), cellList, true));
                     houseBean.setExpend(getAndAddCellValue(row.getCell(n++), cellList, true));
 
+                    houseBean.setAddtime(new Date());
+                    houseBean.setUpdatetime(new Date());
                     //插入数据库
 
                     //建立ES索引
@@ -180,6 +182,10 @@ public class ExcelFileUtil {
                     employerBean.setSafemanphone(getAndAddCellValue(row.getCell(n++), cellList, true));
                     employerBean.setAddress(getAndAddCellValue(row.getCell(n++), cellList, true));
                     employerBean.setExtend(getAndAddCellValue(row.getCell(n++), cellList, true));
+
+                    employerBean.setAddtime(new Date());
+                    employerBean.setUpdatetime(new Date());
+
                     //插入数据库
 
                     //建立ES索引
@@ -207,6 +213,9 @@ public class ExcelFileUtil {
                     placeBean.setLesseeid(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setLesseephone(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setExtend(getAndAddCellValue(row.getCell(n++), cellList, true));
+
+                    placeBean.setAddtime(new Date());
+                    placeBean.setUpdatetime(new Date());
                     //插入数据库
 
                     //建立ES索引
@@ -232,6 +241,9 @@ public class ExcelFileUtil {
                     cameraBean.setDirection(getAndAddCellValue(row.getCell(n++), cellList, true));
                     cameraBean.setCount(Integer.parseInt(getAndAddCellValue(row.getCell(n++), cellList, true)));
                     cameraBean.setExpend(getAndAddCellValue(row.getCell(n++), cellList, true));
+
+                    cameraBean.setAddtime(new Date());
+                    cameraBean.setUpdatetime(new Date());
                     //插入数据库
 
                     //建立ES索引
