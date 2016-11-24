@@ -88,7 +88,8 @@ public class DataCommitController {
             model.addAttribute("msg", res.getMsg());
             if (res.getData() != null) {
                 model.addAttribute("headList", res.getData().get("headList"));
-                model.addAttribute(typeEnum.getType() + "list", res.getData().get("resList"));
+                model.addAttribute("resList", res.getData().get("resList"));
+                model.addAttribute("isList", "23,23");
             }
         }
         ModelAndView modelAndView = new ModelAndView("/upload", model);
