@@ -53,12 +53,12 @@ public class PlaceClient {
         return false;
     }
 
-    public boolean deletePeople(PlaceBean place){
-        if(place.getId()<=0)
+    public boolean delete(long id){
+        if(id<=0)
             return false;
-        int result = placeDao.deleteByPrimaryKey(place.getId());
+        int result = placeDao.deleteByPrimaryKey(id);
         if(result == 1){
-            boolean flag = esService.deleteById(String.valueOf(place.getId()),PlaceBean.class);
+            boolean flag = esService.deleteById(String.valueOf(id),PlaceBean.class);
             return flag;
         }
         return false;

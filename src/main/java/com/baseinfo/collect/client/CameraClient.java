@@ -54,12 +54,12 @@ public class CameraClient {
         return false;
     }
 
-    public boolean deletePeople(CameraBean camera){
-        if(camera.getId()<=0)
+    public boolean delete(long id){
+        if(id<=0)
             return false;
-        int result = CameraDao.deleteByPrimaryKey(camera.getId());
+        int result = CameraDao.deleteByPrimaryKey(id);
         if(result == 1){
-            boolean flag = esService.deleteById(String.valueOf(camera.getId()),CameraBean.class);
+            boolean flag = esService.deleteById(String.valueOf(id),CameraBean.class);
             return flag;
         }
         return false;

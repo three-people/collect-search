@@ -15,21 +15,21 @@ public class PersonClient {
 
     @Autowired
     @Qualifier("PeopleBeanMapper")
-    private PeopleDao userMapper;//People的相关的Dao层Client
+    private PeopleDao dao;//People的相关的Dao层Client
 
     @Autowired
     @Qualifier("peopleService")
     private PersonElasticSearchCRUDServiceImpl esService;
 
     public boolean insertAndIndex(PeopleBean people){
-        int result = userMapper.insert(people);
+        int result = dao.insert(people);
         if(result == 1){
             long id = people.getId();
             if (id>0) {
                 people.setId(id);
                 boolean flag = esService.insertIndex(people);
                 if (!flag){
-                    userMapper.deleteByPrimaryKey(id);
+                    dao.deleteByPrimaryKey(id);
                     return flag;
                 }
                 return flag;
@@ -42,29 +42,27 @@ public class PersonClient {
     public boolean updatePeople(PeopleBean people){
         if(people.getId()<=0)
             return false;
-        PeopleBean peopleOld = userMapper.selectByPrimaryKey(people.getId());
-        int result = userMapper.updateByPrimaryKey(people);
+        PeopleBean peopleOld = dao.selectByPrimaryKey(people.getId());
+        int result = dao.updateByPrimaryKey(people);
         if(result == 1){
             boolean flag = esService.updateIndex(people);
             if(!flag){
-                userMapper.updateByPrimaryKey(peopleOld);
+                dao.updateByPrimaryKey(peopleOld);
             }
             return flag;
         }
         return false;
     }
 
-    public boolean deletePeople(PeopleBean people){
-        if(people.getId()<=0)
+    public boolean delete(long id){
+        if(id<=0)
             return false;
-        int result = userMapper.deleteByPrimaryKey(people.getId());
+        int result = dao.deleteByPrimaryKey(id);
         if(result == 1){
-            boolean flag = esService.deleteById(String.valueOf(people.getId()),PeopleBean.class);
+            boolean flag = esService.deleteById(String.valueOf(id),PeopleBean.class);
             return flag;
         }
         return false;
     }
-
-
 
 }

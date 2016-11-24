@@ -50,12 +50,12 @@ public class HouseClient {
         return false;
     }
 
-    public boolean deletePeople(HouseBean house){
-        if(house.getId()<=0)
+    public boolean delete(long id){
+        if(id<=0)
             return false;
-        int result = houseDao.deleteByPrimaryKey(house.getId());
+        int result = houseDao.deleteByPrimaryKey(id);
         if(result == 1){
-            boolean flag = esService.deleteById(String.valueOf(house.getId()),HouseBean.class);
+            boolean flag = esService.deleteById(String.valueOf(id),HouseBean.class);
             return flag;
         }
         return false;
