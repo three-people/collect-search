@@ -3,6 +3,7 @@ package com.baseinfo.collect.util;
 import com.baseinfo.collect.beans.*;
 import com.baseinfo.collect.client.HouseClient;
 import com.baseinfo.collect.client.PersonClient;
+import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.enums.BeanTypeEnum;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Walker on 2016/11/18.
@@ -87,17 +90,17 @@ public class ExcelFileUtil {
     }
 
     //处理数据
-    public int insertRowData(Row row, BeanTypeEnum infoHeadEnum) {
+    public int insertRowData(Row row, BeanTypeEnum infoHeadEnum, BaseResponse baseResponse) {
         int n = -1;
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
-                    n=0;
+                    n = 0;
                     PeopleBean peopleBean = new PeopleBean();
                     peopleBean.setType(getCellValue(row.getCell(n++), true));
                     peopleBean.setSubtype(getCellValue(row.getCell(n++), true));
                     peopleBean.setHostname(getCellValue(row.getCell(n++), true));
-                    peopleBean.setHostid(getCellValue(row.getCell(n++), true));
+                    peopleBean.setHostid(getCellValue(row.getCell(n++), false));
                     peopleBean.setHostphone(getCellValue(row.getCell(n++), true));
                     peopleBean.setNumber(Integer.parseInt(getCellValue(row.getCell(n++), true)));
                     peopleBean.setLessee(getCellValue(row.getCell(n++), true));
@@ -111,6 +114,12 @@ public class ExcelFileUtil {
 
                     //建立ES索引
                     n = personclient.insertAndIndex(peopleBean) ? 0 : -1;
+                    if (n == 0) {
+                        List<Object> resList = (ArrayList) baseResponse.getData().get("resList");
+                        resList.add(peopleBean);
+//                        baseResponse.getResList().add(peopleBean);
+                    }
+
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -119,7 +128,7 @@ public class ExcelFileUtil {
                 break;
             case HOUSE:
                 try {
-                    n=0;
+                    n = 0;
                     HouseBean houseBean = new HouseBean();
                     houseBean.setType(getCellValue(row.getCell(n++), true));
                     houseBean.setSubtype(getCellValue(row.getCell(n++), true));
@@ -144,7 +153,7 @@ public class ExcelFileUtil {
                 break;
             case EMPLOYER:
                 try {
-                    n=0;
+                    n = 0;
                     EmployerBean employerBean = new EmployerBean();
                     employerBean.setType(getCellValue(row.getCell(n++), true));
                     employerBean.setName(getCellValue(row.getCell(n++), true));
@@ -188,7 +197,7 @@ public class ExcelFileUtil {
                 break;
             case CAMERA:
                 try {
-                    n=0;
+                    n = 0;
                     CameraBean cameraBean = new CameraBean();
                     cameraBean.setDeviceid(getCellValue(row.getCell(n++), true));
                     cameraBean.setPolicestation(getCellValue(row.getCell(n++), true));
@@ -241,7 +250,7 @@ public class ExcelFileUtil {
         if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
             return String.valueOf(cell.getBooleanCellValue());
         } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-            return String.valueOf((int) cell.getNumericCellValue());
+            return String.valueOf((long) cell.getNumericCellValue());
         } else {
             return String.valueOf(cell.getStringCellValue());
         }
