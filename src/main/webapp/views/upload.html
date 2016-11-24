@@ -20,7 +20,7 @@
 	<div class="col-md-3">
 	</div>
 	<div class="col-md-6">
-	<form action="/excelUpload" method="post" enctype="multipart/form-data">
+	<form action="./excelUpload" method="post" enctype="multipart/form-data">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
@@ -66,7 +66,7 @@ function changeType(obj) {
 
 function download(){
 	if(checkType()) {
-		window.open("/excelDownload?type=" + $("#type").val());
+		window.open("./excelDownload?type=" + $("#type").val());
 	}else{
 		return false;
 	}
