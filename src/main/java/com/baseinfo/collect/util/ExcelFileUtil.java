@@ -79,9 +79,9 @@ public class ExcelFileUtil {
                 break;
             case HOUSE:
                 try {
-                    Integer.parseInt(getCellValue(row.getCell(6), false));
+                    Integer.parseInt(getCellValue(row.getCell(9), false));
                 } catch (Exception e) {
-                    return 7;//第七列数量
+                    return 10;//第10列数量
                 }
                 break;
             case EMPLOYER:
