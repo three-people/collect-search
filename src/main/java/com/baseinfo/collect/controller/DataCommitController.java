@@ -99,6 +99,7 @@ public class DataCommitController {
 
     /**
      * 获取ids 字符串
+     *
      * @param idList
      * @return
      */
@@ -279,13 +280,16 @@ public class DataCommitController {
         response.getData().put("headList", beanTypeEnum.getValue());
         response.getData().put("idList", new ArrayList<Long>());
         for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-            int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum, response);
-            if (numres == 0) successCount++;
-            try {
+            int colCheck = excelFileUtil.checkRowData(sheet.getRow(rowIndex), beanTypeEnum);
+            if (colCheck == -1) {
+                int numres = excelFileUtil.insertRowData(sheet.getRow(rowIndex), beanTypeEnum, response);
+                if (numres == 0) successCount++;
+            }
+            /*try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         if (successCount > 0) {
             response.setMsg("添加数据成功");

@@ -69,6 +69,11 @@ public class ExcelFileUtil {
 
     //检查数据基本判断
     public int checkRowData(Row row, BeanTypeEnum infoHeadEnum) {
+        boolean isNullRow = true;
+        for (int i = 0; i < infoHeadEnum.toString().length(); i++) {//判断是否是空行
+            if (getCellValue(row.getCell(i), true).trim().length() > 1) isNullRow = false;
+        }
+        if (isNullRow) return -2;
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
