@@ -22,7 +22,7 @@
     insert into t_employer (id, type, name, 
       address, chargeman, chargemanid, 
       chargemanphone, safeman, safemanid, 
-      safemanphone, extend)
+      safemanphone, extend, addtime, updatetime)
     values (#{id}, #{type}, #{name}, 
       #{address}, #{chargeman}, #{chargemanid}, 
       #{chargemanphone}, #{safeman}, #{safemanid}, 

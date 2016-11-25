@@ -20,7 +20,7 @@
     </selectKey>
     insert into t_camera (id, type, policestation, 
       localname, devicetype, direction, 
-      count)
+      count, addtime, updatetime)
     values (#{id}, #{deviceid}, #{type}, #{policestation},
       #{localname}, #{devicetype}, #{direction}, 
       #{count}, #{expend},
