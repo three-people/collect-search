@@ -69,10 +69,12 @@ public class ExcelFileUtil {
 
     //检查数据 长度判断
     public String checkCellLength(Row row, BeanTypeEnum typeEnum) {
-        for (int i = 0; i < typeEnum.getValue().length; i++) {
-            if (typeEnum.getLengths()[i] > 49) {
-                if (getCellValue(row.getCell(i), true).trim().length() > typeEnum.getLengths()[i]) {
-                    return String.format("第%d列 \"%s\" 已超过%d字", i + 1, typeEnum.getValue()[i], typeEnum.getLengths()[i]);
+        if (row != null) {
+            for (int i = 0; i < typeEnum.getValue().length; i++) {
+                if (typeEnum.getLengths()[i] > 49) {
+                    if (getCellValue(row.getCell(i), true).trim().length() > typeEnum.getLengths()[i]) {
+                        return String.format("第%d列 \"%s\" 已超过%d字", i + 1, typeEnum.getValue()[i], typeEnum.getLengths()[i]);
+                    }
                 }
             }
         }
@@ -299,15 +301,6 @@ public class ExcelFileUtil {
             cell.setCellStyle(style);
         }
         return workbook;
-    }
-
-    private int valueCheckLength(Row row, BeanTypeEnum typeEnum, String columnName, int length) {
-        for (int i = 0; i < typeEnum.getValue().length; i++) {
-            if (typeEnum.getValue()[i].equals(columnName)) {
-                if (getCellValue(row.getCell(i), false).length() > length) return i + 1;
-            }
-        }
-        return -1;
     }
 
     public String getCellValue(Cell cell, boolean treatAsStr) {
