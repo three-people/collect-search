@@ -97,7 +97,7 @@ public class DataCommitController {
         if(res.getCode() == 1) {
             model.addAttribute("type", beanType);
             modelAndView = new ModelAndView("/uploadresult", model);
-        }else {
+        } else {
             modelAndView = new ModelAndView("/upload", model);
         }
         return modelAndView;
