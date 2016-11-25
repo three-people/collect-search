@@ -93,7 +93,12 @@ public class DataCommitController {
                 model.addAttribute("idList", getIdsByList((ArrayList<Long>) res.getData().get("idList")));
             }
         }
-        ModelAndView modelAndView = new ModelAndView("/upload", model);
+        ModelAndView modelAndView;
+        if(res.getCode() == 1) {
+            modelAndView = new ModelAndView("/uploadresult", model);
+        }else {
+            modelAndView = new ModelAndView("/upload", model);
+        }
         return modelAndView;
     }
 

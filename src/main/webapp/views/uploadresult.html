@@ -1,0 +1,81 @@
+<html>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<body>
+#parse("./topbar.html")
+<div class="row">
+    <div class="col-md-12">
+        <div style="margin: 60px 0px">
+            <h1 class="text-center">数据上传成功</h1>
+            <div/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="text-center">
+                <button type="button" class="btn btn-danger pull-left" onclick="delete('$!idList')">撤销导入</button>
+                <span>←&nbsp;&nbsp;<span style="font-size: 18px;">请检查数据</span>&nbsp;&nbsp;→</span>
+                <a href="./uploadpage" class="btn btn-success pull-right">数据正确</a>
+            </div>
+            <br/> <br/>
+            <div>
+            <table class="table table-bordered table-hover">
+            #if($headList)
+                <thead><tr>
+                    #foreach($head in $headList)
+                    <td>$head</td>
+                    #end
+                </tr></thead>
+                <tbody>
+                    #foreach($row in $resList)
+                    <tr>
+                        #foreach($cell in $row)
+                        <td>$cell</td>
+                        #end
+                    </tr>
+                    #end
+                </tbody>
+            #end
+            </table>
+            </div>
+        </div><!-- /.col-lg-6 -->
+        <div class="col-md-2">
+        </div>
+
+
+    </div><!-- /.row -->
+
+    <script type="text/javascript">
+        function changeType(obj) {
+            $("#type").val($(obj).attr("data-type"));
+            $("#type-lebal").html($(obj).html())
+        }
+
+        function download(){
+            if(checkType()) {
+                window.open("./excelDownload?type=" + $("#type").val());
+            }else{
+                return false;
+            }
+        }
+
+        function checkType(obj) {
+            if($("#type").val()==""){
+                alert("请选择类别！");
+                return false;
+            }
+            $(obj).button('loading');
+            return true;
+        }
+    </script>
+
+</body>
+</html>

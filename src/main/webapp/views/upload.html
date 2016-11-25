@@ -20,7 +20,7 @@
 	<div class="col-md-3">
 	</div>
 	<div class="col-md-6">
-	<form action="./excelUpload" method="post" enctype="multipart/form-data">
+	<form  action="./excelUpload" method="post" enctype="multipart/form-data">
 		<div class="input-group">
 			<div class="input-group-btn">
 				<button type="button" class="btn btn-default 
@@ -39,7 +39,7 @@
 			<input type="hidden" name="type" id="type" value="">
 			<input class="form-control" type="file" name="multifile" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit" onclick="return checkType();">上传</button>
+				<button class="btn btn-default" id="upload-btn" type="submit" onclick="return checkType(this);" data-loading-text="正在上传...">上传</button>
 			</span>
 			<span class="input-group-btn">
 				<button class="btn btn-default" type="button" onclick="return download();">下载模板</button>
@@ -248,11 +248,12 @@ function download(){
 	}
 }
 
-function checkType() {
+function checkType(obj) {
 	if($("#type").val()==""){
 		alert("请选择类别！");
 		return false;
 	}
+	$(obj).button('loading');
 	return true;
 }
 </script>

@@ -23,7 +23,7 @@
       location, host, owner, 
       ownerid, ownerphone, 
       unit, floor, doornumber, 
-      employee, expend)
+      employee, expend, addtime, updatetime)
     values (#{id}, #{type}, #{subtype}, 
       #{location}, #{host}, #{owner}, 
       #{ownerid}, #{ownerphone},
