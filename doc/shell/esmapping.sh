@@ -2,8 +2,8 @@
 #生成es相关的person索引
 escluster_host=$1
 
-curl -XPUT http://127.0.0.1:9200/people_index
-curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/people_index
+curl -XPOST http://192.168.0.107:9200/people_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
@@ -45,10 +45,10 @@ curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
             },
             "expend": {
                  "type": "string"
-            }
+            },
             "addtime": {
                  "type": "string"
-            }
+            },
             "updatetime": {
                  "type": "string"
             }
@@ -58,12 +58,13 @@ curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
 
 
 #房屋相关
-curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/house_index
+curl -XPOST http://192.168.0.107:9200/house_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
-            "analyzer": "ik_max_word",
-            "search_analyzer": "ik_max_word",
+            "analyzer": "standard",
+            "search_analyzer": "standard",
             "term_vector": "no",
             "store": "false"
         },
@@ -78,11 +79,7 @@ curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
                 "type": "string"
             },
             "location": {
-                 "type": "string",
-                 "term_vector": "with_positions_offsets",
-                 "analyzer": "ik_max_word",
-                 "search_analyzer": "ik_max_word",
-                 "boost": 8
+                 "type": "string"
             },
             "host": {
                  "type": "string"
@@ -110,17 +107,24 @@ curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
             },
             "expend": {
                  "type": "string"
+            },
+            "addtime": {
+                 "type": "string"
+            },
+            "updatetime": {
+                 "type": "string"
             }
         }
     }
 }'
 #雇佣关系相关索引结构
-curl -XPOST http://${escluster_host}:9200/employer_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/employer_index
+curl -XPOST http://192.168.0.107:9200/employer_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
-            "analyzer": "ik_max_word",
-            "search_analyzer": "ik_max_word",
+            "analyzer": "standard",
+            "search_analyzer": "standard",
             "term_vector": "no",
             "store": "false"
         },
@@ -135,11 +139,7 @@ curl -XPOST http://${escluster_host}:9200/employer_index/fulltext/_mapping -d'
                 "type": "string"
             },
             "address": {
-                 "type": "string",
-                 "term_vector": "with_positions_offsets",
-                 "analyzer": "ik_max_word",
-                 "search_analyzer": "ik_max_word",
-                 "boost": 8
+                 "type": "string"
             },
             "chargeman": {
                  "type": "string"
@@ -161,17 +161,24 @@ curl -XPOST http://${escluster_host}:9200/employer_index/fulltext/_mapping -d'
             },
             "extend": {
                  "type": "string"
+            },
+            "addtime": {
+                 "type": "string"
+            },
+            "updatetime": {
+                 "type": "string"
             }
         }
     }
 }'
 #场所
-curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/place_index
+curl -XPOST http://192.168.0.107:9200/place_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
-            "analyzer": "ik_max_word",
-            "search_analyzer": "ik_max_word",
+            "analyzer": "standard",
+            "search_analyzer": "standard",
             "term_vector": "no",
             "store": "false"
         },
@@ -186,11 +193,7 @@ curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
                 "type": "string"
             },
             "address": {
-                 "type": "string",
-                 "term_vector": "with_positions_offsets",
-                 "analyzer": "ik_max_word",
-                 "search_analyzer": "ik_max_word",
-                 "boost": 8
+                 "type": "string"
             },
             "area": {
                  "type": "string"
@@ -215,18 +218,25 @@ curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
             },
             "extend": {
                  "type": "string"
+            },
+            "addtime": {
+                 "type": "string"
+            },
+            "updatetime": {
+                 "type": "string"
             }
         }
     }
 }'
 
 #监控相关
-curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/camera_index
+curl -XPOST http://192.168.0.107:9200/camera_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
-            "analyzer": "ik_max_word",
-            "search_analyzer": "ik_max_word",
+            "analyzer": "standard",
+            "search_analyzer": "standard",
             "term_vector": "no",
             "store": "false"
         },
@@ -241,11 +251,7 @@ curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
                 "type": "string"
             },
             "policestation": {
-                 "type": "string",
-                 "term_vector": "with_positions_offsets",
-                 "analyzer": "ik_max_word",
-                 "search_analyzer": "ik_max_word",
-                 "boost": 8
+                 "type": "string"
             },
             "localname": {
                  "type": "string"
@@ -260,6 +266,12 @@ curl -XPOST http://${escluster_host}:9200/house_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "expend": {
+                 "type": "string"
+            },
+            "addtime": {
+                 "type": "string"
+            },
+            "updatetime": {
                  "type": "string"
             }
         }
