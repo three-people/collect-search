@@ -94,9 +94,9 @@ public class DataCommitController {
             }
         }
         ModelAndView modelAndView;
-        if(res.getCode() == 1) {
+        if (res.getCode() == 1) {
             modelAndView = new ModelAndView("/uploadresult", model);
-        }else {
+        } else {
             modelAndView = new ModelAndView("/upload", model);
         }
         return modelAndView;
@@ -244,7 +244,7 @@ public class DataCommitController {
         // 读取首行 即,表头
         Row firstRow = sheet.getRow(firstRowIndex);
         //校验数据 excel 形式
-        int headColumn = ExcelFileUtil.checkHead(firstRow, beanTypeEnum);
+        int headColumn = excelFileUtil.checkHead(firstRow, beanTypeEnum);
         if (headColumn > -1) {
             response.setCode(-2);
             response.setMsg(String.format("请填写正确的列名:第%d列,%s 为空或错误", headColumn, beanTypeEnum.getValue()[headColumn - 1]));
@@ -253,29 +253,39 @@ public class DataCommitController {
         //TODO：test start
         for (int i = firstRow.getFirstCellNum(); i <= firstRow.getLastCellNum(); i++) {
             Cell cell = firstRow.getCell(i);
-            String cellValue = ExcelFileUtil.getCellValue(cell, true);
+            String cellValue = excelFileUtil.getCellValue(cell, true);
             System.out.print(" " + cellValue + "\t");
         }
         System.out.println("");
         //校验数据
         for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
+            String resValueLength = excelFileUtil.checkCellLength(sheet.getRow(rowIndex), beanTypeEnum);
+            if (resValueLength != null && resValueLength.length() > 0) {
+                response.setCode(-2);
+                response.setMsg(String.format("文件第%d行,%s", rowIndex + 1, resValueLength));
+                //TODO:
+                System.out.println(String.format("文件第%d行,%s", rowIndex + 1, resValueLength));
+                return;
+            }
             int colCheck = excelFileUtil.checkRowData(sheet.getRow(rowIndex), beanTypeEnum);
             if (colCheck > -1) {
-                response.setCode(-2);
+                response.setCode(-3);
                 response.setMsg(String.format("文件第%d行,第%d列,%s 数据类型错误", rowIndex + 1, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
                 //TODO:
                 System.out.println(String.format("文件第%d行,第%d列,%s 错误", rowIndex + 1, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
                 return;
             }
             Row currentRow = sheet.getRow(rowIndex);// 当前行
-            int firstColumnIndex = currentRow.getFirstCellNum(); // 首列
-            int lastColumnIndex = currentRow.getLastCellNum();// 最后一列
-            for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++) {
-                Cell currentCell = currentRow.getCell(columnIndex);// 当前单元格
-                String currentCellValue = ExcelFileUtil.getCellValue(currentCell, true);// 当前单元格的值
-                System.out.print(currentCellValue + "\t");
+            if (currentRow != null) {
+                int firstColumnIndex = currentRow.getFirstCellNum(); // 首列
+                int lastColumnIndex = currentRow.getLastCellNum();// 最后一列
+                for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++) {
+                    Cell currentCell = currentRow.getCell(columnIndex);// 当前单元格
+                    String currentCellValue = excelFileUtil.getCellValue(currentCell, true);// 当前单元格的值
+                    System.out.print(currentCellValue + "\t");
+                }
+                System.out.println("");
             }
-            System.out.println("");
         }//TODO test end
         // 入库并添加索引
         int successCount = 0;
@@ -299,6 +309,9 @@ public class DataCommitController {
         if (successCount > 0) {
             response.setMsg("添加数据成功");
             response.setCode(1);
+        } else {
+            response.setMsg("无数据提交,请检查文件");
+            response.setCode(0);
         }
     }
 

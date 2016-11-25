@@ -55,7 +55,7 @@ public class ExcelFileUtil {
 
 
     //检查excel 表头
-    public static int checkHead(Row headRow, BeanTypeEnum infoEnum) {
+    public int checkHead(Row headRow, BeanTypeEnum infoEnum) {
         if (headRow == null) return -1;
         for (int i = 0; i < infoEnum.getValue().length; i++) {
             if (headRow.getCell(i) == null) return i;
@@ -67,11 +67,23 @@ public class ExcelFileUtil {
         return -1;
     }
 
+    //检查数据 长度判断
+    public String checkCellLength(Row row, BeanTypeEnum typeEnum) {
+        for (int i = 0; i < typeEnum.getValue().length; i++) {
+            if (typeEnum.getLengths()[i] > 49) {
+                if (getCellValue(row.getCell(i), true).trim().length() > typeEnum.getLengths()[i]) {
+                    return String.format("第%d列 \"%s\" 已超过%d字", i + 1, typeEnum.getValue()[i], typeEnum.getLengths()[i]);
+                }
+            }
+        }
+        return "";
+    }
+
     //检查数据基本判断
     public int checkRowData(Row row, BeanTypeEnum infoHeadEnum) {
         boolean isNullRow = true;
         for (int i = 0; i < infoHeadEnum.toString().length(); i++) {//判断是否是空行
-            if (getCellValue(row.getCell(i), true).trim().length() > 1) isNullRow = false;
+            if (row != null && getCellValue(row.getCell(i), true).trim().length() > 1) isNullRow = false;
         }
         if (isNullRow) return -2;
         switch (infoHeadEnum) {
@@ -95,7 +107,7 @@ public class ExcelFileUtil {
                 break;
             case CAMERA:
                 try {
-                    Integer.parseInt(getCellValue(row.getCell(6), true));
+                    Integer.parseInt(getCellValue(row.getCell(6), false));
                 } catch (Exception e) {
                     return 7;//第七列数量
                 }
@@ -206,6 +218,7 @@ public class ExcelFileUtil {
                 break;
             case PLACE:
                 try {
+                    n = 0;
                     PlaceBean placeBean = new PlaceBean();
                     placeBean.setType(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setName(getAndAddCellValue(row.getCell(n++), cellList, true));
@@ -288,7 +301,16 @@ public class ExcelFileUtil {
         return workbook;
     }
 
-    public static String getCellValue(Cell cell, boolean treatAsStr) {
+    private int valueCheckLength(Row row, BeanTypeEnum typeEnum, String columnName, int length) {
+        for (int i = 0; i < typeEnum.getValue().length; i++) {
+            if (typeEnum.getValue()[i].equals(columnName)) {
+                if (getCellValue(row.getCell(i), false).length() > length) return i + 1;
+            }
+        }
+        return -1;
+    }
+
+    public String getCellValue(Cell cell, boolean treatAsStr) {
         if (cell == null) {
             return "";
         }
@@ -308,7 +330,7 @@ public class ExcelFileUtil {
         }
     }
 
-    public static String getAndAddCellValue(Cell cell, List<String> rowList, boolean treatAsStr) {
+    private String getAndAddCellValue(Cell cell, List<String> rowList, boolean treatAsStr) {
         if (cell == null) {
             rowList.add("");
             return "";
