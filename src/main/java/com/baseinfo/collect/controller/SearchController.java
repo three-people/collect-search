@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.baseinfo.collect.beans.TotalHits;
 import com.baseinfo.collect.client.*;
 import com.baseinfo.collect.dao.*;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ import java.util.Map;
  */
 @Controller
 public class SearchController {
+
+    private static int PAGESIZE = 20;
 
 	@Autowired
     @Qualifier("esSearchService")
@@ -69,10 +72,13 @@ public class SearchController {
             pageIndex--;
         	String indexType = IndexConstants.getIndexByType(type);
             TotalHits hits = new TotalHits(0);
-            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*2, 2, indexType,hits);
+            List<Map<String, Object>> resultList = esSearchService.queryForObjectNotEq(searchkey, pageIndex*PAGESIZE, PAGESIZE, indexType,hits);
             model.addObject(type+"list", resultList);
             long total = hits.getTotal();
-            long pagetotal = total/2;
+            long pagetotal = total/PAGESIZE;
+            if(total%PAGESIZE>0){
+                pagetotal++;
+            }
             model.addObject("total",total);
             model.addObject("pagetotal",pagetotal);
         } catch (Exception e) {
@@ -106,6 +112,50 @@ public class SearchController {
         if(result) {
             res.setCode(1);
         } else {
+            res.setCode(0);
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/batchdelete/{type}")
+    public BaseResponse batchdelete(@PathVariable("type") String type, HttpServletRequest request, HttpServletResponse response) {
+        BaseResponse res = new BaseResponse();
+        String ids = request.getParameter("ids").trim();
+        String[] idStrArr;
+        if(StringUtils.isNotBlank(ids)){
+            idStrArr = ids.split(",");
+            Long[] idArr = new Long[idStrArr.length];
+            for (int i=0; i<idStrArr.length; i++) {
+                String idStr = idStrArr[i];
+                if(StringUtils.isNumeric(idStr))
+                    idArr[i] = Long.parseLong(idStr);
+            }
+            boolean result = false;
+            switch (type){
+                case "house" :
+                    for(long id : idArr)
+                        houseClient.delete(id);
+                    break;
+                case "people" :
+                    for(long id : idArr)
+                        personClient.delete(id);
+                    break;
+                case "place" :
+                    for(long id : idArr)
+                        placeClient.delete(id);
+                    break;
+                case "employer" :
+                    for(long id : idArr)
+                        employerClient.delete(id);
+                    break;
+                case "camera" :
+                    for(long id : idArr)
+                        cameraClient.delete(id);
+                    break;
+            }
+            res.setCode(1);
+        }else {
             res.setCode(0);
         }
         return res;

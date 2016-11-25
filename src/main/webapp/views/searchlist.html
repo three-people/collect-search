@@ -7,13 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="../js/jquery.min.js"></script>
+<script src="./js/jquery.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="../js/bootstrap.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <body>
 #parse("./topbar.html")
 
@@ -184,13 +184,14 @@
 		#if($cameralist)
 		#foreach($camera in $cameralist)
 		<div>
-			<h4>$!camera.localname</h4>
+			<h4>地点：$!camera.localname</h4>
 			<ul class="list-inline">
 				<li><strong>所属派出所：</strong>$!camera.policestation</li>
 				<li><strong>分类：</strong>$!camera.type</li>
 				<li><strong>类型：</strong>$!camera.devicetype</li>
 				<li><strong>朝向：</strong>$!camera.direction</li>
 				<li><strong>数量：</strong>$!camera.count</li>
+				<li><strong>设备编号：</strong>$!camera.deviceid</li>
 			</ul>
 			<div>
 				<!--<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
@@ -403,16 +404,19 @@ function update(id, type){
 }
 
 function deleteData(id, type){
-	jQuery.ajax({
-		url: "/delete/"+type+"/"+id,
-		success: function(data){
-			if(data.code == 1){
-				alert("删除成功");
-			}else{
-				alert("删除失败");
+	if(confirm("确定删除吗？")){
+		jQuery.ajax({
+			url: "/delete/"+type+"/"+id,
+			success: function(data){
+				if(data.code == 1){
+					alert("删除成功");
+					location.reload();
+				}else{
+					alert("删除失败");
+				}
 			}
-		}
-	});
+		});
+	}
 }
 </script>
 </body>

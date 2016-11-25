@@ -18,9 +18,9 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_camera (id, type, policestation, 
+    insert into t_camera (id, deviceid, type, policestation,
       localname, devicetype, direction, 
-      count, addtime, updatetime)
+      count, expend, addtime, updatetime)
     values (#{id}, #{deviceid}, #{type}, #{policestation},
       #{localname}, #{devicetype}, #{direction}, 
       #{count}, #{expend},

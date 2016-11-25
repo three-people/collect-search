@@ -1,12 +1,12 @@
 <html>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="../js/jquery.min.js"></script>
+<script src="./js/jquery.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="../js/bootstrap.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <body>
 #parse("./topbar.html")
 <div class="row">
@@ -43,6 +43,12 @@
 			</span>
 		</div><!-- /input-group -->
 	</form>
+		<h5><b>使用说明：</b></h5>
+		<h5>搜索多个词时推荐用空格隔开，如“泺源 泉城广场”。</h5>
+		<h5>模糊搜索时，使用*（星号）代表任意多个字符，?（问号）代表单个字符。</h5>
+		<h5><b>模糊搜索示例：</b></h5>
+		<h5>输入“&nbsp;济南??&nbsp;”得到结果：“济南公安"，“济南消防”，每个问号匹配一个字符。</h5>
+		<h5>输入“&nbsp;济南*&nbsp;”得到结果：“济南市”，“济南公安”，“济南市市中区”，一个星号匹配任意个字符。</h5>
 	</div><!-- /.col-lg-6 -->
 	<div class="col-md-3">
 	</div>

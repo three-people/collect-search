@@ -1,12 +1,12 @@
 <html>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="./js/jquery.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <body>
 #parse("./topbar.html")
 <div class="row">
@@ -21,8 +21,8 @@
         </div>
         <div class="col-md-8">
             <div class="text-center">
-                <button type="button" class="btn btn-danger pull-left" onclick="delete('$!idList')">撤销导入</button>
-                <span>←&nbsp;&nbsp;<span style="font-size: 18px;">请检查数据</span>&nbsp;&nbsp;→</span>
+                <button type="button" class="btn btn-danger pull-left" onclick="batchdelete('$!type','$!idList', this);" data-loading-text="正在撤销...">撤销导入</button>
+                <span style="font-size: 18px;">←&nbsp;&nbsp;请检查数据&nbsp;&nbsp;→</span>
                 <a href="./uploadpage" class="btn btn-success pull-right">数据正确</a>
             </div>
             <br/> <br/>
@@ -74,6 +74,23 @@
             }
             $(obj).button('loading');
             return true;
+        }
+
+        function batchdelete(type, ids, obj) {
+            $(obj).button('loading');
+            jQuery.ajax({
+                url: "/batchdelete/"+type,
+                data : {"ids" : ids},
+                type: "POST",
+                success: function(data){
+                    if(data.code == 1){
+                        alert("删除成功");
+                        window.location.href="./uploadpage";
+                    }else{
+                        alert("删除失败");
+                    }
+                }
+            });
         }
     </script>
 
