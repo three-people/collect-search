@@ -44,42 +44,24 @@ public class DataCommitController {
     @Qualifier("ExcelFileUtil")
     ExcelFileUtil excelFileUtil;
 
-
-    @RequestMapping(value = "/main")
-    public ModelAndView excelPage(HttpServletRequest request,
-                                  HttpServletResponse response) {
-
-        String error = request.getParameter("error");
-        if (error != null) {
-        }
-        ModelAndView model = new ModelAndView("/uploaddata/upload");
-        return model;
-    }
-
     @ResponseBody
     @RequestMapping(value = "/excelUpload")
-    public ModelAndView excelCommit(
-//                                    @RequestParam("beanType") int beanType,
-//            @RequestParam("multifile") MultipartFile file,
-            HttpServletRequest request,
-            HttpServletResponse response) {
+    public ModelAndView excelCommit(HttpServletRequest request, HttpServletResponse response) {
         String beanType = request.getParameter("type");
         BeanTypeEnum typeEnum = BeanTypeEnum.getEnum(beanType);
         BaseResponse res = new BaseResponse();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("multifile");
         //String sourceName = file.getOriginalFilename(); // 原始文件名
-        if (checkFile(file, res)) {   //文件后缀判断
+        if (checkFile(file, res)) {   //文件基本信息检查
             try {
                 InputStream fileInput = file.getInputStream();
                 //读取excel文件方法
                 Workbook workbook = createWorkbook(fileInput);
                 dealExcel(workbook, typeEnum, res);
-
             } catch (Exception e) {
                 res.setCode(0);
                 res.setMsg("系统错误，请稍后重试");
-                e.printStackTrace();
                 logger.error("上传文件error:", e);
             }
         }
@@ -94,31 +76,13 @@ public class DataCommitController {
             }
         }
         ModelAndView modelAndView;
-        if(res.getCode() == 1) {
+        if (res.getCode() == 1) {
             model.addAttribute("type", beanType);
             modelAndView = new ModelAndView("/uploadresult", model);
         } else {
             modelAndView = new ModelAndView("/upload", model);
         }
         return modelAndView;
-    }
-
-    /**
-     * 获取ids 字符串
-     *
-     * @param idList
-     * @return
-     */
-    private String getIdsByList(List<Long> idList) {
-        if (idList == null || idList.isEmpty()) {
-            return "";
-        }
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < idList.size(); i++) {
-            sb.append(String.valueOf(idList.get(i)));
-            if (i < idList.size() - 1) sb.append(",");
-        }
-        return sb.toString();
     }
 
     @RequestMapping(value = "/excelDownload")
@@ -163,13 +127,13 @@ public class DataCommitController {
             }
             if (file.getSize() > 1000 * 1000 * 5) {
                 baseResponse.setCode(-1);
-                baseResponse.setMsg(String.format("文件所占空间%dMB,请拆分文件小于5MB", file.getSize() / 1024 / 1024));
+                baseResponse.setMsg(String.format("文件大小为%dMB,请拆分文件小于5MB", file.getSize() / 1024 / 1024));
                 return false;
             }
             String sourceName = file.getOriginalFilename();
             if (!sourceName.endsWith(EXTENSION_XLS) && !sourceName.endsWith(EXTENSION_XLSX)) {
                 baseResponse.setCode(-1);
-                baseResponse.setMsg("文件格式错误");
+                baseResponse.setMsg("文件格式(即后缀名)错误");
                 return false;
             }
         } catch (Exception e) {
@@ -178,21 +142,6 @@ public class DataCommitController {
             return false;
         }
         return true;
-    }
-
-    /**
-     * 是否是excel文件后缀
-     *
-     * @param file
-     * @return
-     */
-    private boolean isExcelFileSuffix(String file, BaseResponse baseResponse) {
-        baseResponse.setCode(-1);
-        baseResponse.setMsg("文件格式错误");
-        if (file.endsWith(EXTENSION_XLS) || file.endsWith(EXTENSION_XLSX)) {
-            return true;
-        }
-        return false;
     }
 
     private Workbook getWorkbook(String excelFile) throws Exception {
@@ -213,14 +162,20 @@ public class DataCommitController {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         Workbook wb = new DataCommitController().getWorkbook("C:\\Users\\Walker\\Desktop\\testfile\\实有房屋.xlsx");
 
         Workbook wb2 = new DataCommitController().createWorkbook(new FileInputStream("C:\\Users\\Walker\\Desktop\\testfile\\camera.xls"));
         new DataCommitController().dealExcel(wb2, BeanTypeEnum.CAMERA, null);
-    }
+    }*/
 
-
+    /**
+     * 检查并提交excel内容到DB
+     *
+     * @param workbook
+     * @param beanTypeEnum
+     * @param response
+     */
     private void dealExcel(Workbook workbook, BeanTypeEnum beanTypeEnum, BaseResponse response) {
         if (workbook == null) {
             response.setCode(-1);
@@ -251,24 +206,40 @@ public class DataCommitController {
             response.setMsg(String.format("请填写正确的列名:第%d列,%s 为空或错误", headColumn, beanTypeEnum.getValue()[headColumn - 1]));
             return;
         }
-        //TODO：test start
-        for (int i = firstRow.getFirstCellNum(); i <= firstRow.getLastCellNum(); i++) {
+        //sout 列名
+        /*for (int i = firstRow.getFirstCellNum(); i <= firstRow.getLastCellNum(); i++) {
             Cell cell = firstRow.getCell(i);
             String cellValue = excelFileUtil.getCellValue(cell, true);
             System.out.print(" " + cellValue + "\t");
         }
-        System.out.println("");
+        System.out.println("");*/
         //校验数据
+        int effectRowCount = 0;
         for (int rowIndex = firstRowIndex + 1; rowIndex <= lastRowIndex; rowIndex++) {
-            int colCheck = excelFileUtil.checkRowData(sheet.getRow(rowIndex), beanTypeEnum);
-            if (colCheck > -1) {
+            String resValueLength = excelFileUtil.checkCellLength(sheet.getRow(rowIndex), beanTypeEnum);
+            if (resValueLength != null && resValueLength.length() > 0) {
                 response.setCode(-2);
-                response.setMsg(String.format("文件第%d行,第%d列,%s 数据类型错误", rowIndex + 1, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
-                //TODO:
-                System.out.println(String.format("文件第%d行,第%d列,%s 错误", rowIndex + 1, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
+                response.setMsg(String.format("文件第%d行,%s", rowIndex + 1, resValueLength));
+//                System.out.println(String.format("文件第%d行,%s", rowIndex + 1, resValueLength));
                 return;
             }
-            Row currentRow = sheet.getRow(rowIndex);// 当前行
+            int colCheck = excelFileUtil.checkRowData(sheet.getRow(rowIndex), beanTypeEnum);
+            if (effectRowCount % 200 == 0) {
+                System.out.println("200");
+            }
+            if (colCheck == -1 && (++effectRowCount > 1000)) {
+                response.setCode(-3);
+                response.setMsg(String.format("文件数据过多，请拆分数据到一千行以内!", rowIndex + 1, resValueLength));
+                return;
+            }
+            if (colCheck > -1) {
+                response.setCode(-4);
+                response.setMsg(String.format("文件第%d行,第%d列,%s 为空或非数字,请修改!", rowIndex + 1, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
+//                System.out.println(String.format("文件第%d行,第%d列,%s 错误", rowIndex + 1, colCheck, beanTypeEnum.getValue()[colCheck - 1]));
+                return;
+            }
+            //sout excel内容
+            /*Row currentRow = sheet.getRow(rowIndex);// 当前行
             int firstColumnIndex = currentRow.getFirstCellNum(); // 首列
             int lastColumnIndex = currentRow.getLastCellNum();// 最后一列
             for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++) {
@@ -276,8 +247,8 @@ public class DataCommitController {
                 String currentCellValue = excelFileUtil.getCellValue(currentCell, true);// 当前单元格的值
                 System.out.print(currentCellValue + "\t");
             }
-            System.out.println("");
-        }//TODO test end
+            System.out.println("");*/
+        }
         // 入库并添加索引
         int successCount = 0;
         response.setResList(new ArrayList<Object>());
@@ -300,7 +271,28 @@ public class DataCommitController {
         if (successCount > 0) {
             response.setMsg("添加数据成功");
             response.setCode(1);
+        } else {
+            response.setMsg("无数据提交,请检查文件");
+            response.setCode(0);
         }
+    }
+
+    /**
+     * 获取ids 字符串
+     *
+     * @param idList
+     * @return
+     */
+    private String getIdsByList(List<Long> idList) {
+        if (idList == null || idList.isEmpty()) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < idList.size(); i++) {
+            sb.append(String.valueOf(idList.get(i)));
+            if (i < idList.size() - 1) sb.append(",");
+        }
+        return sb.toString();
     }
 
 }

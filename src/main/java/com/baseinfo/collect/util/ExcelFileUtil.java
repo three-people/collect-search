@@ -28,11 +28,6 @@ import java.util.List;
 public class ExcelFileUtil {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ExcelFileUtil.class);
 
-    //    public static final String[] people_info = new String[]{"", ""};
-//    public static final String[] house_info = new String[]{"", ""};
-//    public static final String[] employer_info = new String[]{"", ""};
-//    public static final String[] place_info = new String[]{"", ""};
-//    public static final String[] camera_info = new String[]{"设备编号", "所属派出所", "分类", "监控地点", "设备类型", "设备朝向", "数量", "备注"};
     @Autowired
     @Qualifier("PlaceClient")
     PlaceClient placeClient;
