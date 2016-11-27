@@ -245,7 +245,7 @@ public class DataCommitController {
         // 读取首行 即,表头
         Row firstRow = sheet.getRow(firstRowIndex);
         //校验数据 excel 形式
-        int headColumn = ExcelFileUtil.checkHead(firstRow, beanTypeEnum);
+        int headColumn = excelFileUtil.checkHead(firstRow, beanTypeEnum);
         if (headColumn > -1) {
             response.setCode(-2);
             response.setMsg(String.format("请填写正确的列名:第%d列,%s 为空或错误", headColumn, beanTypeEnum.getValue()[headColumn - 1]));
@@ -254,7 +254,7 @@ public class DataCommitController {
         //TODO：test start
         for (int i = firstRow.getFirstCellNum(); i <= firstRow.getLastCellNum(); i++) {
             Cell cell = firstRow.getCell(i);
-            String cellValue = ExcelFileUtil.getCellValue(cell, true);
+            String cellValue = excelFileUtil.getCellValue(cell, true);
             System.out.print(" " + cellValue + "\t");
         }
         System.out.println("");
@@ -273,7 +273,7 @@ public class DataCommitController {
             int lastColumnIndex = currentRow.getLastCellNum();// 最后一列
             for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++) {
                 Cell currentCell = currentRow.getCell(columnIndex);// 当前单元格
-                String currentCellValue = ExcelFileUtil.getCellValue(currentCell, true);// 当前单元格的值
+                String currentCellValue = excelFileUtil.getCellValue(currentCell, true);// 当前单元格的值
                 System.out.print(currentCellValue + "\t");
             }
             System.out.println("");
