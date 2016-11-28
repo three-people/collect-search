@@ -8,6 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -119,6 +120,9 @@ public class ExcelFileUtil {
     public int insertRowData(Row row, BeanTypeEnum infoHeadEnum, BaseResponse baseResponse) {
         int n = -1;
         List<String> cellList = new ArrayList<>();
+        //登录信息
+        String loginId = (String) baseResponse.getData().get("loginid");
+        String uname = (String) baseResponse.getData().get("uname");
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
@@ -137,6 +141,10 @@ public class ExcelFileUtil {
 
                     peopleBean.setAddtime(new Date());
                     peopleBean.setUpdatetime(new Date());
+
+                    peopleBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setPoliceid(loginId);
+                    peopleBean.setPolicename(uname);
                     //插入数据库
 
                     //建立ES索引
@@ -169,6 +177,10 @@ public class ExcelFileUtil {
 
                     houseBean.setAddtime(new Date());
                     houseBean.setUpdatetime(new Date());
+
+                    houseBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setPoliceid(loginId);
+                    houseBean.setPolicename(uname);
                     //插入数据库
 
                     //建立ES索引
@@ -199,6 +211,10 @@ public class ExcelFileUtil {
 
                     employerBean.setAddtime(new Date());
                     employerBean.setUpdatetime(new Date());
+
+                    employerBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setPoliceid(loginId);
+                    employerBean.setPolicename(uname);
 
                     //插入数据库
 
@@ -231,6 +247,10 @@ public class ExcelFileUtil {
 
                     placeBean.setAddtime(new Date());
                     placeBean.setUpdatetime(new Date());
+
+                    placeBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setPoliceid(loginId);
+                    placeBean.setPolicename(uname);
                     //插入数据库
 
                     //建立ES索引
@@ -259,6 +279,10 @@ public class ExcelFileUtil {
 
                     cameraBean.setAddtime(new Date());
                     cameraBean.setUpdatetime(new Date());
+
+                    cameraBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setPoliceid(loginId);
+                    cameraBean.setPolicename(uname);
                     //插入数据库
 
                     //建立ES索引
@@ -287,13 +311,21 @@ public class ExcelFileUtil {
         Workbook workbook = new HSSFWorkbook();
         Sheet sheet = workbook.createSheet(beanTypeEnum.getName());
         HSSFCellStyle style = (HSSFCellStyle) workbook.createCellStyle();
+        style.setFillForegroundColor(HSSFColor.LEMON_CHIFFON.index);
+        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+
         HSSFRow row = (HSSFRow) sheet.createRow(0);
         HSSFCell cell;
         for (int column = 0; column < beanTypeEnum.getValue().length; column++) {
             cell = row.createCell(column);
             cell.setCellValue(beanTypeEnum.getValue()[column]);
             cell.setCellStyle(style);
+            sheet.autoSizeColumn(0);
         }
         return workbook;
     }
@@ -314,7 +346,7 @@ public class ExcelFileUtil {
         } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
             return String.valueOf((long) cell.getNumericCellValue());
         } else {
-            return String.valueOf(cell.getStringCellValue());
+            return String.valueOf(cell.getStringCellValue()).trim();
         }
     }
 
@@ -339,7 +371,7 @@ public class ExcelFileUtil {
             str = String.valueOf(cell.getStringCellValue());
         }
         rowList.add(str);
-        return str;
+        return str.trim();
     }
 
 
