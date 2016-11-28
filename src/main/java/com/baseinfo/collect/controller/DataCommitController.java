@@ -211,7 +211,7 @@ public class DataCommitController {
         int headColumn = excelFileUtil.checkHead(firstRow, beanTypeEnum);
         if (headColumn > -1) {
             response.setCode(-2);
-            response.setMsg(String.format("请填写正确的列名:第%d列,%s 为空或错误", headColumn, beanTypeEnum.getValue()[headColumn - 1]));
+            response.setMsg(String.format("请填写正确的列名: 第%d列,%s 为空或错误", headColumn + 1, beanTypeEnum.getValue()[headColumn]));
             return;
         }
         //sout 列名
