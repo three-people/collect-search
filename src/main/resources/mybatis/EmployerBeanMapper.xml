@@ -3,7 +3,7 @@
 <mapper namespace="com.baseinfo.collect.dao.EmployerDao" >
   <sql id="Base_Column_List" >
     id, type, name, address, chargeman, chargemanid, chargemanphone, safeman, safemanid, 
-    safemanphone, extend
+    safemanphone, extend, addtime, updatetime policeid, policename,policearea
   </sql>
   <select id="selectByPrimaryKey" resultType="EmployerBean" parameterType="java.lang.Long" >
     select 
@@ -22,12 +22,12 @@
     insert into t_employer (id, type, name, 
       address, chargeman, chargemanid, 
       chargemanphone, safeman, safemanid, 
-      safemanphone, extend, addtime, updatetime)
+      safemanphone, extend, addtime, updatetime, policeid, policename, policearea)
     values (#{id}, #{type}, #{name}, 
       #{address}, #{chargeman}, #{chargemanid}, 
       #{chargemanphone}, #{safeman}, #{safemanid}, 
       #{safemanphone}, #{extend},
-      #{addtime}, #{updatetime})
+      #{addtime}, #{updatetime}), #{policeid}, #{policename}, #{policearea}
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.EmployerBean" >
     update t_employer

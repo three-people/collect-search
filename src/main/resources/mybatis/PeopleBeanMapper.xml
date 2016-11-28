@@ -3,7 +3,7 @@
 <mapper namespace="com.baseinfo.collect.dao.PeopleDao" >
   <sql id="Base_Column_List" >
     id, type, subtype, hostname, hostid, hostphone, number, lessee, stay, employee,
-    expend,addtime,updatetime
+    expend, addtime, updatetime, policeid, policename, policearea
   </sql>
   <select id="selectByPrimaryKey" resultType="PeopleBean" parameterType="java.lang.Long" >
     select
@@ -21,13 +21,13 @@
     </selectKey>
     insert into t_people (type, subtype,
     hostname, hostid, hostphone,
-    number, lessee,stay, employee, expend,addtime,updatetime
+    number, lessee,stay, employee, expend, addtime, updatetime, policeid, policename, policearea
     )
     values (#{type}, #{subtype},
     #{hostname}, #{hostid}, #{hostphone},
     #{number}, #{lessee},
     #{stay}, #{employee}, #{expend},
-    #{addtime}, #{updatetime}
+    #{addtime}, #{updatetime}, #{policeid}, #{policename}, #{policearea}
     )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.PeopleBean" >
