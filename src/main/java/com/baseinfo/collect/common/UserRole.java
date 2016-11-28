@@ -7,7 +7,9 @@ public class UserRole {
 
     public static int superAdmin = 1;
 
-    public static int common = 2;
+    public static int admin = 2;
+
+    public static int common = 3;
 
 
 }

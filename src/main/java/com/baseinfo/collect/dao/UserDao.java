@@ -17,5 +17,5 @@ public interface UserDao {
 
     public UserBean selectUserByUnameAndPwd(String uname,String pwd) throws Exception;
 
-
+    public UserBean selectUserByUname(String uname) throws Exception;
 }

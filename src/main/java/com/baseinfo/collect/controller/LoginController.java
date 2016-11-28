@@ -5,6 +5,7 @@ import com.baseinfo.collect.beans.UserBean;
 import com.baseinfo.collect.client.PersonClient;
 import com.baseinfo.collect.common.UrlPaths;
 import com.baseinfo.collect.common.UserResStatus;
+import com.baseinfo.collect.common.UserRole;
 import com.baseinfo.collect.contract.BaseResponse;
 import com.baseinfo.collect.dao.UserDao;
 import org.apache.commons.lang.StringUtils;
@@ -57,8 +58,9 @@ public class LoginController {
             }
             request.getSession().setAttribute("loginId", String.valueOf(bean.getId()));
             request.getSession().setAttribute("uname", uname);
+            request.getSession().setAttribute("userrole", bean.getRole());
             res.setCode(UserResStatus.SUCESS);
-            res.setMsg("登陆成功");
+            res.setMsg("登录成功");
             return res;
         } catch (Exception e) {
             logger.error("login error",e);
@@ -78,7 +80,6 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/import")
     public BaseResponse importPeople(HttpServletRequest request, HttpServletResponse response){
         PeopleBean people = new PeopleBean();
         people.setType("写字楼");
@@ -144,21 +145,30 @@ public class LoginController {
             }
         }
 
-        UserBean bean = new UserBean();
-        bean.setUname(uname);
-        bean.setAddtime(new Date());
-        bean.setDepartmentName(departmentName);
-        bean.setRealName(realName);
-        bean.setRole(Integer.parseInt(role));
-        bean.setStatus(1);
         try {
+            UserBean exist = userService.selectUserByUname(uname);
+            if(exist != null){
+                res.setMsg("该账号已存在");
+                return res;
+            }
+
+            UserBean bean = new UserBean();
+            bean.setUname(uname);
+            bean.setPwd(pwd);
+            bean.setAddtime(new Date());
+            bean.setDepartmentName(departmentName);
+            bean.setRealName(realName);
+            bean.setRole(Integer.parseInt(role));
+            bean.setStatus(1);
+
             int flag= userService.insert(bean);
             if (flag>0) {
                 res.setCode(UserResStatus.SUCESS);
                 res.setMsg("添加成功");
+            } else {
+                res.setCode(UserResStatus.ERROR);
+                res.setMsg("添加失败");
             }
-            res.setCode(UserResStatus.ERROR);
-            res.setMsg("添加失败");
             return res;
         } catch (Exception e) {
             res.setCode(UserResStatus.ERROR);
@@ -384,7 +394,7 @@ public class LoginController {
             if (id<=0)
                 return false;
             UserBean bean = userService.select(id);
-            if(bean!=null){
+            if(bean != null && bean.getRole() < UserRole.common){
                 return true;
             }
             return false;

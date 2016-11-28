@@ -7,6 +7,9 @@
     </sql>
 
     <insert id="insert" parameterType="UserBean" >
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into user_table (id, uname,pwd, realName,role,status,departmentName,addtime,updatetime)
         values (#{id},#{uname},#{pwd},#{realName},#{role}, #{status},#{departmentName}, #{addtime},#{updatetime})
     </insert>
@@ -17,6 +20,10 @@
 
     <select id="selectUserByUnameAndPwd" resultType="UserBean" >
         SELECT * FROM user_table WHERE uname = #{uname} AND pwd = #{pwd}
+    </select>
+
+    <select id="selectUserByUname" resultType="UserBean" >
+        SELECT * FROM user_table WHERE uname = #{uname}
     </select>
 
     <delete id="deleteUserById" parameterType="Map">

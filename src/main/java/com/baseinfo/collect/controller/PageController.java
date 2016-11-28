@@ -40,4 +40,9 @@ public class PageController {
     public String uploadPage(HttpServletRequest request, HttpServletResponse response) {
         return "/upload";
     }
+
+    @RequestMapping(value = "/adduser")
+    public String addUser(HttpServletRequest request, HttpServletResponse response) {
+        return "/adduser";
+    }
 }

@@ -26,14 +26,13 @@ public class UserDaoImpl implements UserDao{
     @Override
     public int insert(UserBean user) throws Exception {
         SqlSession session = factory.openSession(true);
-        int flag = 0;
         try {
-            flag = session.insert("userOpreation.insert",user);
+            session.insert("userOpreation.insert",user);
         }finally {
             session.commit();
             session.close();
         }
-        return flag;
+        return (int)user.getId();
     }
 
     @Override
@@ -88,6 +87,23 @@ public class UserDaoImpl implements UserDao{
         List<UserBean> beanList;
         try {
             beanList = session.selectList("userOpreation.selectUserByUnameAndPwd",idMap);
+        }finally {
+            session.commit();
+            session.close();
+        }
+        if (beanList==null || beanList.size()<=0)
+            return null;
+        return beanList.get(0);
+    }
+
+    @Override
+    public UserBean selectUserByUname(String uname) throws Exception {
+        Map idMap = new HashMap();
+        idMap.put("uname",uname);
+        SqlSession session = factory.openSession(true);
+        List<UserBean> beanList;
+        try {
+            beanList = session.selectList("userOpreation.selectUserByUname",idMap);
         }finally {
             session.commit();
             session.close();

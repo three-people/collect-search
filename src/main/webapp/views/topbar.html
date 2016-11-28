@@ -18,6 +18,9 @@
                     $uname <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
+                    #if($userrole < 3)
+                    <li><a href="./adduser">新增账号</a></li>
+                    #end
                     <li><a href="./user/logout">登出</a></li>
                 </ul>
             </li>
