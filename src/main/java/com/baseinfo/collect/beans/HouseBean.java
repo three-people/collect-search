@@ -48,6 +48,15 @@ public class HouseBean {
     private String expend;
 
     @Field(index = FieldIndex.not_analyzed, store = true)
+    private String policeid;
+
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private String policename;
+
+    @Field(index = FieldIndex.not_analyzed, store = true)
+    private String policearea;
+
+    @Field(index = FieldIndex.not_analyzed, store = true)
     private Date addtime;
 
     @Field(index = FieldIndex.not_analyzed, store = true)
@@ -170,5 +179,29 @@ public class HouseBean {
 
     public void setExpend(String expend) {
         this.expend = expend == null ? null : expend.trim();
+    }
+
+    public String getPoliceid() {
+        return policeid;
+    }
+
+    public String getPolicename() {
+        return policename;
+    }
+
+    public String getPolicearea() {
+        return policearea;
+    }
+
+    public void setPoliceid(String policeid) {
+        this.policeid = policeid;
+    }
+
+    public void setPolicename(String policename) {
+        this.policename = policename;
+    }
+
+    public void setPolicearea(String policearea) {
+        this.policearea = policearea;
     }
 }
