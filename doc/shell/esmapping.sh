@@ -46,6 +46,15 @@ curl -XPOST http://192.168.0.107:9200/people_index/fulltext/_mapping -d'
             "expend": {
                  "type": "string"
             },
+            "policeid": {
+                 "type": "string"
+            },
+            "policename": {
+                 "type": "string"
+            },
+            "policearea": {
+                 "type": "string"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -108,6 +117,15 @@ curl -XPOST http://192.168.0.107:9200/house_index/fulltext/_mapping -d'
             "expend": {
                  "type": "string"
             },
+            "policeid": {
+                 "type": "string"
+            },
+            "policename": {
+                 "type": "string"
+            },
+            "policearea": {
+                 "type": "string"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -160,6 +178,15 @@ curl -XPOST http://192.168.0.107:9200/employer_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "extend": {
+                 "type": "string"
+            },
+            "policeid": {
+                 "type": "string"
+            },
+            "policename": {
+                 "type": "string"
+            },
+            "policearea": {
                  "type": "string"
             },
             "addtime": {
@@ -219,6 +246,15 @@ curl -XPOST http://192.168.0.107:9200/place_index/fulltext/_mapping -d'
             "extend": {
                  "type": "string"
             },
+            "policeid": {
+                 "type": "string"
+            },
+            "policename": {
+                 "type": "string"
+            },
+            "policearea": {
+                 "type": "string"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -266,6 +302,15 @@ curl -XPOST http://192.168.0.107:9200/camera_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "expend": {
+                 "type": "string"
+            },
+            "policeid": {
+                 "type": "string"
+            },
+            "policename": {
+                 "type": "string"
+            },
+            "policearea": {
                  "type": "string"
             },
             "addtime": {
