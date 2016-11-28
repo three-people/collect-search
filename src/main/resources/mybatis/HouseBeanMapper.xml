@@ -33,18 +33,18 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.HouseBean" >
     update t_house
-    set type = #{type},
-      subtype = #{subtype},
-      location = #{location},
-      host = #{host},
-      owner = #{owner},
-      ownerid = #{ownerid},
-      ownerphone = #{ownerphone},
-      unit = #{unit},
+    set <if test="type != null">type = #{type},</if>
+      <if test="subtype != null">subtype = #{subtype},</if>
+    <if test="location != null">location = #{location},</if>
+    <if test="host != null">host = #{host},</if>
+    <if test="owner != null">owner = #{owner},</if>
+    <if test="ownerid != null">ownerid = #{ownerid},</if>
+    <if test="ownerphone != null">ownerphone = #{ownerphone},</if>
+    <if test="unit != null">unit = #{unit},</if>
       floor = #{floor},
-      doornumber = #{doornumber},
-      employee = #{employee},
-      expend = #{expend},
+    <if test="doornumber != null">doornumber = #{doornumber},</if>
+    <if test="employee != null">employee = #{employee},</if>
+    <if test="expend != null">expend = #{expend},</if>
       updatetime = #{updatetime}
     where id = #{id}
   </update>

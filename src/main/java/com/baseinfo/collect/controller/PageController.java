@@ -33,7 +33,7 @@ public class PageController {
 
     @RequestMapping(value = "/loginpage")
     public String loginPage(HttpServletRequest request, HttpServletResponse response) {
-        return "/login";
+        return "/newlogin";
     }
 
     @RequestMapping(value = "/uploadpage")

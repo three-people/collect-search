@@ -4,6 +4,7 @@ package com.baseinfo.collect.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.baseinfo.collect.beans.HouseBean;
 import com.baseinfo.collect.beans.TotalHits;
 import com.baseinfo.collect.client.*;
 import com.baseinfo.collect.dao.*;
@@ -52,6 +53,20 @@ public class SearchController {
     @Autowired
     @Qualifier("CameraClient")
     private CameraClient cameraClient;
+
+    @ResponseBody
+    @RequestMapping(value = "/update/house")
+    public BaseResponse update(HouseBean house,HttpServletRequest request,HttpServletResponse response) {
+        BaseResponse res = new BaseResponse();
+        System.out.print(house);
+        boolean result = houseClient.updatePeople(house);
+        if(result){
+            res.setCode(1);
+        } else {
+            res.setCode(0);
+        }
+        return res;
+    }
 
     @RequestMapping(value = "/search")
     public ModelAndView search(HttpServletRequest request, HttpServletResponse response) {

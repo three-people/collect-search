@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * 房屋相关的Client
  */
@@ -39,9 +41,11 @@ public class HouseClient {
         if(house.getId()<=0)
             return false;
         HouseBean houseOld = houseDao.selectByPrimaryKey(house.getId());
+        house.setUpdatetime(new Date());
         int result = houseDao.updateByPrimaryKey(house);
         if(result == 1){
-            boolean flag = esService.updateIndex(house);
+            HouseBean houseNew = houseDao.selectByPrimaryKey(house.getId());
+            boolean flag = esService.updateIndex(houseNew);
             if(!flag){
                 houseDao.updateByPrimaryKey(houseOld);
             }

@@ -14,6 +14,11 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="./js/bootstrap.min.js"></script>
+<style type="text/css">
+	.noborder{
+		border: 0px;
+	}
+</style>
 <body>
 #parse("./topbar.html")
 
@@ -41,7 +46,7 @@
 			</div><!-- /btn-group -->
 			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="$!searchkey">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit" onclick="submit();">搜索</button>
+				<button class="btn btn-primary" type="submit" onclick="submit();">搜索</button>
 			</span>
 		</div><!-- /input-group -->
 		</form>
@@ -61,41 +66,42 @@
 		  <li id="label-place"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('place');">场所</a></li>
 		  <li id="label-camera"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('camera');">监控</a></li>
 		</ul>
+		#if($pagetotal<1)
+		<br><div class="alert alert-warning">未搜索到信息。</div>
+		#end
+
 		#if($houselist)
-		#foreach($house in $houselist)
+		#foreach($bean in $houselist)
 		<div>
-			<h4>$!bean.location</h4>
-			<ul class="list-inline">
-				<li><strong>类型：</strong>$!bean.type &nbsp;$!bean.subtype</li>
-				#if ($bean.unit)
-				<li><strong>单元：</strong>$!bean.unit</li>
+			<form>
+				<h4>$!bean.location</h4>
+				<ul class="list-inline">
+					<li><strong>类型：</strong><input class="noborder" readonly="readonly" size="$!bean.type.length()" name="type" value="$!bean.type"></li>
+					<li><strong>用途：</strong><input class="noborder" readonly="readonly" size="$!bean.subtype.length()"  name="subtype" value="$!bean.subtype"></li>
+					<li><strong>单元：</strong><input class="noborder" readonly="readonly" size="1" maxlength="4" name="unit" value="$!bean.unit"></li>
+					<li><strong>楼层：</strong><input class="noborder" readonly="readonly" size="1" maxlength="4" name="floor" value="$!bean.floor"></li>
+					<li><strong>门牌号/房号：</strong><input class="noborder" readonly="readonly" size="1" maxlength="4" name="doornumber" value="$!bean.doornumber"></li>
+					<li><strong>户主/房主：</strong><input class="noborder" readonly="readonly" size="$!bean.owner.length()"  name="owner" value="$!bean.owner"></li>
+					<li><strong>产权人：</strong><input class="noborder" readonly="readonly" size="$!bean.host.length()"  name="host" value="$!bean.host"></li>
+				</ul>
+				<ul class="list-inline">
+					<li><strong>社区警：</strong>$!bean.policename</li>
+					<li><strong>警务区：</strong>$!bean.policearea</li>
+				</ul>
+				#if ($bean.employee)
+				<div>
+					<strong>从业人员：</strong><input class="noborder" readonly="readonly" size="$!bean.employee.length()" name="employee" value="$!bean.employee">
+				</div>
 				#end
-				<li><strong>楼层：</strong>$!bean.floor</li>
-				#if ($bean.doornumber)
-				<li><strong>门牌号/房号：</strong>$!bean.doornumber</li>
-				#end
-				<li><strong>户主/房主：</strong>$!bean.owner</li>
-				#if ($bean.host)
-				<li><strong>产权人：</strong>$!bean.host</li>
-				#end
-			</ul>
-			<ul>
-				<li><strong>社区警：</strong>$!bean.policename</li>
-				<li><strong>警务区：</strong>$!bean.policearea</li>
-			</ul>
-			#if ($bean.employee)
-			<div>
-				<strong>从业人员：</strong>$!bean.employee
-			</div>
-			#end
-			<div>
-				<!--<a href="javascript:void(0);" onclick="update('$bean.id','house')">修改</a>
-				&nbsp;-->
-				#if($userrole < 3)
-                <input type="checkbox" data-id="$!bean.id">
-				<a href="javascript:void(0);" onclick="deleteData('$bean.id','house')">删除</a>
-				#end
-			</div>
+				<div>
+					#if($userrole < 3)
+					<input type="checkbox" data-id="$!bean.id">
+					<a href="javascript:void(0);" onclick="deleteData('$bean.id','house')">删除</a>&emsp;
+					<a href="javascript:void(0);" onclick="editable(this,'house')" id="updatebtn">修改</a>
+					<input type="hidden" name="id" value="$bean.id">
+					#end
+				</div>
+			</form>
 		<hr>
 		</div>
 		#end
@@ -117,7 +123,7 @@
 				<li><strong>寄住人：</strong>$!bean.stay</li>
 				#end
 			</ul>
-			<ul>
+			<ul class="list-inline">
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 			</ul>
@@ -156,7 +162,7 @@
 				<li><strong>身份证号：</strong>$!bean.safemanid</li>
 				<li><strong>联系电话：</strong>$!bean.safemanphone</li>
 			</ul>
-			<ul>
+			<ul class="list-inline">
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 			</ul>
@@ -192,7 +198,7 @@
 				<li><strong>身份证号：</strong>$!bean.lesseeid</li>
 				<li><strong>联系电话：</strong>$!bean.lesseephone</li>
 			</ul>
-			<ul>
+			<ul class="list-inline">
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 			</ul>
@@ -221,7 +227,7 @@
 				<li><strong>数量：</strong>$!$bean.count</li>
 				<li><strong>设备编号：</strong>$!$bean.deviceid</li>
 			</ul>
-			<ul>
+			<ul class="list-inline">
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 			</ul>
@@ -241,7 +247,7 @@
 		#if($userrole < 3)
         <div style="margin: 24px 0px;float:left;">
             <a href="javascript:void(0);" onclick="selectAll()">全选</a>&emsp;
-            <a href="javascript:void(0);" onclick="batchDelete()">删除</a>
+            <a href="javascript:void(0);" onclick="batchDelete()">批量删除</a>
         </div>
 		#end
 
@@ -441,8 +447,42 @@ function pageTo(page) {
 	$("#form-search").submit();
 }
 
-function update(id, type){
-	$('#model-'+type).modal('show')
+function editable(obj, type){
+	var row = $(obj).closest('form');
+	$(row).find("input").each(function(){
+		$(this).removeAttr("readonly");
+		$(this).removeClass("noborder");
+	});
+	$(obj).html("保存");
+	$(obj).removeAttr("onclick");
+	$(obj).bind("click", function(){
+		update(obj, type);
+	});
+}
+
+function update(obj, type){
+	var row = $(obj).closest('form');
+	var param = row.serialize();
+	jQuery.ajax({
+		url: "/update/"+type,
+		data: param,
+		type: 'post',
+		success: function(data){
+			if(data.code == 1){
+				alert("更新成功");
+				$(row).find("input").each(function(){
+					$(this).prop("readonly","readonly");
+					$(this).addClass("noborder");
+				});
+				$(obj).html("修改");
+				$(obj).bind("click", function(){
+					editable(obj, type);
+				});
+			}else{
+				alert("更新失败");
+			}
+		}
+	})
 }
 
 function deleteData(id, type){
