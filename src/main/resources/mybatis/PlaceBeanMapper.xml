@@ -3,7 +3,7 @@
 <mapper namespace="com.baseinfo.collect.dao.PlaceDao" >
   <sql id="Base_Column_List" >
     id, type, name, address, area, lessor, lessorid, lessorphone, lessee, lesseeid, lesseephone,
-    extend
+    extend, addtime, updatetime policeid, policeid, policename,policearea
   </sql>
   <select id="selectByPrimaryKey" resultType="PlaceBean" parameterType="java.lang.Long" >
     select 
@@ -22,13 +22,13 @@
     insert into t_place (id, type, name, 
       address, area, lessor, 
       lessorid, lessorphone, lessee, 
-      lesseeid, lesseephone, extend, addtime, updatetime
+      lesseeid, lesseephone, extend, addtime, updatetime, policeid, policename, policearea
       )
     values (#{id}, #{type}, #{name}, 
       #{address}, #{area}, #{lessor}, 
       #{lessorid}, #{lessorphone}, #{lessee}, 
       #{lesseeid}, #{lesseephone}, #{extend},
-      #{addtime}, #{updatetime}
+      #{addtime}, #{updatetime}, #{policeid}, #{policename}, #{policearea}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.PlaceBean" >

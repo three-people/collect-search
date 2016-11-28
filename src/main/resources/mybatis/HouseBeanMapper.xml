@@ -3,7 +3,7 @@
 <mapper namespace="com.baseinfo.collect.dao.HouseDao" >
   <sql id="Base_Column_List" >
     id, type, subtype, location, host, owner, ownerid, ownerphone, unit, floor, 
-    doornumber, employee, expend
+    doornumber, employee, expend, addtime, updatetime policeid, policeid, policename,policearea
   </sql>
   <select id="selectByPrimaryKey" resultType="HouseBean" parameterType="java.lang.Long" >
     select 
@@ -23,13 +23,13 @@
       location, host, owner, 
       ownerid, ownerphone, 
       unit, floor, doornumber, 
-      employee, expend, addtime, updatetime)
+      employee, expend, addtime, updatetime, policeid, policename, policearea)
     values (#{id}, #{type}, #{subtype}, 
       #{location}, #{host}, #{owner}, 
       #{ownerid}, #{ownerphone},
       #{unit}, #{floor}, #{doornumber},
       #{employee}, #{expend},
-      #{addtime}, #{updatetime})
+      #{addtime}, #{updatetime}, #{policeid}, #{policename}, #{policearea})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.HouseBean" >
     update t_house
