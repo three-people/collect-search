@@ -1,0 +1,85 @@
+<html>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="./js/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="./js/bootstrap.min.js"></script>
+<body>
+#parse("./topbar.html")
+<div class="row">
+	<div class="col-md-12">
+		<div style="margin: 60px 0px">
+			<h3 class="text-center">新增账号</h3>
+		<div/>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-4" style="padding:0px 60px;">
+	<form action="./search" method="post">
+		<div class="input-group">
+			<span class="input-group-addon">账号：</span>
+			<input type="text" id="uname" class="form-control">
+		</div><br/>
+		<div class="input-group">
+			<span class="input-group-addon">密码：</span>
+			<input type="password" id="pwd1" class="form-control">
+		</div><br/>
+		<div class="input-group">
+			<span class="input-group-addon">密码确认：</span>
+			<input type="password" id="pwd2" class="form-control">
+		</div><br/>
+		<div class="input-group">
+			<span class="input-group-addon">姓名：</span>
+			<input type="text" id="realname" class="form-control">
+		</div><br/>
+		#if($userrole < 3)
+		<input type="radio" name="role" id="role-common" value="3" checked>普通账号
+		<input type="radio" name="role" id="role-admin" value="2">管理员账号
+		#end
+		<br/><br/>
+		<button type="button" class="btn btn-primary" onclick="signup()">注&nbsp;册</button>
+		&emsp;<span id="msg" style="color:red"></span>
+	</form>
+	</div><!-- /.col-lg-6 -->
+	<div class="col-md-4">
+	</div>
+</div><!-- /.row -->
+
+<script type="text/javascript">
+function signup() {
+	var pwd1 = $('#pwd1').val();
+	var pwd2 = $('#pwd2').val();
+	var uname = $('#uname').val();
+	if(pwd1!=pwd2){
+		$("#msg").html('两次输入的密码不一致');
+	}else if(uname == ""){
+		$("#msg").html('用户名不能为空');
+	}else if(pwd1 == ""){
+		$("#msg").html('密码不能为空');
+	}else{
+		var realname = $('#realname').val();
+		var role = $('input:radio:checked').val();
+		jQuery.ajax({
+			url: "/user/adduser",
+			data: {"uname": uname, "pwd":pwd1, "realName": realname, "role":role},
+			type: "POST",
+			success: function (data) {
+				if (data.code == 1) {
+					alert("注册成功");
+					location.reload();
+				} else {
+					alert(data.msg);
+				}
+			}
+		});
+	}
+}
+</script>
+
+</body>
+</html>

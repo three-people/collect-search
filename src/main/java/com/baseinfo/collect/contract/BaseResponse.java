@@ -1,6 +1,5 @@
 package com.baseinfo.collect.contract;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,9 +11,14 @@ public class BaseResponse {
 
     private String msg;
 
-    private Map<String,Object> data;
+    private Map<String, Object> data;
 
-    private List<Object> resList;
+    public BaseResponse() {
+    }
+
+    public BaseResponse(Map<String, Object> data) {
+        this.data = data;
+    }
 
     public int getCode() {
         return code;
@@ -26,14 +30,6 @@ public class BaseResponse {
 
     public Map<String, Object> getData() {
         return data;
-    }
-
-    public List<Object> getResList() {
-        return resList;
-    }
-
-    public void setResList(List<Object> resList) {
-        this.resList = resList;
     }
 
     public void setCode(int code) {

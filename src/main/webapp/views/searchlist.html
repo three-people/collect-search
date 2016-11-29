@@ -14,6 +14,11 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="./js/bootstrap.min.js"></script>
+<style type="text/css">
+	.noborder{
+		border: 0px;
+	}
+</style>
 <body>
 #parse("./topbar.html")
 
@@ -41,7 +46,7 @@
 			</div><!-- /btn-group -->
 			<input type="text" name="searchkey" id="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”" value="$!searchkey">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit" onclick="submit();">搜索</button>
+				<button class="btn btn-primary" type="submit" onclick="submit();">搜索</button>
 			</span>
 		</div><!-- /input-group -->
 		</form>
@@ -61,91 +66,113 @@
 		  <li id="label-place"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('place');">场所</a></li>
 		  <li id="label-camera"><a href="javascript:void(0);" onclick="changeTypeAndSubmit('camera');">监控</a></li>
 		</ul>
+		#if($pagetotal<1)
+		<br><div class="alert alert-warning">未搜索到信息。</div>
+		#end
+
 		#if($houselist)
-		#foreach($house in $houselist)
+		#foreach($bean in $houselist)
 		<div>
-			<h4>$!house.location</h4>
-			<ul class="list-inline">
-				<li><strong>类型：</strong>$!house.type &nbsp;$!house.subtype</li>
-				#if ($house.unit)
-				<li><strong>单元：</strong>$!house.unit</li>
+			<form>
+				<h4>$!bean.location</h4>
+				<ul class="list-inline">
+					<li><strong>类型：</strong><input class="noborder" readonly="readonly" size="$!bean.type.length()" name="type" value="$!bean.type"></li>
+					<li><strong>用途：</strong><input class="noborder" readonly="readonly" size="$!bean.subtype.length()"  name="subtype" value="$!bean.subtype"></li>
+					<li><strong>单元：</strong><input class="noborder" readonly="readonly" size="1" maxlength="4" name="unit" value="$!bean.unit"></li>
+					<li><strong>楼层：</strong><input class="noborder" readonly="readonly" size="1" maxlength="4" name="floor" value="$!bean.floor"></li>
+					<li><strong>门牌号/房号：</strong><input class="noborder" readonly="readonly" size="1" maxlength="4" name="doornumber" value="$!bean.doornumber"></li>
+					<li><strong>户主/房主：</strong><input class="noborder" readonly="readonly" size="$!bean.owner.length()"  name="owner" value="$!bean.owner"></li>
+					<li><strong>产权人：</strong><input class="noborder" readonly="readonly" size="$!bean.host.length()"  name="host" value="$!bean.host"></li>
+				</ul>
+				<ul class="list-inline">
+					<li><strong>社区警：</strong>$!bean.policename</li>
+					<li><strong>警务区：</strong>$!bean.policearea</li>
+				</ul>
+				#if ($bean.employee)
+				<div>
+					<strong>从业人员：</strong><input class="noborder" readonly="readonly" size="$!bean.employee.length()" name="employee" value="$!bean.employee">
+				</div>
 				#end
-				<li><strong>楼层：</strong>$!house.floor</li>
-				#if ($house.doornumber)
-				<li><strong>门牌号/房号：</strong>$!house.doornumber</li>
-				#end
-				<li><strong>户主/房主：</strong>$!house.owner</li>
-				#if ($house.host)
-				<li><strong>产权人：</strong>$!house.host</li>
-				#end
-			</ul>
-			#if ($house.employee)
-			<div>
-				<strong>从业人员：</strong>$!house.employee
-			</div>
-			#end
-			<div>
-				<!--<a href="javascript:void(0);" onclick="update('$house.id','house')">修改</a>
-				&nbsp;-->
-				<a href="javascript:void(0);" onclick="deleteData('$house.id','house')">删除</a>
-			</div>
+				<div>
+					#if($userrole < 3)
+					<input type="checkbox" data-id="$!bean.id">
+					<a href="javascript:void(0);" onclick="deleteData('$bean.id','house')">删除</a>&emsp;
+					<a href="javascript:void(0);" onclick="editable(this,'house')" id="updatebtn">修改</a>
+					<input type="hidden" name="id" value="$bean.id">
+					#end
+				</div>
+			</form>
 		<hr>
 		</div>
 		#end
 		#end
 		
 		#if($peoplelist)
-		#foreach($people in $peoplelist)
+		#foreach($bean in $peoplelist)
 		<div style="border-bottom:1px solid #ddd; padding: 5px 10px;">
 			<ul class="list-inline">
-				<li><strong>类型：</strong>$!people.type &nbsp;$!people.subtype</li>
-				<li><strong>户主/出租人：</strong>$!people.hostname</li>
-				<li><strong>身份证号：</strong>$!people.hostid</li>
-				<li><strong>电话：</strong>$!people.hostphone</li>
-				<li><strong>人数：</strong>$!people.number</li>
-				#if ($people.lessee)
-				<li><strong>租住人：</strong>$!people.lessee</li>
+				<li><strong>类型：</strong>$!bean.type &nbsp;$!bean.subtype</li>
+				<li><strong>户主/出租人：</strong>$!bean.hostname</li>
+				<li><strong>身份证号：</strong>$!bean.hostid</li>
+				<li><strong>电话：</strong>$!bean.hostphone</li>
+				<li><strong>人数：</strong>$!bean.number</li>
+				#if ($bean.lessee)
+				<li><strong>租住人：</strong>$!bean.lessee</li>
 				#end
-				#if ($people.stay)
-				<li><strong>寄住人：</strong>$!people.stay</li>
+				#if ($bean.stay)
+				<li><strong>寄住人：</strong>$!bean.stay</li>
 				#end
 			</ul>
-			#if ($people.employee)
+			<ul class="list-inline">
+				<li><strong>社区警：</strong>$!bean.policename</li>
+				<li><strong>警务区：</strong>$!bean.policearea</li>
+			</ul>
+			#if ($bean.employee)
 			<div>
-				<strong>从业人员：</strong>$!people.employee
+				<strong>从业人员：</strong>$!bean.employee
 			</div>
 			#end
 			<div style="padding:2px 0px;">
-				<!--<a href="javascript:void(0);" onclick="update('$people.id','people')">修改</a>
+				<!--<a href="javascript:void(0);" onclick="update('$bean.id','people')">修改</a>
 				&nbsp;-->
-				<a href="javascript:void(0);" onclick="deleteData('$people.id','people')">删除</a>
+				#if($userrole < 3)
+                <input type="checkbox" data-id="$!bean.id">
+				<a href="javascript:void(0);" onclick="deleteData('$bean.id','people')">删除</a>
+				#end
 			</div>
 		</div>
 		#end
 		#end
 		
 		#if($employerlist)
-		#foreach($employer in $employerlist)
+		#foreach($bean in $employerlist)
 		<div>
-			<h4>$!employer.name</h4>
+			<h4>$!bean.name</h4>
 			<ul class="list-inline">
-				<li><strong>类型：</strong>$!employer.type</li>
-				<li><strong>地址：</strong>$!employer.address</li>
+				<li><strong>类型：</strong>$!bean.type</li>
+				<li><strong>地址：</strong>$!bean.address</li>
 			</ul>
 			<ul class="list-inline">
-				<li><strong>主要负责人：</strong>$!employer.chargeman</li>
-				<li><strong>身份证号：</strong>$!employer.chargemanid</li>
-				<li><strong>联系电话：</strong>$!employer.chargemanphone</li>
+				<li><strong>主要负责人：</strong>$!bean.chargeman</li>
+				<li><strong>身份证号：</strong>$!bean.chargemanid</li>
+				<li><strong>联系电话：</strong>$!bean.chargemanphone</li>
 			</ul>
 			<ul class="list-inline">
-				<li><strong>内保负责人：</strong>$!employer.safeman</li>
-				<li><strong>身份证号：</strong>$!employer.safemanid</li>
-				<li><strong>联系电话：</strong>$!employer.safemanphone</li>
+				<li><strong>内保负责人：</strong>$!bean.safeman</li>
+				<li><strong>身份证号：</strong>$!bean.safemanid</li>
+				<li><strong>联系电话：</strong>$!bean.safemanphone</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>社区警：</strong>$!bean.policename</li>
+				<li><strong>警务区：</strong>$!bean.policearea</li>
 			</ul>
 			<div>
-				<!--<a href="javascript:void(0);" onclick="update('$employer.id','employer')">修改</a>
+				<!--<a href="javascript:void(0);" onclick="update('$bean.id','bean')">修改</a>
 				&nbsp;-->
-				<a href="javascript:void(0);" onclick="deleteData('$employer.id','employer')">删除</a>
+				#if($userrole < 3)
+                <input type="checkbox" data-id="$!bean.id">
+				<a href="javascript:void(0);" onclick="deleteData('$bean.id','employer')">删除</a>
+				#end
 			</div>
 		<hr>
 		</div>
@@ -153,28 +180,35 @@
 		#end
 		
 		#if($placelist)
-		#foreach($place in $placelist)
+		#foreach($bean in $placelist)
 		<div>
-			<h4>$!place.name</h4>
+			<h4>$!bean.name</h4>
 			<ul class="list-inline">
-				<li><strong>类型：</strong>$!place.type</li>
-				<li><strong>面积：</strong>$!place.area</li>
-				<li><strong>地址：</strong>$!place.address</li>
+				<li><strong>类型：</strong>$!bean.type</li>
+				<li><strong>面积：</strong>$!bean.area</li>
+				<li><strong>地址：</strong>$!bean.address</li>
 			</ul>
 			<ul class="list-inline">
-				<li><strong>出租人：</strong>$!place.lessor</li>
-				<li><strong>身份证号：</strong>$!place.lessorid</li>
-				<li><strong>联系电话：</strong>$!place.lessorphone</li>
+				<li><strong>出租人：</strong>$!bean.lessor</li>
+				<li><strong>身份证号：</strong>$!bean.lessorid</li>
+				<li><strong>联系电话：</strong>$!bean.lessorphone</li>
 			</ul>
 			<ul class="list-inline">
-				<li><strong>租赁人：</strong>$!place.lessee</li>
-				<li><strong>身份证号：</strong>$!place.lesseeid</li>
-				<li><strong>联系电话：</strong>$!place.lesseephone</li>
+				<li><strong>租赁人：</strong>$!bean.lessee</li>
+				<li><strong>身份证号：</strong>$!bean.lesseeid</li>
+				<li><strong>联系电话：</strong>$!bean.lesseephone</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>社区警：</strong>$!bean.policename</li>
+				<li><strong>警务区：</strong>$!bean.policearea</li>
 			</ul>
 			<div>
-				<!--<a href="javascript:void(0);" onclick="update('$place.id','place')">修改</a>
+				<!--<a href="javascript:void(0);" onclick="update('$bean.id','place')">修改</a>
 				&nbsp;-->
-				<a href="javascript:void(0);" onclick="deleteData('$place.id','place')">删除</a>
+				#if($userrole < 3)
+                <input type="checkbox" data-id="$!bean.id" >
+				<a href="javascript:void(0);" onclick="deleteData('$bean.id','place')">删除</a>
+				#end
 			</div>
 		<hr>
 		</div>
@@ -182,27 +216,41 @@
 		#end
 		
 		#if($cameralist)
-		#foreach($camera in $cameralist)
+		#foreach($bean in $cameralist)
 		<div>
-			<h4>地点：$!camera.localname</h4>
+			<h4>地点：$!$bean.localname</h4>
 			<ul class="list-inline">
-				<li><strong>所属派出所：</strong>$!camera.policestation</li>
-				<li><strong>分类：</strong>$!camera.type</li>
-				<li><strong>类型：</strong>$!camera.devicetype</li>
-				<li><strong>朝向：</strong>$!camera.direction</li>
-				<li><strong>数量：</strong>$!camera.count</li>
-				<li><strong>设备编号：</strong>$!camera.deviceid</li>
+				<li><strong>所属派出所：</strong>$!$bean.policestation</li>
+				<li><strong>分类：</strong>$!$bean.type</li>
+				<li><strong>类型：</strong>$!$bean.devicetype</li>
+				<li><strong>朝向：</strong>$!$bean.direction</li>
+				<li><strong>数量：</strong>$!$bean.count</li>
+				<li><strong>设备编号：</strong>$!$bean.deviceid</li>
+			</ul>
+			<ul class="list-inline">
+				<li><strong>社区警：</strong>$!bean.policename</li>
+				<li><strong>警务区：</strong>$!bean.policearea</li>
 			</ul>
 			<div>
 				<!--<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
 				&nbsp;-->
-				<a href="javascript:void(0);" onclick="deleteData('$camera.id','camera')">删除</a>
+				#if($userrole < 3)
+                <input type="checkbox" data-id="$!camera.id">
+				<a href="javascript:void(0);" onclick="deleteData('$bean.id','camera')">删除</a>
+				#end
 			</div>
 		<hr>
 		</div>
 		#end
 		#end
-		
+
+		#if($userrole < 3)
+        <div style="margin: 24px 0px;float:left;">
+            <a href="javascript:void(0);" onclick="selectAll()">全选</a>&emsp;
+            <a href="javascript:void(0);" onclick="batchDelete()">批量删除</a>
+        </div>
+		#end
+
 		<!-- 分页 -->
 		#if($pagetotal > 1)
 		<ul id="pager" class="pagination pull-right">
@@ -399,8 +447,42 @@ function pageTo(page) {
 	$("#form-search").submit();
 }
 
-function update(id, type){
-	$('#model-'+type).modal('show')
+function editable(obj, type){
+	var row = $(obj).closest('form');
+	$(row).find("input").each(function(){
+		$(this).removeAttr("readonly");
+		$(this).removeClass("noborder");
+	});
+	$(obj).html("保存");
+	$(obj).removeAttr("onclick");
+	$(obj).bind("click", function(){
+		update(obj, type);
+	});
+}
+
+function update(obj, type){
+	var row = $(obj).closest('form');
+	var param = row.serialize();
+	jQuery.ajax({
+		url: "/update/"+type,
+		data: param,
+		type: 'post',
+		success: function(data){
+			if(data.code == 1){
+				alert("更新成功");
+				$(row).find("input").each(function(){
+					$(this).prop("readonly","readonly");
+					$(this).addClass("noborder");
+				});
+				$(obj).html("修改");
+				$(obj).bind("click", function(){
+					editable(obj, type);
+				});
+			}else{
+				alert("更新失败");
+			}
+		}
+	})
 }
 
 function deleteData(id, type){
@@ -417,6 +499,38 @@ function deleteData(id, type){
 			}
 		});
 	}
+}
+
+function selectAll(){
+    $("input[type=checkbox]").attr("checked", "true");
+}
+
+function batchDelete(){
+    if(confirm("确定删除吗？")) {
+        var ids = "";
+        $("input:checked").each(function () {
+//        if($(this).attr("checked") == true) {
+            var id = $(this).attr("data-id");
+            ids += id + ",";
+//        }
+        })
+        if (ids.length > 0) {
+            ids = ids.substr(0, ids.length - 1);
+        }
+        jQuery.ajax({
+            url: "/batchdelete/$type",
+            data: {"ids": ids},
+            type: "POST",
+            success: function (data) {
+                if (data.code == 1) {
+                    alert("删除成功");
+                    location.reload();
+                } else {
+                    alert("删除失败");
+                }
+            }
+        });
+    }
 }
 </script>
 </body>

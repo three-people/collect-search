@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -49,7 +50,7 @@ public class DataCommitController {
     public ModelAndView excelCommit(HttpServletRequest request, HttpServletResponse response) {
         String beanType = request.getParameter("type");
         BeanTypeEnum typeEnum = BeanTypeEnum.getEnum(beanType);
-        BaseResponse res = new BaseResponse();
+        BaseResponse res = new BaseResponse(new HashMap<String, Object>());
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("multifile");
         //String sourceName = file.getOriginalFilename(); // 原始文件名
@@ -58,6 +59,12 @@ public class DataCommitController {
                 InputStream fileInput = file.getInputStream();
                 //读取excel文件方法
                 Workbook workbook = createWorkbook(fileInput);
+                HttpSession session = request.getSession();
+                //获取登录信息
+                String loginId = (String) session.getAttribute("loginId");
+                String uname = (String) session.getAttribute("uname");
+                res.getData().put("loginid", loginId);
+                res.getData().put("uname", uname);
                 dealExcel(workbook, typeEnum, res);
             } catch (Exception e) {
                 res.setCode(0);
@@ -75,6 +82,7 @@ public class DataCommitController {
                 model.addAttribute("idList", getIdsByList((ArrayList<Long>) res.getData().get("idList")));
             }
         }
+
         ModelAndView modelAndView;
         if (res.getCode() == 1) {
             model.addAttribute("type", beanType);
@@ -203,7 +211,7 @@ public class DataCommitController {
         int headColumn = excelFileUtil.checkHead(firstRow, beanTypeEnum);
         if (headColumn > -1) {
             response.setCode(-2);
-            response.setMsg(String.format("请填写正确的列名:第%d列,%s 为空或错误", headColumn, beanTypeEnum.getValue()[headColumn - 1]));
+            response.setMsg(String.format("请填写正确的列名: 第%d列,%s 为空或错误", headColumn + 1, beanTypeEnum.getValue()[headColumn]));
             return;
         }
         //sout 列名
@@ -251,8 +259,6 @@ public class DataCommitController {
         }
         // 入库并添加索引
         int successCount = 0;
-        response.setResList(new ArrayList<Object>());
-        response.setData(new HashMap<String, Object>());
         response.getData().put("resList", new ArrayList<Object>());
         response.getData().put("headList", beanTypeEnum.getValue());
         response.getData().put("idList", new ArrayList<Long>());

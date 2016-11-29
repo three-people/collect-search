@@ -7,6 +7,9 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="./js/bootstrap.min.js"></script>
+<!--[if lt IE 10]>
+<script src="./assets/js/placeholder.js"></script>
+<![endif]-->
 <body>
 #parse("./topbar.html")
 <div class="row">
@@ -39,7 +42,7 @@
 			<input type="hidden" name="type" id="type" value="house">
 			<input type="text" name="searchkey" class="form-control" placeholder="搜索词之间请用空格分隔, 如“泺源 泉城广场”">
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit">搜索</button>
+				<button class="btn btn-primary" type="submit">搜索</button>
 			</span>
 		</div><!-- /input-group -->
 	</form>
