@@ -5,19 +5,14 @@ escluster_host=$1
 curl -XPUT http://192.168.0.107:9200/people_index
 curl -XPOST http://192.168.0.107:9200/people_index/fulltext/_mapping -d'
 {
-    "fulltext": {
-        "_all": {
-            "analyzer": "standard",
-            "search_analyzer": "standard",
-            "term_vector": "no",
-            "store": "false"
-        },
+    "fullstring": {
         "properties": {
             "id": {
                 "type": "string"
             },
             "type": {
                 "type": "string"
+
             },
             "subtype": {
                 "type": "string"
@@ -53,7 +48,8 @@ curl -XPOST http://192.168.0.107:9200/people_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "policearea": {
-                 "type": "string"
+                 "type": "string",
+                 "index":"false"
             },
             "addtime": {
                  "type": "string"
@@ -70,13 +66,7 @@ curl -XPOST http://192.168.0.107:9200/people_index/fulltext/_mapping -d'
 curl -XPUT http://192.168.0.107:9200/house_index
 curl -XPOST http://192.168.0.107:9200/house_index/fulltext/_mapping -d'
 {
-    "fulltext": {
-        "_all": {
-            "analyzer": "standard",
-            "search_analyzer": "standard",
-            "term_vector": "no",
-            "store": "false"
-        },
+    "fullstring": {
         "properties": {
             "id": {
                 "type": "string"
@@ -124,7 +114,8 @@ curl -XPOST http://192.168.0.107:9200/house_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "policearea": {
-                 "type": "string"
+                 "type": "string",
+                 "index":"false"
             },
             "addtime": {
                  "type": "string"
@@ -139,13 +130,7 @@ curl -XPOST http://192.168.0.107:9200/house_index/fulltext/_mapping -d'
 curl -XPUT http://192.168.0.107:9200/employer_index
 curl -XPOST http://192.168.0.107:9200/employer_index/fulltext/_mapping -d'
 {
-    "fulltext": {
-        "_all": {
-            "analyzer": "standard",
-            "search_analyzer": "standard",
-            "term_vector": "no",
-            "store": "false"
-        },
+    "fullstring": {
         "properties": {
             "id": {
                 "type": "string"
@@ -187,7 +172,8 @@ curl -XPOST http://192.168.0.107:9200/employer_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "policearea": {
-                 "type": "string"
+                 "type": "string",
+                 "index":"false"
             },
             "addtime": {
                  "type": "string"
@@ -202,13 +188,7 @@ curl -XPOST http://192.168.0.107:9200/employer_index/fulltext/_mapping -d'
 curl -XPUT http://192.168.0.107:9200/place_index
 curl -XPOST http://192.168.0.107:9200/place_index/fulltext/_mapping -d'
 {
-    "fulltext": {
-        "_all": {
-            "analyzer": "standard",
-            "search_analyzer": "standard",
-            "term_vector": "no",
-            "store": "false"
-        },
+    "fullstring": {
         "properties": {
             "id": {
                 "type": "string"
@@ -253,14 +233,16 @@ curl -XPOST http://192.168.0.107:9200/place_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "policearea": {
-                 "type": "string"
+                 "type": "string",
+                 "index":"false"
             },
             "addtime": {
                  "type": "string"
             },
             "updatetime": {
                  "type": "string"
-            }
+
+            }，
         }
     }
 }'
@@ -269,7 +251,7 @@ curl -XPOST http://192.168.0.107:9200/place_index/fulltext/_mapping -d'
 curl -XPUT http://192.168.0.107:9200/camera_index
 curl -XPOST http://192.168.0.107:9200/camera_index/fulltext/_mapping -d'
 {
-    "fulltext": {
+    "fullstring": {
         "_all": {
             "analyzer": "standard",
             "search_analyzer": "standard",
@@ -311,7 +293,8 @@ curl -XPOST http://192.168.0.107:9200/camera_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "policearea": {
-                 "type": "string"
+                 "type": "string",
+                 "index":"false"
             },
             "addtime": {
                  "type": "string"

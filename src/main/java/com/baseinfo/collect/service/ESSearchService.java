@@ -33,7 +33,7 @@ public class ESSearchService {
                 .setTypes("fulltext").setSearchType(SearchType.DEFAULT)
                 .setExplain(true);
         QueryStringQueryBuilder queryString = QueryBuilders.queryStringQuery(content);
-        queryString.defaultField("query_field");
+        queryString.defaultField("_all");
         queryString.analyzer("standard");
         //queryString.minimumShouldMatch("10");
         //QueryBuilders.boolQuery().should(
