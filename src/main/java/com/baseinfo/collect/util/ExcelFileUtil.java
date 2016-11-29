@@ -122,7 +122,7 @@ public class ExcelFileUtil {
         List<String> cellList = new ArrayList<>();
         //登录信息
         String loginId = (String) baseResponse.getData().get("loginid");
-        String uname = (String) baseResponse.getData().get("uname");
+        String realName = (String) baseResponse.getData().get("realName");
         switch (infoHeadEnum) {
             case PEOPLE:
                 try {
@@ -144,7 +144,7 @@ public class ExcelFileUtil {
 
                     peopleBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
                     peopleBean.setPoliceid(loginId);
-                    peopleBean.setPolicename(uname);
+                    peopleBean.setPolicename(realName);
                     //插入数据库
 
                     //建立ES索引
@@ -180,7 +180,7 @@ public class ExcelFileUtil {
 
                     houseBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
                     houseBean.setPoliceid(loginId);
-                    houseBean.setPolicename(uname);
+                    houseBean.setPolicename(realName);
                     //插入数据库
 
                     //建立ES索引
@@ -214,7 +214,7 @@ public class ExcelFileUtil {
 
                     employerBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
                     employerBean.setPoliceid(loginId);
-                    employerBean.setPolicename(uname);
+                    employerBean.setPolicename(realName);
 
                     //插入数据库
 
@@ -250,7 +250,7 @@ public class ExcelFileUtil {
 
                     placeBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setPoliceid(loginId);
-                    placeBean.setPolicename(uname);
+                    placeBean.setPolicename(realName);
                     //插入数据库
 
                     //建立ES索引
@@ -282,7 +282,7 @@ public class ExcelFileUtil {
 
                     cameraBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
                     cameraBean.setPoliceid(loginId);
-                    cameraBean.setPolicename(uname);
+                    cameraBean.setPolicename(realName);
                     //插入数据库
 
                     //建立ES索引
