@@ -67,5 +67,8 @@ public class EmployerClient {
         return false;
     }
 
+    public int countTotal() {
+        return employerDao.countTotal();
+    }
 
 }

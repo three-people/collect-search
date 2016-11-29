@@ -1,0 +1,89 @@
+<html>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/echarts.common.min.js"></script>
+
+<body>
+#parse("./topbar.html")
+<div class="row">
+	<div class="col-md-12">
+		<div style="margin: 60px 0px">
+			<h1 class="text-center">数据统计</h1>
+		<div/>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+	</div>
+	<div class="col-md-6 text-center">
+		<div>
+		户数：$totalPeople&emsp;
+		人口数：$totalPeopleNumber&emsp;
+		房屋数：$totalHouse&emsp;
+		楼宇数：$totalLocation&emsp;
+		单位数：$totalEmployer&emsp;
+		场所数：$totalPlace&emsp;
+		监控数：$totalCamera
+		</div>
+		<div id="chart-main" style="margin:10px auto;width: 600px;height:400px;">
+		</div>
+	</div><!-- /.col-lg-6 -->
+	<div class="col-md-3">
+	</div>
+
+
+</div><!-- /.row -->
+
+<script type="text/javascript">
+	// 基于准备好的dom，初始化echarts实例
+	var myChart = echarts.init(document.getElementById('chart-main'));
+	// 指定图表的配置项和数据
+	var option = {
+		title : {
+			text: '人口统计图',
+			subtext: '各类型户数的比例',
+			x:'center'
+		},
+		tooltip : {
+			trigger: 'item',
+			formatter: "{a} <br/>{b} : {c} ({d}%)"
+		},
+//		legend: {
+//			orient: 'vertical',
+//			left: 'left',
+//			data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+//		},
+		series : [
+			{
+				name: '户主类型',
+				type: 'pie',
+				radius : '55%',
+				center: ['50%', '60%'],
+				data:[
+					#foreach($item in $countPeopleBySubtype)
+					{value:$item.count, name:'$item.subtype'},
+					#end
+				],
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}
+		]
+	};
+
+	// 使用刚指定的配置项和数据显示图表。
+	myChart.setOption(option);
+</script>
+
+</body>
+</html>

@@ -65,5 +65,8 @@ public class CameraClient {
         return false;
     }
 
+    public int countTotal() {
+        return CameraDao.countTotal();
+    }
 
 }

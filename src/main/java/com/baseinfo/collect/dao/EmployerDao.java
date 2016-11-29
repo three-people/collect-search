@@ -10,4 +10,6 @@ public interface EmployerDao {
     EmployerBean selectByPrimaryKey(Long id);
 
     int updateByPrimaryKey(EmployerBean record);
+
+    int countTotal();
 }

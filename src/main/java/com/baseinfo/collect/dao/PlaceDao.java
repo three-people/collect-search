@@ -10,4 +10,6 @@ public interface PlaceDao {
     PlaceBean selectByPrimaryKey(Long id);
 
     int updateByPrimaryKey(PlaceBean record);
+
+    int countTotal();
 }

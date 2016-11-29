@@ -10,4 +10,6 @@ public interface CameraDao {
     CameraBean selectByPrimaryKey(Long id);
 
     int updateByPrimaryKey(CameraBean record);
+
+    int countTotal();
 }

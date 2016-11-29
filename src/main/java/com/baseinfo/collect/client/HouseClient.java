@@ -65,4 +65,12 @@ public class HouseClient {
         return false;
     }
 
+    public int countTotal() {
+        return houseDao.countTotal();
+    }
+
+    public int countTotalLocation() {
+        return houseDao.countTotalLocation();
+    }
+
 }

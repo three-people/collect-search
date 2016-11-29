@@ -5,6 +5,11 @@
     id, type, name, address, area, lessor, lessorid, lessorphone, lessee, lesseeid, lesseephone,
     extend, addtime, updatetime policeid, policeid, policename,policearea
   </sql>
+  <select id="countTotal" resultType="java.lang.Integer" >
+    select
+    count(id)
+    from t_place
+  </select>
   <select id="selectByPrimaryKey" resultType="PlaceBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

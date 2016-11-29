@@ -5,6 +5,11 @@
     id, type, name, address, chargeman, chargemanid, chargemanphone, safeman, safemanid, 
     safemanphone, extend, addtime, updatetime policeid, policename,policearea
   </sql>
+  <select id="countTotal" resultType="java.lang.Integer" >
+    select
+    count(id)
+    from t_employer
+  </select>
   <select id="selectByPrimaryKey" resultType="EmployerBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

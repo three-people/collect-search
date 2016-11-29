@@ -4,6 +4,11 @@
   <sql id="Base_Column_List" >
     id, deviceid, type, policestation, localname, devicetype, direction, count, expend, addtime, updatetime, policeid, policename,policearea
   </sql>
+    <select id="countTotal" resultType="java.lang.Integer" >
+        select
+        count(id)
+        from t_camera
+    </select>
   <select id="selectByPrimaryKey" resultType="CameraBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

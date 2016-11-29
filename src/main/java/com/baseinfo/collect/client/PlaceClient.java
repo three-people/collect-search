@@ -63,4 +63,9 @@ public class PlaceClient {
         }
         return false;
     }
+
+    public int countTotal() {
+        return placeDao.countTotal();
+    }
+
 }

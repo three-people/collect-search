@@ -5,6 +5,16 @@
     id, type, subtype, location, host, owner, ownerid, ownerphone, unit, floor, 
     doornumber, employee, expend, addtime, updatetime policeid, policeid, policename,policearea
   </sql>
+    <select id="countTotalLocation" resultType="java.lang.Integer" >
+        select
+        count(DISTINCT (location))
+        from t_house
+    </select>
+    <select id="countTotal" resultType="java.lang.Integer" >
+        select
+        count(id)
+        from t_house
+    </select>
   <select id="selectByPrimaryKey" resultType="HouseBean" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

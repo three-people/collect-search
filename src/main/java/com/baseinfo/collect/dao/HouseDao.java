@@ -10,4 +10,8 @@ public interface HouseDao {
     HouseBean selectByPrimaryKey(Long id);
 
     int updateByPrimaryKey(HouseBean record);
+
+    int countTotal();
+
+    int countTotalLocation();
 }

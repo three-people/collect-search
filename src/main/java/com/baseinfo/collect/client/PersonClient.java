@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 对人员数据进行存储和建索引
  */
@@ -63,6 +66,18 @@ public class PersonClient {
             return flag;
         }
         return false;
+    }
+
+    public int countTotal() {
+        return dao.countTotal();
+    }
+
+    public int countTotalNumber() {
+        return dao.countTotalNumber();
+    }
+
+    public List<Map<String, Object>> countBySubtype() {
+        return dao.countBySubtype();
     }
 
 }
