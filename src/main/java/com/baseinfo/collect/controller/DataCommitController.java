@@ -62,9 +62,9 @@ public class DataCommitController {
                 HttpSession session = request.getSession();
                 //获取登录信息
                 String loginId = (String) session.getAttribute("loginId");
-                String uname = (String) session.getAttribute("uname");
+                String realName = (String) session.getAttribute("realName");
                 res.getData().put("loginid", loginId);
-                res.getData().put("uname", uname);
+                res.getData().put("realName", realName);
                 dealExcel(workbook, typeEnum, res);
             } catch (Exception e) {
                 res.setCode(0);

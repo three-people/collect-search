@@ -59,6 +59,7 @@ public class LoginController {
             request.getSession().setAttribute("loginId", String.valueOf(bean.getId()));
             request.getSession().setAttribute("uname", uname);
             request.getSession().setAttribute("userrole", bean.getRole());
+            request.getSession().setAttribute("realName", bean.getRealName());
             res.setCode(UserResStatus.SUCESS);
             res.setMsg("登录成功");
             return res;
