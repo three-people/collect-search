@@ -10,80 +10,83 @@
 <body>
 #parse("./topbar.html")
 <div class="row">
-	<div class="col-md-12">
-		<div style="margin: 60px 0px">
-			<h1 class="text-center">数据上传</h1>
-		<div/>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-3">
-	</div>
-	<div class="col-md-6">
-	<form  action="./excelUpload" method="post" enctype="multipart/form-data">
-		<div class="input-group">
-			<div class="input-group-btn">
-				<button type="button" class="btn btn-default 
+    <div class="col-md-12">
+        <div style="margin: 60px 0px">
+            <h1 class="text-center">数据上传</h1>
+            <div/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <form action="./excelUpload" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default
 				dropdown-toggle" data-toggle="dropdown">
-					<span id="type-lebal">上传类型</span>
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="javascript:void(0);" data-type="house" onclick="changeType(this);">房屋</a></li>
-					<li><a href="javascript:void(0);" data-type="people" onclick="changeType(this);">人口</a></li>
-					<li><a href="javascript:void(0);" data-type="employer" onclick="changeType(this);">单位</a></li>
-					<li><a href="javascript:void(0);" data-type="place" onclick="changeType(this);">场所</a></li>
-					<li><a href="javascript:void(0);" data-type="camera" onclick="changeType(this);">监控</a></li>
-				</ul>
-			</div><!-- /btn-group -->
-			<input type="hidden" name="type" id="type" value="">
-			<input class="form-control" type="file" name="multifile" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-			<span class="input-group-btn">
-				<button class="btn btn-primary" id="upload-btn" type="submit" onclick="return checkType(this);" data-loading-text="正在上传...">上传</button>
+                            <span id="type-lebal">上传类型</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0);" data-type="house" onclick="changeType(this);">房屋</a></li>
+                            <li><a href="javascript:void(0);" data-type="people" onclick="changeType(this);">人口</a></li>
+                            <li><a href="javascript:void(0);" data-type="employer" onclick="changeType(this);">单位</a>
+                            </li>
+                            <li><a href="javascript:void(0);" data-type="place" onclick="changeType(this);">场所</a></li>
+                            <li><a href="javascript:void(0);" data-type="camera" onclick="changeType(this);">监控</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input type="hidden" name="type" id="type" value="">
+                    <input class="form-control" type="file" name="multifile"
+                           accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <span class="input-group-btn">
+				<button class="btn btn-primary" id="upload-btn" type="submit" onclick="return checkType(this);"
+                        data-loading-text="正在上传...">上传</button>
 			</span>
-			<span class="input-group-btn">
+                    <span class="input-group-btn">
 				<button class="btn btn-default" type="button" onclick="return download();">下载模板</button>
 			</span>
-		</div><!-- /input-group -->
-	</form>
-        #if($!{code})
-        <h4><font color=#if($!{code}&&$code==1)"green"#else"red"#end>$!{msg}</font></h4>
-        #end
-		#if(!$!{code}||$!{code}!=1)
-		<h5>使用说明：</h5>
-		<h5>本系统仅接受xls，xlsx文件。</h5>
-		<h5>请选择想要上传的数据类型，之后点击“下载模板”（已有模板则忽略该步骤）。</h5>
-		<h5>根据模板填好数据后点击“选择文件”，选好文件后点击“上传”按钮即可。</h5>
-		#end
-	</div><!-- /.col-lg-6 -->
-	<div class="col-md-3">
-	</div>
+                </div><!-- /input-group -->
+            </form>
+            #if($!{code})
+            <h4><font color=#if($!{code}&&$code==1)"green"#else"red"#end>$!{msg}</font></h4>
+            #end
+            #if(!$!{code}||$!{code}!=1)
+            <h5>使用说明：</h5>
+            <h5>本系统仅接受xls，xlsx文件。</h5>
+            <h5>请选择想要上传的数据类型，之后点击“下载模板”（已有模板则忽略该步骤）。</h5>
+            <h5>根据模板填好数据后点击“选择文件”，选好文件后点击“上传”按钮即可。</h5>
+            #end
+        </div><!-- /.col-lg-6 -->
+        <div class="col-md-3">
+        </div>
 
-
+    </div>
 </div><!-- /.row -->
 
 <script type="text/javascript">
-function changeType(obj) {
-	$("#type").val($(obj).attr("data-type"));
-	$("#type-lebal").html($(obj).html())
-}
+    function changeType(obj) {
+        $("#type").val($(obj).attr("data-type"));
+        $("#type-lebal").html($(obj).html())
+    }
 
-function download(){
-	if(checkType()) {
-		window.open("./excelDownload?type=" + $("#type").val());
-	}else{
-		return false;
-	}
-}
+    function download() {
+        if (checkType()) {
+            window.open("./excelDownload?type=" + $("#type").val());
+        } else {
+            return false;
+        }
+    }
 
-function checkType(obj) {
-	if($("#type").val()==""){
-		alert("请选择类别！");
-		return false;
-	}
-	$(obj).button('loading');
-	return true;
-}
+    function checkType(obj) {
+        if ($("#type").val() == "") {
+            alert("请选择类别！");
+            return false;
+        }
+        $(obj).button('loading');
+        return true;
+    }
 </script>
 
 </body>
