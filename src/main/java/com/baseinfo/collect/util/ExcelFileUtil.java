@@ -143,6 +143,8 @@ public class ExcelFileUtil {
                     peopleBean.setUpdatetime(new Date());
 
                     peopleBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    peopleBean.setNeighbor(getAndAddCellValue(row.getCell(n++), cellList, true));
+
                     peopleBean.setPoliceid(loginId);
                     peopleBean.setPolicename(realName);
                     //插入数据库
@@ -179,6 +181,7 @@ public class ExcelFileUtil {
                     houseBean.setUpdatetime(new Date());
 
                     houseBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    houseBean.setNeighbor(getAndAddCellValue(row.getCell(n++), cellList, true));
                     houseBean.setPoliceid(loginId);
                     houseBean.setPolicename(realName);
                     //插入数据库
@@ -213,6 +216,7 @@ public class ExcelFileUtil {
                     employerBean.setUpdatetime(new Date());
 
                     employerBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    employerBean.setNeighbor(getAndAddCellValue(row.getCell(n++), cellList, true));
                     employerBean.setPoliceid(loginId);
                     employerBean.setPolicename(realName);
 
@@ -249,6 +253,7 @@ public class ExcelFileUtil {
                     placeBean.setUpdatetime(new Date());
 
                     placeBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setNeighbor(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setPoliceid(loginId);
                     placeBean.setPolicename(realName);
                     //插入数据库
@@ -281,6 +286,7 @@ public class ExcelFileUtil {
                     cameraBean.setUpdatetime(new Date());
 
                     cameraBean.setPolicearea(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    cameraBean.setNeighbor(getAndAddCellValue(row.getCell(n++), cellList, true));
                     cameraBean.setPoliceid(loginId);
                     cameraBean.setPolicename(realName);
                     //插入数据库
