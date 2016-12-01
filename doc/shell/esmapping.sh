@@ -2,8 +2,8 @@
 #生成es相关的person索引
 escluster_host=$1
 
-curl -XPUT http://127.0.0.1:9200/people_index
-curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/people_index
+curl -XPOST http://192.168.0.107:9200/people_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "properties": {
@@ -52,8 +52,7 @@ curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
                  "index":"no"
             },
             "neighbor": {
-                 "type": "string",
-                 "index":"no"
+                 "type": "string"
             },
             "addtime": {
                  "type": "string"
@@ -67,8 +66,8 @@ curl -XPOST http://127.0.0.1:9200/people_index/fulltext/_mapping -d'
 
 
 #房屋相关
-curl -XPUT http://127.0.0.1:9200/house_index
-curl -XPOST http://127.0.0.1:9200/house_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/house_index
+curl -XPOST http://192.168.0.107:9200/house_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "properties": {
@@ -121,6 +120,9 @@ curl -XPOST http://127.0.0.1:9200/house_index/fulltext/_mapping -d'
                  "type": "string",
                  "index":"no"
             },
+            "neighbor": {
+                 "type": "string"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -131,8 +133,8 @@ curl -XPOST http://127.0.0.1:9200/house_index/fulltext/_mapping -d'
     }
 }'
 #雇佣关系相关索引结构
-curl -XPUT http://127.0.0.1:9200/employer_index
-curl -XPOST http://127.0.0.1:9200/employer_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/employer_index
+curl -XPOST http://192.168.0.107:9200/employer_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "properties": {
@@ -179,6 +181,9 @@ curl -XPOST http://127.0.0.1:9200/employer_index/fulltext/_mapping -d'
                  "type": "string",
                  "index":"no"
             },
+            "neighbor": {
+                 "type": "string"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -189,8 +194,8 @@ curl -XPOST http://127.0.0.1:9200/employer_index/fulltext/_mapping -d'
     }
 }'
 #场所
-curl -XPUT http://127.0.0.1:9200/place_index
-curl -XPOST http://127.0.0.1:9200/place_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/place_index
+curl -XPOST http://192.168.0.107:9200/place_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "properties": {
@@ -240,6 +245,9 @@ curl -XPOST http://127.0.0.1:9200/place_index/fulltext/_mapping -d'
                  "type": "string",
                  "index":"no"
             },
+            "neighbor": {
+                 "type": "string"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -252,8 +260,8 @@ curl -XPOST http://127.0.0.1:9200/place_index/fulltext/_mapping -d'
 }'
 
 #监控相关
-curl -XPUT http://127.0.0.1:9200/camera_index
-curl -XPOST http://127.0.0.1:9200/camera_index/fulltext/_mapping -d'
+curl -XPUT http://192.168.0.107:9200/camera_index
+curl -XPOST http://192.168.0.107:9200/camera_index/fulltext/_mapping -d'
 {
     "fulltext": {
         "_all": {
@@ -299,6 +307,9 @@ curl -XPOST http://127.0.0.1:9200/camera_index/fulltext/_mapping -d'
             "policearea": {
                  "type": "string",
                  "index":"no"
+            },
+            "neighbor": {
+                 "type": "string"
             },
             "addtime": {
                  "type": "string"
