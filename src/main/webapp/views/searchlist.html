@@ -88,6 +88,7 @@
 					<li><strong>社区警：</strong>$!bean.policename</li>
 					<li><strong>警务区：</strong>$!bean.policearea</li>
 					<li><strong>居委会：</strong>$!bean.neighbor</li>
+					#if($!bean.expend)<li><strong>备注：</strong>$!bean.expend</li>#end
 				</ul>
 				#if ($bean.employee)
 				<div>
@@ -128,6 +129,7 @@
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 				<li><strong>居委会：</strong>$!bean.neighbor</li>
+				#if($!bean.expend)<li><strong>备注：</strong>$!bean.expend</li>#end
 			</ul>
 			#if ($bean.employee)
 			<div>
@@ -168,6 +170,7 @@
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 				<li><strong>居委会：</strong>$!bean.neighbor</li>
+				#if($!bean.extend)<li><strong>备注：</strong>$!bean.extend</li>#end
 			</ul>
 			<div>
 				<!--<a href="javascript:void(0);" onclick="update('$bean.id','bean')">修改</a>
@@ -205,6 +208,7 @@
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 				<li><strong>居委会：</strong>$!bean.neighbor</li>
+				#if($!bean.extend)<li><strong>备注：</strong>$!bean.extend</li>#end
 			</ul>
 			<div>
 				<!--<a href="javascript:void(0);" onclick="update('$bean.id','place')">修改</a>
@@ -222,19 +226,20 @@
 		#if($cameralist)
 		#foreach($bean in $cameralist)
 		<div>
-			<h4>地点：$!$bean.localname</h4>
+			<h4>地点：$!bean.localname</h4>
 			<ul class="list-inline">
-				<li><strong>所属派出所：</strong>$!$bean.policestation</li>
-				<li><strong>分类：</strong>$!$bean.type</li>
-				<li><strong>类型：</strong>$!$bean.devicetype</li>
-				<li><strong>朝向：</strong>$!$bean.direction</li>
-				<li><strong>数量：</strong>$!$bean.count</li>
+				<li><strong>所属派出所：</strong>$!bean.policestation</li>
+				<li><strong>分类：</strong>$!bean.type</li>
+				<li><strong>类型：</strong>$!bean.devicetype</li>
+				<li><strong>朝向：</strong>$!bean.direction</li>
+				<li><strong>数量：</strong>$!bean.count</li>
 				<li><strong>设备编号：</strong>$!$bean.deviceid</li>
 			</ul>
 			<ul class="list-inline">
 				<li><strong>社区警：</strong>$!bean.policename</li>
 				<li><strong>警务区：</strong>$!bean.policearea</li>
 				<li><strong>居委会：</strong>$!bean.neighbor</li>
+				#if($!bean.expend)<li><strong>备注：</strong>$!bean.expend</li>#end
 			</ul>
 			<div>
 				<!--<a href="javascript:void(0);" onclick="update('$camera.id','camera')">修改</a>
