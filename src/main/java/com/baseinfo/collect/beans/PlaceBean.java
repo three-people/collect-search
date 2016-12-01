@@ -49,8 +49,11 @@ public class PlaceBean {
     @Field(index = FieldIndex.not_analyzed, store = true)
     private String policename;
 
-    @Field(index = FieldIndex.not_analyzed, store = true)
+    @Field(index = FieldIndex.no, store = true)
     private String policearea;
+
+    @Field(index = FieldIndex.no,store = true)
+    private String neighbor;
 
     @Field(index = FieldIndex.not_analyzed, store = true)
     private Date addtime;
@@ -192,4 +195,13 @@ public class PlaceBean {
     public void setPolicearea(String policearea) {
         this.policearea = policearea;
     }
+
+    public String getNeighbor() {
+        return neighbor;
+    }
+
+    public void setNeighbor(String neighbor) {
+        this.neighbor = neighbor;
+    }
+
 }

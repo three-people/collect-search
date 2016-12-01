@@ -43,14 +43,18 @@ public class CameraBean {
     @Field(index = FieldIndex.not_analyzed, store = true)
     private String policename;
 
-    @Field(index = FieldIndex.not_analyzed, store = true)
+    @Field(index = FieldIndex.no, store = true)
     private String policearea;
+
+    @Field(index = FieldIndex.no,store = true)
+    private String neighbor;
 
     @Field(index = FieldIndex.not_analyzed, store = true)
     private java.util.Date addtime;
 
     @Field(index = FieldIndex.not_analyzed, store = true)
     private java.util.Date updatetime;
+
 
     public java.util.Date getAddtime() {
         return addtime;
@@ -162,5 +166,13 @@ public class CameraBean {
 
     public void setPolicearea(String policearea) {
         this.policearea = policearea;
+    }
+
+    public String getNeighbor() {
+        return neighbor;
+    }
+
+    public void setNeighbor(String neighbor) {
+        this.neighbor = neighbor;
     }
 }
