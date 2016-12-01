@@ -121,6 +121,10 @@ curl -XPOST http://127.0.0.1:9200/house_index/fulltext/_mapping -d'
                  "type": "string",
                  "index":"no"
             },
+            "neighbor": {
+                 "type": "string",
+                 "index":"no"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -176,6 +180,10 @@ curl -XPOST http://127.0.0.1:9200/employer_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "policearea": {
+                 "type": "string",
+                 "index":"no"
+            },
+            "neighbor": {
                  "type": "string",
                  "index":"no"
             },
@@ -240,6 +248,10 @@ curl -XPOST http://127.0.0.1:9200/place_index/fulltext/_mapping -d'
                  "type": "string",
                  "index":"no"
             },
+            "neighbor": {
+                 "type": "string",
+                 "index":"no"
+            },
             "addtime": {
                  "type": "string"
             },
@@ -297,6 +309,10 @@ curl -XPOST http://127.0.0.1:9200/camera_index/fulltext/_mapping -d'
                  "type": "string"
             },
             "policearea": {
+                 "type": "string",
+                 "index":"no"
+            },
+            "neighbor": {
                  "type": "string",
                  "index":"no"
             },
