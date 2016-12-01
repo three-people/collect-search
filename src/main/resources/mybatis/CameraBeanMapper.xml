@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baseinfo.collect.dao.CameraDao" >
   <sql id="Base_Column_List" >
-    id, deviceid, type, policestation, localname, devicetype, direction, count, expend, addtime, updatetime, policeid, policename,policearea
+    id, deviceid, type, policestation, localname, devicetype, direction, count, expend, addtime, updatetime, policeid, policename,policearea,neighbor
   </sql>
     <select id="countTotal" resultType="java.lang.Integer" >
         select
@@ -25,11 +25,11 @@
     </selectKey>
     insert into t_camera (id, deviceid, type, policestation,
       localname, devicetype, direction, 
-      count, expend, addtime, updatetime, policeid, policename, policearea)
+      count, expend, addtime, updatetime, policeid, policename, policearea,neighbor)
     values (#{id}, #{deviceid}, #{type}, #{policestation},
       #{localname}, #{devicetype}, #{direction}, 
       #{count}, #{expend},
-      #{addtime}, #{updatetime}, #{policeid}, #{policename}, #{policearea})
+      #{addtime}, #{updatetime}, #{policeid}, #{policename}, #{policearea},#{neighbor})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.baseinfo.collect.beans.CameraBean" >
     update t_camera
@@ -41,6 +41,7 @@
       direction = #{direction},
       count = #{count},
       expend = #{expend},
+      neighbor = #{neighbor}
       updatetime = #{updatetime}
     where id = #{id}
   </update>
