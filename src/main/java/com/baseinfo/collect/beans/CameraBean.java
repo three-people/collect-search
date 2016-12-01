@@ -46,7 +46,7 @@ public class CameraBean {
     @Field(index = FieldIndex.no, store = true)
     private String policearea;
 
-    @Field(index = FieldIndex.no,store = true)
+    @Field(index = FieldIndex.not_analyzed,store = true)
     private String neighbor;
 
     @Field(index = FieldIndex.not_analyzed, store = true)
