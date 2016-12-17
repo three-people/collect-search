@@ -241,12 +241,15 @@ public class ExcelFileUtil {
                     placeBean.setName(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setAddress(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setArea(getAndAddCellValue(row.getCell(n++), cellList, true));
-                    placeBean.setLessor(getAndAddCellValue(row.getCell(n++), cellList, true));
-                    placeBean.setLessorid(getAndAddCellValue(row.getCell(n++), cellList, true));
-                    placeBean.setLessorphone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    //租住人
                     placeBean.setLessee(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setLesseeid(getAndAddCellValue(row.getCell(n++), cellList, true));
                     placeBean.setLesseephone(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    //出租人
+                    placeBean.setLessor(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLessorid(getAndAddCellValue(row.getCell(n++), cellList, true));
+                    placeBean.setLessorphone(getAndAddCellValue(row.getCell(n++), cellList, true));
+
                     placeBean.setExtend(getAndAddCellValue(row.getCell(n++), cellList, true));
 
                     placeBean.setAddtime(new Date());
